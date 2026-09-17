@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100 p-6">
+
+    <div class="max-w-4xl mx-auto">
+
+        {{-- HEADER --}}
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">
+                Game Bahasa Bali
+            </h1>
+            <p class="text-gray-500 mt-2">
+                Pilih room yang tersedia untuk mulai bermain
+            </p>
+        </div>
+
+        {{--
+            Menampilkan pesan error jika ada.
+
+            with('error', '...') di Controller akan tersimpan
+            di session flash. Laravel menyediakan helper
+            session('key') untuk membacanya di Blade.
+
+            Session flash hanya tersedia untuk satu request berikutnya,
+            setelah itu otomatis hilang.
+        --}}
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700
+                        px-4 py-3 rounded mb-6">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{--
+            Mengecek apakah $rooms kosong atau tidak.
+
+            $rooms adalah Collection yang dikirim dari GameController.
+            @forelse adalah kombinasi @foreach dan @empty:
+            → Jika $rooms tidak kosong, jalankan blok pertama
+            → Jika $rooms kosong, jalankan blok @empty
+        --}}
+        @forelse ($rooms as $room)
+
+            {{--
+                Setiap room ditampilkan sebagai kartu.
+                Kita cek $room->mode untuk menentukan:
+                → Warna badge mode
+                → Tujuan link ketika kartu diklik
+            --}}
+            <div class="bg-white rounded-xl shadow p-5 mb-4
+                        flex items-center justify-between">
+
+                <div>
+                    {{-- Nama room --}}
+                    <h2 class="text-lg font-semibold text-gray-800">
+                        {{ $room->nama_room }}
+                    </h2>
+
+                    {{--
+                        Badge mode room.
+
+                        Kita gunakan @if untuk membedakan
+                        warna badge berdasarkan mode:
+                        → assessment = warna hijau
+                        → battle     = warna biru
+                    --}}
+                    <span class="inline-block mt-1 px-2 py-0.5 rounded text-xs
+                                font-medium
+                                @if($room->mode === 'assesment')
+                                    bg-green-100 text-green-700
+                                @else
+                                    bg-blue-100 text-blue-700
+                                @endif">
+                        {{ ucfirst($room->mode) }}
+                    </span>
+                </div>
+
+                {{--
+                    Tombol Mulai.
+
+                    Tujuan link berbeda berdasarkan mode room:
+                    → assesment → route('assesment.show', id_room)
+                    → battle     → route('battle.show', id_room)
+                                   (nanti ditambahkan)
+
+                    route() adalah helper Laravel untuk generate URL
+                    berdasarkan nama route yang sudah didefinisikan
+                    di web.php.
+                --}}
+                @if ($room->mode === 'assessment')
+                    <a href="{{ route('assesment.show', $room->id_room) }}"
+                       class="bg-green-500 hover:bg-green-600 text-white
+                              px-5 py-2 rounded-lg text-sm font-medium
+                              transition">
+                        Mulai
+                    </a>
+                @else
+                    {{--
+                        Battle mode belum dibuat.
+                        Tombol dibuat disabled agar tidak bisa diklik.
+                    --}}
+                    <a href="{{ route('battle.show', $room->id_room) }}"
+                       class="bg-green-500 hover:bg-green-600 text-white
+                              px-5 py-2 rounded-lg text-sm font-medium
+                              transition">
+                        Mulai
+                    </a>
+                @endif
+
+            </div>
+
+        @empty
+
+            {{-- Ditampilkan jika tidak ada room aktif sama sekali --}}
+            <div class="text-center text-gray-400 py-20">
+                <p class="text-lg">Belum ada room yang tersedia.</p>
+                <p class="text-sm mt-1">
+                    Hubungi guru untuk membuat room baru.
+                </p>
+            </div>
+
+        @endforelse
+
+    </div>
+
+</body>
+</html>
