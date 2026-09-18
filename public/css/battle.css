@@ -1,7 +1,9 @@
 /* ============================================
    BASE
    ============================================ */
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -10,7 +12,7 @@ body {
     background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     min-height: 100vh;
     overflow: hidden;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 /* ============================================
@@ -33,8 +35,8 @@ body {
     align-items: center;
     padding: 1.2rem 1.5rem;
     gap: 1.2rem;
-    background: rgba(255,255,255,0.03);
-    border-bottom: 2px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 
 .player-info-left {
@@ -58,8 +60,12 @@ body {
     text-transform: uppercase;
 }
 
-.player-a-color { color: #60a5fa; }
-.player-b-color { color: #f87171; }
+.player-a-color {
+    color: #60a5fa;
+}
+.player-b-color {
+    color: #ff69b4;
+}
 
 .progress-badge {
     font-size: clamp(0.9rem, 1.8vw, 1.2rem);
@@ -67,7 +73,7 @@ body {
     margin-top: 0.3rem;
     padding: 0.2rem 0.75rem;
     border-radius: 99px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     color: white;
 }
 
@@ -82,8 +88,10 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    transition: background 0.2s, box-shadow 0.2s;
+    background: rgba(255, 255, 255, 0.15);
+    transition:
+        background 0.2s,
+        box-shadow 0.2s;
 }
 
 .streak-dot.active-a {
@@ -102,7 +110,7 @@ body {
     top: -2rem;
     left: 50%;
     transform: translateX(-50%) scale(0);
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.85);
     border-radius: 0.75rem;
     padding: 0.4rem 1rem;
     font-size: clamp(0.75rem, 1.3vw, 0.95rem);
@@ -119,12 +127,12 @@ body {
 }
 
 .popup-notify.boost {
-    background: rgba(234,179,8,0.95);
+    background: rgba(234, 179, 8, 0.95);
     color: #1a1a00;
 }
 
 .popup-notify.fall {
-    background: rgba(239,68,68,0.95);
+    background: rgba(239, 68, 68, 0.95);
     color: white;
 }
 
@@ -156,15 +164,15 @@ body {
     flex-direction: column;
     gap: 12px;
     padding: 0.75rem 0.5rem;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 1rem;
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .lane {
     position: relative;
     height: 32px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 99px;
     overflow: visible;
 }
@@ -180,12 +188,12 @@ body {
 
 .lane-fill-a {
     background: linear-gradient(90deg, #1d4ed8, #60a5fa);
-    box-shadow: 0 0 12px rgba(96,165,250,0.5);
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
 }
 
 .lane-fill-b {
-    background: linear-gradient(90deg, #b91c1c, #f87171);
-    box-shadow: 0 0 12px rgba(248,113,113,0.5);
+    background: linear-gradient(90deg, #ff69b4, #eb95c0);
+    box-shadow: 0 0 12px rgba(242, 185, 214, 0.8);
 }
 
 /* Karakter di atas lane */
@@ -197,7 +205,7 @@ body {
     transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 10;
     line-height: 1;
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
     user-select: none;
     pointer-events: none;
 }
@@ -207,7 +215,7 @@ body {
     justify-content: space-between;
     padding: 0 0.5rem;
     font-size: clamp(0.55rem, 1vw, 0.72rem);
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.35);
     letter-spacing: 0.1em;
     font-weight: 600;
     text-transform: uppercase;
@@ -217,11 +225,22 @@ body {
    ANIMASI KARAKTER
    ============================================ */
 @keyframes shake {
-    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-    20%       { transform: translate(calc(-50% - 8px), -50%) rotate(-10deg); }
-    40%       { transform: translate(calc(-50% + 8px), -50%) rotate(10deg); }
-    60%       { transform: translate(calc(-50% - 4px), -50%) rotate(-5deg); }
-    80%       { transform: translate(calc(-50% + 4px), -50%) rotate(5deg); }
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    20% {
+        transform: translate(calc(-50% - 8px), -50%) rotate(-10deg);
+    }
+    40% {
+        transform: translate(calc(-50% + 8px), -50%) rotate(10deg);
+    }
+    60% {
+        transform: translate(calc(-50% - 4px), -50%) rotate(-5deg);
+    }
+    80% {
+        transform: translate(calc(-50% + 4px), -50%) rotate(5deg);
+    }
 }
 
 .character.shaking {
@@ -229,15 +248,27 @@ body {
 }
 
 @keyframes fall {
-    0%   { transform: translate(-50%, -50%) rotate(0deg); }
-    50%  { transform: translate(-50%, 16px) rotate(60deg); }
-    100% { transform: translate(-50%, 16px) rotate(90deg); }
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    50% {
+        transform: translate(-50%, 16px) rotate(60deg);
+    }
+    100% {
+        transform: translate(-50%, 16px) rotate(90deg);
+    }
 }
 
 @keyframes recover {
-    0%   { transform: translate(-50%, 16px) rotate(90deg); }
-    60%  { transform: translate(-50%, -8px) rotate(-10deg); }
-    100% { transform: translate(-50%, -50%) rotate(0deg); }
+    0% {
+        transform: translate(-50%, 16px) rotate(90deg);
+    }
+    60% {
+        transform: translate(-50%, -8px) rotate(-10deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
 }
 
 .character.falling {
@@ -252,8 +283,7 @@ body {
 
 .character.boosted {
     transition: left 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    filter: drop-shadow(0 0 12px gold)
-            drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+    filter: drop-shadow(0 0 12px gold) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
 }
 
 /* ============================================
@@ -264,8 +294,8 @@ body {
     align-items: center;
     justify-content: center;
     padding: 1rem 2rem;
-    background: rgba(0,0,0,0.3);
-    border-bottom: 2px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .question-grid {
@@ -280,7 +310,7 @@ body {
 }
 
 .question-col-a {
-    border-right: 1px solid rgba(255,255,255,0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
     padding-right: 1rem;
 }
 
@@ -321,12 +351,12 @@ body {
 }
 
 .answer-a {
-    border-right: 2px solid rgba(255,255,255,0.1);
+    border-right: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .answer-btn {
-    background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 1rem;
     color: white;
     font-size: clamp(0.85rem, 1.8vw, 1.2rem);
@@ -343,28 +373,30 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-.answer-btn:active { transform: scale(0.96); }
+.answer-btn:active {
+    transform: scale(0.96);
+}
 
 .player-a-btn:hover,
 .player-a-btn:focus {
-    background: rgba(59,130,246,0.3);
+    background: rgba(59, 130, 246, 0.3);
     border-color: #60a5fa;
 }
 
 .player-b-btn:hover,
 .player-b-btn:focus {
-    background: rgba(239,68,68,0.3);
-    border-color: #f87171;
+    background: rgba(181, 119, 151, 0.8);
+    border-color: #ee7ec1;
 }
 
 .answer-btn.correct {
-    background: rgba(34,197,94,0.4) !important;
+    background: rgba(34, 197, 94, 0.4) !important;
     border-color: #22c55e !important;
     color: #86efac !important;
 }
 
 .answer-btn.wrong {
-    background: rgba(239,68,68,0.4) !important;
+    background: rgba(239, 68, 68, 0.4) !important;
     border-color: #ef4444 !important;
     color: #fca5a5 !important;
 }
@@ -385,14 +417,21 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.88);
+    background: rgba(0, 0, 0, 0.88);
 }
 
-#win-overlay.show { display: flex; }
+#win-overlay.show {
+    display: flex;
+}
 
 @keyframes winner-bounce {
-    0%, 100% { transform: scale(1); }
-    50%       { transform: scale(1.04); }
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.04);
+    }
 }
 
 .winner-card {
@@ -400,8 +439,14 @@ body {
 }
 
 @keyframes confetti-fall {
-    0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 .confetti-piece {

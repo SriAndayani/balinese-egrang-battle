@@ -39,7 +39,7 @@
                 {{-- Player A --}}
                 <div class="bg-blue-500 bg-opacity-20 border-2
                             border-blue-400 rounded-2xl p-6 text-center">
-                    <div class="text-5xl mb-3">🟦</div>
+                    <div class="text-5xl mb-3">🧖‍♂️</div>
                     <h2 class="text-xl font-bold text-blue-300 mb-4">
                         PLAYER A
                     </h2>
@@ -62,9 +62,9 @@
                 </div>
 
                 {{-- Player B --}}
-                <div class="bg-red-500 bg-opacity-20 border-2
-                            border-red-400 rounded-2xl p-6 text-center">
-                    <div class="text-5xl mb-3">🟥</div>
+                <div class="bg-pink-400 bg-opacity-20 border-2
+                            border-pink-300 rounded-2xl p-6 text-center">
+                    <div class="text-5xl mb-3">🧖</div>
                     <h2 class="text-xl font-bold text-red-300 mb-4">
                         PLAYER B
                     </h2>
@@ -93,7 +93,7 @@
                            text-gray-900 font-black text-2xl py-5
                            rounded-2xl transition shadow-lg
                            shadow-yellow-500/30 tracking-wide">
-                ⚡ MULAI BATTLE!
+                MULAI BATTLE!
             </button>
 
         </form>

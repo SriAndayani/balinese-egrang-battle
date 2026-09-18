@@ -94,7 +94,7 @@
                 <div class="character char-a"
                      id="char-a"
                      style="left: 0%">
-                    🏃
+                    🏃‍♂️‍➡️
                 </div>
             </div>
 
@@ -108,7 +108,7 @@
                 <div class="character char-b"
                      id="char-b"
                      style="left: 0%">
-                    🏃
+                    🏃‍➡️
                 </div>
             </div>
 
@@ -166,7 +166,7 @@
             {{-- Soal Player B --}}
             <div style="text-align:center;padding-left:1rem;">
                 <div style="font-size:clamp(0.65rem,1.2vw,0.8rem);
-                            color:rgba(239,68,68,0.8);
+                            color: rgba(244, 114, 182, 0.8);
                             font-weight:700;
                             letter-spacing:0.1em;
                             margin-bottom:0.4rem;">

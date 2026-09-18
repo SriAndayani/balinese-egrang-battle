@@ -38,7 +38,7 @@
     <div class="relative z-10 w-full max-w-2xl text-center">
 
         {{-- Trophy --}}
-        <div class="text-9xl mb-6 winner-badge">🏆</div>
+        <div class="text-9xl mb-6 winner-badge"></div>
 
         {{-- Nama pemenang --}}
         <h1 class="text-5xl font-black text-yellow-400 mb-2">
