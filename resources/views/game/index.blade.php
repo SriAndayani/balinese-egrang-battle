@@ -129,5 +129,23 @@
 
     </div>
 
+    <a href="{{ route('login') }}"
+    title="Login"
+    aria-label="Ke halaman login"
+    class="fixed bottom-6 right-6 z-50
+            flex items-center justify-center w-14 h-14
+            rounded-2xl border border-white/60
+            bg-gray-200/60 backdrop-blur-md shadow-lg
+            hover:bg-white-200/80 hover:scale-105 active:scale-95
+            transition">
+
+        {{-- Ikon rumah (SVG), warnanya mengikuti text-blue-500 --}}
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-blue-500"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10.5 12 3l9 7.5"/>
+            <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>
+        </svg>
+    </a>
 </body>
 </html>

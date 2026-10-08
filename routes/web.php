@@ -5,22 +5,39 @@ use App\Http\Controllers\Game\GameController;
 use App\Http\Controllers\Assesment\AssesmentController;
 use App\Http\Controllers\Assesment\AssesmentResultController;
 use App\Http\Controllers\Battle\BattleController;
+use App\Http\Controllers\Auth\AuthController;
 
 // halaman welcome bawaan laravel
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
+
+// ------------------ AUTHENTICATION AREA ------------------
+Route::middleware(['guest'])->group(function(){
+    // ROUTE LOGIN
+    Route::get('/login', function () {
+        return view('auth.login');
+    })->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+
+    // ROUTE REGISTER
+    Route::get('/register', function () {
+        return view('auth.login');
+    })->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+}); 
+
+Route::middleware(['auth'])->group(function(){
+    
+});
+
+
+
+// ================ GAMES AREA ================
 Route::get('/', [GameController::class, 'index'])
     ->name('game.index');
-// AUTH
-// Route::middleware(); // sampai sini lanjutkan untuk buat login
-
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');  
-
-// ASSESMENT VIEW
+// ------------ ASSESMENT VIEW ------------
 Route::prefix('assesment')->name('assesment.')->group(function () {
 
     Route::get('/{room}', [AssesmentController::class, 'show'])
@@ -45,7 +62,7 @@ Route::prefix('assesment')->name('assesment.')->group(function () {
         ->name('result.show');
 });
 
-// BATTLE VIEW
+// ------------------ BATTLE VIEW ------------------
 Route::prefix('battle')->name('battle.')->group(function () {
 
     Route::get('/{room}', [BattleController::class, 'show'])
