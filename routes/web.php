@@ -13,6 +13,12 @@ use App\Http\Controllers\Battle\BattleController;
 
 Route::get('/', [GameController::class, 'index'])
     ->name('game.index');
+// AUTH
+// Route::middleware(); // sampai sini lanjutkan untuk buat login
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');  
 
 // ASSESMENT VIEW
 Route::prefix('assesment')->name('assesment.')->group(function () {
