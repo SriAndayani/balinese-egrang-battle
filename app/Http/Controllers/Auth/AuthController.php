@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -16,7 +18,7 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
             'role' => ['required', 'in:guru,admin'],
         ],[
-            'email.required' => 'Email masih kosong!',
+            'username.required' => 'Username masih kosong!',
             'password.required' => 'Password masih kosong!', 
         ]);
 
@@ -51,14 +53,43 @@ class AuthController extends Controller
  
         // 6. Arahkan sesuai role
         if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');//route nya harus di sesuaikan
+            return redirect()->route('admin.dashboard');
         }
  
-        // Dashboard guru belum dibuat? sementara arahkan ke halaman utama
-        return Route::has('guru.dashboard')
-            ? redirect()->route('guru.dashboard')//route nya harus di sesuaikan
-            : redirect('/');
+        return redirect()->route('guru.dashboard');
 
+    }
+
+    public function register(Request $request)
+    {
+        // 1. Validasi isi form
+        $validated = $request->validate([
+            'username' => ['required', 'string', 'max:50', 'unique:users,username'],
+            'email'    => ['required', 'email', 'max:100', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ], [
+            'username.required'  => 'Username masih kosong!',
+            'username.unique'    => 'Username sudah dipakai, pilih yang lain.',
+            'email.required'     => 'Email masih kosong!',
+            'email.email'        => 'Format email tidak valid.',
+            'email.unique'       => 'Email sudah terdaftar.',
+            'password.required'  => 'Password masih kosong!',
+            'password.min'       => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Ulangi password tidak cocok.',
+        ]);
+
+        // 2. Simpan ke database
+        User::create([
+            'username' => $validated['username'],
+            'email'    => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role'     => 'guru',
+            'status'   => 'pending',
+        ]);
+ 
+        // 3. Kembali ke halaman login dengan pesan sukses
+        return redirect()->route('login')
+            ->with('success', 'Pendaftaran berhasil! Tunggu verifikasi dari admin sebelum login.');
     }
 
     public function logout(Request $request)

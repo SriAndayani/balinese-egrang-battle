@@ -26,7 +26,7 @@
     {{-- Form --}}
     {{-- Ganti '#' dengan route proses login kamu nanti, misalnya route('login.proses') --}}
     <form method="POST"
-          action="{{ Route::has('login.proses') ? route('login.proses') : '#' }}"
+          action="{{ route('login.proses') }}"
           class="mt-6">
         @csrf
 

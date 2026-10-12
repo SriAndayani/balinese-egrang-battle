@@ -6,6 +6,8 @@ use App\Http\Controllers\Assesment\AssesmentController;
 use App\Http\Controllers\Assesment\AssesmentResultController;
 use App\Http\Controllers\Battle\BattleController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Dashboard\AdminController;
+use App\Http\Controllers\Dashboard\GuruController;
 
 // halaman welcome bawaan laravel
 // Route::get('/', function () {
@@ -19,17 +21,20 @@ Route::middleware(['guest'])->group(function(){
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
 
     // ROUTE REGISTER
     Route::get('/register', function () {
-        return view('auth.login');
+        return view('auth.register');
     })->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register'])->name('register.proses');
 }); 
 
 Route::middleware(['auth'])->group(function(){
-    
+    //------ ROUTE ADMIN -------
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    //------ ROUTE GURU -------
+    Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
 });
 
 
