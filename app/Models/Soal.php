@@ -9,6 +9,7 @@ class Soal extends Model
     protected $primaryKey = 'id_soal';
 
     protected $fillable = [
+        'id_user', 
         'id_kategori',
         'pertanyaan',
         'gambar',
@@ -49,5 +50,10 @@ class Soal extends Model
             'id_soal',
             'id_soal'
         );
+    }
+
+    public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 }

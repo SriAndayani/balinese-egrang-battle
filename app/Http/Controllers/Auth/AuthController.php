@@ -38,7 +38,7 @@ class AuthController extends Controller
         $user = Auth::user();
  
         // 4. Guru hanya boleh masuk kalau akunnya sudah diverifikasi admin
-        if ($user->role === 'guru' && $user->status !== 'verified') {
+        if ($user->role === 'guru' && $user->status !== 'active') {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

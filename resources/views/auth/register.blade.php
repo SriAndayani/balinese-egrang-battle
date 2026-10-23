@@ -93,6 +93,10 @@
             Sudah punya akun?
             <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Masuk di sini</a>
         </p>
+
+        <p class="text-center text-xs text-red-500 mt-3">
+            *akun guru memerlukan verifikasi dari admin
+        </p>
     </form>
 </div>
 
