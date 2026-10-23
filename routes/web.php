@@ -46,6 +46,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     ->name('admin.verifikasi.terima');
     Route::post('/admin/verifikasi-guru/{user}/tolak', [VerifikasiGuruController::class, 'tolak'])
     ->name('admin.verifikasi.tolak');
+    Route::post('/admin/user/{user}/hapus', [VerifikasiGuruController::class, 'destroy'])
+    ->name('admin.user.destroy');
 
     //------ KELOLA KATEGORI -------
     Route::get('/admin/kategori', [KategoriController::class, 'index'])
@@ -74,8 +76,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // ROUTE GURU
 Route::middleware(['auth', 'role:guru'])->group(function () {
-        //------ DASHBOARD -------
+    //------ DASHBOARD -------
     Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+
+    //------ KELOLA ROOM -------
+    Route::get('/guru/room', [VerifikasiGuruController::class, 'index'])
+    ->name('guru.room.index');
+
+    //------ LIHAT HASIL SISWA -------
+
 });
 
 

@@ -35,7 +35,6 @@ class VerifikasiGuruController extends Controller
 
     public function terima(User $user)
     {
-        $this->pastikanAdmin();
         abort_if($user->role !== 'guru', 404);
  
         $user->update(['status' => 'active']);
@@ -45,11 +44,20 @@ class VerifikasiGuruController extends Controller
 
     public function tolak(User $user)
     {
-        $this->pastikanAdmin();
         abort_if($user->role !== 'guru', 404);
  
         $user->delete();
  
         return back()->with('success', "Pendaftaran {$user->username} ditolak dan dihapus.");
     }
+
+    public function destroy(User $user)
+    {
+        abort_if($user->role !== 'guru', 404);
+ 
+        $user->delete();
+ 
+        return back()->with('success', "Akun {$user->username} berhasil dihapus.");
+    }
+
 }

@@ -11,10 +11,10 @@
 
 @php
     $menus = [
-        ['label' => 'Dashboard',       'icon' => '🏠', 'route' => 'admin.dashboard',         'active' => 'admin.dashboard'],
-        ['label' => 'Verifikasi Guru', 'icon' => '✅', 'route' => 'admin.verifikasi.index',  'active' => 'admin.verifikasi.*'],
-        ['label' => 'Kelola Soal',     'icon' => '📘', 'route' => 'admin.soal.index',        'active' => 'admin.soal.*'],
-        ['label' => 'Kelola Kategori', 'icon' => '🏷️', 'route' => 'admin.kategori.index',    'active' => 'admin.kategori.*'],
+        ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'admin.dashboard',         'active' => 'admin.dashboard'],
+        ['label' => 'Verifikasi Guru', 'icon' => 'user-check.svg', 'route' => 'admin.verifikasi.index',  'active' => 'admin.verifikasi.*'],
+        ['label' => 'Kelola Soal',     'icon' => 'book-open.svg', 'route' => 'admin.soal.index',        'active' => 'admin.soal.*'],
+        ['label' => 'Kelola Kategori', 'icon' => 'category.svg', 'route' => 'admin.kategori.index',    'active' => 'admin.kategori.*'],
     ];
 @endphp
 
@@ -34,7 +34,12 @@
                     <a href="{{ Route::has($menu['route']) ? route($menu['route']) : '#' }}"
                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
                               {{ request()->routeIs($menu['active']) ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
-                        <span>{{ $menu['icon'] }}</span> {{ $menu['label'] }}
+                        <img
+                            src="{{ asset('icons/' . $menu['icon']) }}"
+                            alt=""
+                            class="w-5 h-5 shrink-0"
+                        >
+                        <span>{{ $menu['label'] }}</span> 
                     </a>
                 @endforeach
             </nav>
@@ -45,9 +50,14 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
+                        class="flex items-center justify-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
                                text-gray-600 hover:bg-gray-100 w-full text-left">
-                    <span>⏻</span> Logout
+                    <span>Logout</span>
+                    <img
+                        src="{{ asset('icons/logout.svg') }}"
+                        alt="Logout Icon"
+                        class="w-5 h-5"    
+                    >
                 </button>
             </form>
         </div>

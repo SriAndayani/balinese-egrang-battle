@@ -33,7 +33,7 @@
     </div>
 
     {{-- ============ DAFTAR CARD GURU ============ --}}
-    <div class="mt-6 flex flex-col gap-4 max-w-3xl">
+    <div class="mt-6 flex flex-col gap-4 w-full">
 
         @forelse ($daftarGuru as $guru)
             <div class="bg-white rounded-xl border border-gray-200 p-5">
@@ -89,6 +89,21 @@
                                     class="px-4 py-1.5 rounded-lg text-sm font-medium
                                            bg-red-500 hover:bg-red-600 text-white transition">
                                 Tolak
+                            </button>
+                        </form>
+                    </div>
+                @else
+                {{-- Guru sudah aktif --}}
+                    <div class="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-300">
+
+                        {{-- Hapus akun guru --}}
+                        <form method="POST" action="{{ route('admin.user.destroy', $guru) }}"
+                              onsubmit="return confirm('Yakin ingin menghapus akun guru {{ $guru->username }}? Tindakan ini tidak dapat dibatalkan.')">
+                            @csrf
+                            <button type="submit"
+                                    class="px-4 py-1.5 rounded-lg text-sm font-medium
+                                           bg-red-500 hover:bg-red-600 text-white transition">
+                                Hapus Akun
                             </button>
                         </form>
                     </div>

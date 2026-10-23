@@ -51,7 +51,7 @@
                         value="{{ old('nama_a') }}"
                         class="w-full bg-white bg-opacity-10
                                border-2 border-blue-400 rounded-xl
-                               px-4 py-3 text-white text-center
+                               px-4 py-3 text-blue-300 text-center
                                text-lg font-semibold placeholder-blue-300
                                focus:outline-none focus:border-white">
                     @error('nama_a')
@@ -76,7 +76,7 @@
                         value="{{ old('nama_b') }}"
                         class="w-full bg-white bg-opacity-10
                                border-2 border-red-400 rounded-xl
-                               px-4 py-3 text-white text-center
+                               px-4 py-3 text-red-300 text-center
                                text-lg font-semibold placeholder-red-300
                                focus:outline-none focus:border-white">
                     @error('nama_b')
