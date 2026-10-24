@@ -117,6 +117,15 @@ class SoalController extends Controller
     public function destroy(Soal $soal)
     {
         Gate::authorize('delete', $soal);
+
+    $jumlahRoom = DB::table('room_soal')->where('id_soal', $soal->id_soal)->count();
+
+    if ($jumlahRoom > 0) {
+        return back()->withErrors([
+            'hapus' => "Soal tidak bisa dihapus karena dipakai di {$jumlahRoom} room. "
+                     . 'Keluarkan dulu dari room tersebut.',
+        ]);
+    }
  
         try {
             DB::transaction(function () use ($soal) {

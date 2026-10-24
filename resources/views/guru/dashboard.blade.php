@@ -11,8 +11,8 @@
 
 @php
     $menus = [
-        ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => '#',         'active' => 'guru.dashboard'],
-        ['label' => 'Kelola Room', 'icon' => 'room.svg', 'route' => '#',  'active' => 'admin.verifikasi.*'],
+        ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'guru.dashboard',         'active' => 'guru.dashboard'],
+        ['label' => 'Kelola Room', 'icon' => 'room.svg', 'route' => 'guru.room.index',  'active' => 'guru.room.*'],
         ['label' => 'Hasil Siswa',     'icon' => 'chart.svg', 'route' => '#',        'active' => 'admin.soal.*'],
     ];
 @endphp
@@ -85,6 +85,6 @@
     </div>
 
 </div>
-
+<script src="{{ asset('js/guruRoom.js') }}"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@ class Room extends Model
     protected $fillable = [
         'id_user',
         'nama_room',
+        'kode_room',
         'mode',
         'status',
         'reward',
@@ -20,7 +21,7 @@ class Room extends Model
         'status' => 'boolean',
     ];
 
-        public function user()
+    public function guru(): BelongsTo
     {
         return $this->belongsTo(
             User::class,

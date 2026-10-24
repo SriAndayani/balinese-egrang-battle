@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\GuruController;
 use App\Http\Controllers\Admin\VerifikasiGuruController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\SoalController;
+use App\Http\Controllers\Guru\RoomController;
 
 // halaman welcome bawaan laravel
 // Route::get('/', function () {
@@ -82,6 +83,19 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
     //------ KELOLA ROOM -------
     Route::get('/guru/room', [VerifikasiGuruController::class, 'index'])
     ->name('guru.room.index');
+    Route::get('/guru/room', [RoomController::class, 'index'])
+    ->name('guru.room.index');
+    Route::get('/guru/room/tambah', [RoomController::class, 'create'])
+    ->name('guru.room.create');
+    Route::post('/guru/room/', [RoomController::class, 'store'])
+    ->name('guru.room.store');
+    Route::get('/guru/room/{room}/detail', [RoomCOntroller::class, 'edit'])
+    ->name('guru.room.edit');
+    Route::post('/guru/room/{room}/ubah', [RoomController::class, 'update'])
+    ->name('guru.room.update');
+    Route::post('/guru/room/{room}/hapus', [RoomController::class, 'destroy'])
+    ->name('guru.room.destroy');
+
 
     //------ LIHAT HASIL SISWA -------
 

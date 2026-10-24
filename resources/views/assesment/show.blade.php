@@ -18,20 +18,6 @@
             Masukkan namamu untuk memulai kuis
         </p>
 
-        {{--
-            Form input nama siswa.
-
-            action → URL tujuan form ketika disubmit
-                     Menggunakan route() agar tidak hardcode URL.
-
-            method="POST" → dikirim sebagai HTTP POST request
-
-            @csrf → WAJIB ada di setiap form POST di Laravel.
-                    Tanpa ini, Laravel akan menolak request
-                    dengan error 419 Page Expired.
-                    @csrf menghasilkan hidden input berisi token
-                    untuk mencegah serangan Cross-Site Request Forgery.
-        --}}
         <form action="{{ route('assesment.start', $room->id_room) }}"
               method="POST">
             @csrf
@@ -52,24 +38,33 @@
                            text-gray-800 focus:outline-none focus:ring-2
                            focus:ring-green-400
                            @error('nama') border-red-400 @enderror"
-                    {{--
-                        old('nama') mengisi kembali field dengan nilai
-                        yang sebelumnya diinput jika validasi gagal.
-                        Tanpa ini, field akan kosong saat halaman direfresh
-                        karena error validasi.
-                    --}}
                     value="{{ old('nama') }}"
                 >
-
-                {{--
-                    @error menampilkan pesan error validasi
-                    untuk field tertentu.
-
-                    Ketika validate() di Controller gagal,
-                    Laravel otomatis menyimpan pesan error ke session
-                    dan bisa diakses dengan @error('nama') di Blade.
-                --}}
                 @error('nama')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="kode_room"
+                       class="block text-sm font-medium text-gray-700 mb-1">
+                    Kode Room
+                </label>
+
+                <input
+                    type="text"
+                    id="kode_room"
+                    name="kode_room"
+                    placeholder="Masukkan kode dari guru"
+                    autocomplete="off"
+                    maxlength="10"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2
+                           text-gray-800 focus:outline-none focus:ring-2 
+                           focus:ring-green-400
+                           @error('kode_room') border-red-400 @enderror"
+                >
+
+                @error('kode_room')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -79,8 +74,6 @@
                            font-semibold py-2 rounded-lg transition">
                 Mulai Kuis
             </button>
-
-        </form>
 
         {{-- Link kembali ke daftar room --}}
         <a href="{{ route('game.index') }}"
