@@ -9,3 +9,12 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-VariableFont_wdth,wght.ttf')
+         format('truetype');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}

@@ -112,6 +112,10 @@ Route::middleware(['auth'])->group(function(){
 // ================ GAMES AREA ================
 Route::get('/', [GameController::class, 'index'])
     ->name('game.index');
+
+Route::get('/room/{mode}', [GameController::class, 'room'])
+    ->whereIn('mode', ['assesment', 'battle'])
+    ->name('game.room');
 // ------------ ASSESMENT VIEW ------------
 Route::prefix('assesment')->name('assesment.')->group(function () {
 

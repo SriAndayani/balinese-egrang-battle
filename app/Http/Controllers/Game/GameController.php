@@ -14,4 +14,23 @@ class GameController extends Controller
 
         return view('game.index', compact('rooms'));
     }
+
+    public function room(string $mode)
+    {
+        // Satu tempat untuk semua pengaturan per mode
+        $pengaturan = [
+            'assesment' => ['label' => 'Kuis',   'rute' => 'assesment.show', 'db' => 'assessment'],
+            'battle'    => ['label' => 'Battle', 'rute' => 'battle.show', 'db' => 'battle'],
+        ];
+
+        $label = $pengaturan[$mode]['label'];   // untuk judul halaman
+        $rute  = $pengaturan[$mode]['rute'];    // route tujuan tombol
+
+        $rooms = Room::where('mode', $pengaturan[$mode]['db'])     // isi kolom mode di database harus sama persis
+            ->where('status', 1)
+            ->orderBy('id_room')
+            ->get();
+
+        return view('game.option', compact('mode', 'label', 'rute', 'rooms'));
+    }
 }
