@@ -51,8 +51,10 @@
         <span>{{ ucfirst($mode) }}</span>
     </h1>
 
-        {{-- Tombol kembali ke halaman pilih mode --}}
-    <a class="btn-home" href="{{ url('/') }}" aria-label="Kembali ke beranda">&#127968;</a>
+    {{-- Tombol kembali ke halaman pilih mode --}}
+    <a class="btn-home" href="{{ url('/') }}" aria-label="Kembali ke beranda">
+        <img src="{{ asset('images/home-btn.webp') }}" alt="" decoding="async" draggable="false">
+    </a>
  
     {{-- JavaScript halaman room --}}
     <script src="{{ asset('js/rooms.js') }}"></script>
