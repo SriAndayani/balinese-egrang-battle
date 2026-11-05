@@ -1,0 +1,178 @@
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
+        format('truetype');
+    font-weight: 100 300; 700
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
+        format('truetype');
+    font-weight: 700; 
+    font-style: normal;
+    font-display: swap;
+}
+
+.setup-body{
+--papan-lebar:min(30vw,60vh);          /* lebar satu papan (cadangan untuk browser lama) */
+--papan-lebar:min(30vw,60svh);         /* lebar satu papan */
+--mulai-lebar:min(24vw,30svh);         /* lebar tombol Mulai */
+
+--judul-top:21%;                       /* tulisan "Pemain 1" di papan kecil atas */
+--karakter-top:15%;                    /* ujung atas gambar anak */
+--karakter-lebar:80%;                  /* lebar gambar anak (dari lebar papan) */
+--label-top:60%;                       /* tulisan "Ketik nama" */
+--input-top:68%;                       /* kotak isian nama */
+--input-kiri:21%;                      /* jarak kotak dari tepi kiri papan */
+--input-lebar:54%;                     /* lebar kotak isian */
+}
+
+/* ===== Dasar halaman ===== */
+* {
+    font-family:"Fredoka",sans-serif;
+}
+
+.setup-body{
+height:100vh; height:100svh;
+overflow:hidden;                       /* tidak perlu scroll, semuanya muat di layar */
+background:#4a8df0 url('../images/background-games.webp') center/cover no-repeat;
+}
+.sr-only{
+position:absolute; width:1px; height:1px; overflow:hidden;
+clip:rect(0 0 0 0); white-space:nowrap;
+}
+img{ user-select:none; -webkit-user-drag:none; }
+
+/* ===== Susunan: dua papan, lalu tombol Mulai ===== */
+.setup{
+height:100%;
+display:flex; flex-direction:column;
+align-items:center; justify-content:center;
+gap:clamp(6px,2svh,32px);
+padding:2svh 3vw;
+}
+.papan-baris{
+display:flex; justify-content:center; align-items:flex-end;
+gap:clamp(14px,6vw,150px);
+}
+
+/* ===== Satu papan pemain ===== */
+.pemain{ position:relative; width:var(--papan-lebar); }
+.papan{ display:block; width:100%; height:auto; filter:drop-shadow(0 12px 12px rgba(0,0,0,.3)); }
+
+/* Teks mengikuti lebar papan, jadi ikut membesar di layar IFP */
+.judul-papan,
+.label-nama{
+position:absolute; left:0; right:0;
+margin:0; text-align:center; line-height:1;
+color:#fff3d6; font-weight:700;
+-webkit-text-stroke:.14em #6b3220; paint-order:stroke fill;
+text-shadow:0 .06em 0 rgba(0,0,0,.25);
+}
+.judul-papan{
+top:var(--judul-top); transform:translateY(-50%);
+font-size:calc(var(--papan-lebar) * .070);
+}
+.label-nama{
+top:var(--label-top);
+font-size:calc(var(--papan-lebar) * .075);
+left:-4%;
+}
+
+.karakter{
+position:absolute; left:49%; top:var(--karakter-top);
+width:var(--karakter-lebar); height:auto;
+transform:translateX(-50%);
+pointer-events:none;
+}
+
+/* ===== Kotak isian nama ===== */
+.isi-nama{
+position:absolute;
+left:var(--input-kiri); top:var(--input-top);
+width:var(--input-lebar); height:calc(var(--papan-lebar) * .2);
+padding:0 .4em;
+font:700 calc(var(--papan-lebar) * .085) "Fredoka",sans-serif;
+text-align:center; color:#5b2e14;
+background:#ffe3a3;
+border:calc(var(--papan-lebar) * .012) solid #b87333;
+border-radius:calc(var(--papan-lebar) * .035);
+box-shadow:inset 0 .08em .2em rgba(120,70,20,.35);
+outline:none;
+}
+.isi-nama:focus{
+border-color:#fff;
+box-shadow:0 0 0 calc(var(--papan-lebar) * .015) #ffb300, inset 0 .08em .2em rgba(120,70,20,.35);
+}
+
+.pesan-error{
+position:absolute; left:10%; right:10%; top:88%;
+margin:0; padding:.2em .4em; text-align:center;
+font-weight:600; font-size:calc(var(--papan-lebar) * .06);
+color:#fff; background:#d9381e; border-radius:999px;
+}
+
+/* ===== Tombol Mulai (papan polos) ===== */
+.btn-mulai{
+position:relative; display:block;
+width:var(--mulai-lebar);
+padding:0; border:0; background:none; cursor:pointer;
+filter:drop-shadow(0 10px 10px rgba(0,0,0,.3));
+transition:transform .12s ease-out;
+-webkit-tap-highlight-color:transparent;
+}
+.btn-mulai img{ display:block; width:100%; height:auto; pointer-events:none; }
+.btn-mulai span{
+position:absolute; inset:0; display:grid; place-items:center;
+font-weight:700; font-size:calc(var(--mulai-lebar) * .2); line-height:1;
+color:#fff3d6;
+-webkit-text-stroke:.14em #6b3220; paint-order:stroke fill;
+text-shadow:0 .06em 0 rgba(0,0,0,.25);
+}
+@media (hover:hover){ .btn-mulai:hover{ transform:scale(1.05) translateY(-3px); } }
+.btn-mulai:active{ transform:scale(.96) translateY(4px); }
+.btn-mulai:disabled{ filter:grayscale(.6) drop-shadow(0 6px 6px rgba(0,0,0,.2)); cursor:wait; }
+.btn-mulai:focus-visible{ outline:3px solid #fff; outline-offset:6px; border-radius:16px; }
+
+/* ===== Tombol sudut (home kiri bawah, layar penuh kanan bawah) ===== */
+.btn-sudut{
+position:fixed; z-index:6;
+bottom:calc(14px + env(safe-area-inset-bottom,0px));
+width:clamp(80px,50vw,130px);
+display:block; padding:0; border:0; background:none; cursor:pointer;
+filter:drop-shadow(0 6px 6px rgba(0,0,0,.35));
+transition:transform .08s;
+-webkit-tap-highlight-color:transparent;
+}
+.btn-sudut img{ display:block; width:100%; height:auto; pointer-events:none; }
+.btn-home{ left:clamp(12px,2.5vw,40px); }
+.btn-layar{ right:clamp(12px,2.5vw,40px); }
+.btn-sudut:active{ transform:translateY(4px) scale(.96); }
+.btn-sudut:focus-visible{ outline:3px solid #fff; outline-offset:4px; border-radius:50%; }
+
+/* ===== Pesan error dari server ===== */
+.pesan-atas{
+position:fixed; z-index:10; top:calc(12px + env(safe-area-inset-top,0px)); left:50%;
+transform:translateX(-50%);
+max-width:90vw; padding:10px 22px;
+font-weight:700; font-size:clamp(.95rem,1.6vw,2rem); text-align:center;
+color:#fff; background:#d9381e; border-radius:999px;
+box-shadow:0 6px 12px rgba(0,0,0,.3);
+}
+
+/* ===== HP berdiri: papan lebih kecil agar muat berdampingan ===== */
+@media (orientation:portrait){
+.setup-body{
+    --papan-lebar:min(42vw,34vh);
+    --papan-lebar:min(42vw,34svh);
+    --mulai-lebar:min(46vw,24svh);
+}
+.papan-baris{ gap:3vw; }
+}
+
+@media (prefers-reduced-motion:reduce){
+.btn-mulai,.btn-sudut{ transition:none; }
+}
