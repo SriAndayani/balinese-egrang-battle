@@ -12,7 +12,7 @@
 {{-- Kartu login --}}
 <div class="bg-white w-full max-w-md rounded-xl border border-gray-300 shadow-sm p-8">
 
-    {{-- Logo (ganti dengan <img> logo kamu nanti) --}}
+    {{-- Logo --}}
     <div class="flex justify-center">
         <div class="w-20 h-20 border-2 border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-xs">
             LOGO
@@ -24,7 +24,6 @@
     <p class="text-gray-500 text-center">Masuk ke akun anda</p>
 
     {{-- Form --}}
-    {{-- Ganti '#' dengan route proses login kamu nanti, misalnya route('login.proses') --}}
     <form method="POST"
           action="{{ route('login.proses') }}"
           class="mt-6">
@@ -81,7 +80,7 @@
             Masuk
         </button>
 
-        {{-- Link daftar: HANYA tampil untuk Guru (sesuai wireframe) --}}
+        {{-- Link daftar: HANYA tampil untuk Guru --}}
         <p id="register-text" class="text-center text-xs text-gray-500 mt-3">
             Belum punya akun?
             <a href="{{ Route::has('register') ? route('register') : '#' }}"

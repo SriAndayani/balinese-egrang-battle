@@ -103,54 +103,26 @@
     </div>
 
     <script>
-    /**
-     * Mengunduh score card sebagai file JPEG.
-     *
-     * html2canvas bekerja dengan cara:
-     * 1. Membaca elemen HTML beserta CSS-nya
-     * 2. Menggambar ulang elemen tersebut ke dalam <canvas>
-     * 3. Canvas kemudian dikonversi menjadi file gambar
-     */
     function downloadCard() {
 
-        // Mengambil elemen score-card yang akan di-capture
         const element = document.getElementById('score-card');
-
-        // html2canvas() menerima elemen HTML dan opsi konfigurasi.
-        // Mengembalikan Promise yang resolve dengan object canvas.
         html2canvas(element, {
-
-            // scale mengontrol resolusi gambar.
-            // 2 = 2x resolusi normal (lebih tajam untuk share sosmed)
             scale: 2,
 
-            // useCORS: true mengizinkan html2canvas mengakses
-            // gambar dari domain lain (jika ada gambar eksternal)
             useCORS: true,
 
-            // backgroundColor memastikan latar belakang putih
-            // meskipun body memiliki background berbeda
             backgroundColor: '#ffffff',
 
         }).then(canvas => {
 
-            // toDataURL() mengubah canvas menjadi string base64
-            // dalam format JPEG dengan kualitas 90% (0.9)
             const imageData = canvas.toDataURL('image/jpeg', 0.9);
 
-            // Membuat elemen <a> sementara untuk trigger download.
-            // Ini adalah teknik standar untuk download file
-            // menggunakan JavaScript tanpa library tambahan.
             const link = document.createElement('a');
 
-            // href diisi dengan data URL gambar
             link.href = imageData;
 
-            // download attribute menentukan nama file yang akan diunduh
-            // Template literal digunakan untuk menyisipkan nama siswa
             link.download = `hasil-kuis-{{ $result->nama }}.jpg`;
 
-            // Klik link secara programatik untuk trigger download
             link.click();
         });
     }

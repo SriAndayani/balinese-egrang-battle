@@ -11,7 +11,7 @@
 {{-- Kartu registrasi --}}
 <div class="bg-white w-full max-w-md rounded-xl border border-gray-300 shadow-sm p-8">
 
-    {{-- Logo (ganti dengan <img> logo kamu nanti) --}}
+    {{-- Logo --}}
     <div class="flex justify-center">
         <div class="w-20 h-20 border-2 border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-xs">
             LOGO
