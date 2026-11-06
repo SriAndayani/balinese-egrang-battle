@@ -37,8 +37,8 @@
 
   --mulai-x:12%;                         /* posisi kaki karakter di garis start (dari lebar arena) */
   --jarak-lintasan:64%;                  /* jarak dari start sampai garis finish */
-  --lane-a-y:30%;  --geser-a:3%;         /* jalur Pemain 1 (belakang): posisi kaki dari atas arena, geser kanan */
-  --lane-b-y:54%;  --geser-b:0%;         /* jalur Pemain 2 (depan) */
+  --lane-a-y:39%;  --geser-a:3%;         /* jalur Pemain 1 (belakang): posisi kaki dari atas arena, geser kanan */
+  --lane-b-y:60%;  --geser-b:0%;         /* jalur Pemain 2 (depan) */
 
   --biru:#5b8ff7;  --biru-tua:#1f3a8a;
   --merah-muda:#f4a09b;  --merah-tua:#a8322f;
@@ -86,7 +86,7 @@ img{ user-select:none; -webkit-user-drag:none; }
   position:absolute;
   left:calc(var(--mulai-x) + var(--jarak-lintasan) * var(--p) + var(--geser));
   top:var(--lane-y);
-  transform:translate(-50%,-100%);        /* kaki berada tepat di titik posisi */
+  transform:translate(-50%,-100%);        
   transition:left .45s ease-out;
 }
 .kid-a{ --lane-y:var(--lane-a-y); --geser:var(--geser-a); z-index:2; }
@@ -243,7 +243,6 @@ img{ user-select:none; -webkit-user-drag:none; }
    ============================================================ */
 .btn-sudut{
   position:fixed; z-index:30;
-  bottom:calc(1.6svh + env(safe-area-inset-bottom,0px));
   width:clamp(42px,4.4vw,84px);
   display:block; padding:0; border:0; background:none; cursor:pointer;
   filter:drop-shadow(0 6px 6px rgba(0,0,0,.35));
@@ -251,10 +250,20 @@ img{ user-select:none; -webkit-user-drag:none; }
   -webkit-tap-highlight-color:transparent;
 }
 .btn-sudut img{ display:block; width:100%; height:auto; pointer-events:none; }
-.btn-home{ left:clamp(10px,1.8vw,40px); }
-.btn-layar{ right:clamp(10px,1.8vw,40px); }
+.btn-home{ 
+  left:clamp(10px,1.8vw,40px);
+  bottom:calc(1.6svh + env(safe-area-inset-bottom,0px));
+}
+.btn-layar{ 
+  right:clamp(9px,1vw,30px); 
+  bottom:calc(0.30svh + env(safe-area-inset-bottom,0px));
+}
 .btn-sudut:active{ transform:translateY(4px) scale(.96); }
 .btn-sudut:focus-visible{ outline:3px solid #fff; outline-offset:4px; border-radius:50%; }
+
+.btn-layar {
+  width:clamp(60px,6.5vw,130px);
+}
 
 /* ============================================================
    LAYAR PEMENANG

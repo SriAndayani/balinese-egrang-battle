@@ -68,7 +68,7 @@ class RoomController extends Controller
     {
         Gate::authorize('update', $room);   // 403 kalau bukan room miliknya
  
-        return view('guru.room-form', [
+        return view('guru.roomFile', [
             'room'       => $room,
             'daftarSoal' => $this->daftarSoalTersedia(),
             'terpilih'   => $room->soals->pluck('id_soal')->all(),

@@ -5,84 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masukkan Nama - {{ $room->nama_room }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/assesmentShow.css') }}">
 </head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-
-    <div class="bg-white rounded-xl shadow p-8 w-full max-w-md">
-
-        {{-- Nama room sebagai judul halaman --}}
-        <h1 class="text-2xl font-bold text-gray-800 mb-1">
-            {{ $room->nama_room }}
-        </h1>
-        <p class="text-gray-500 text-sm mb-6">
-            Masukkan namamu untuk memulai kuis
-        </p>
-
+<body class="game-entry">
+ 
+    {{-- Background --}}
+    <img class="game-bg"
+         src="{{ asset('images/background-games.webp') }}"
+         alt="" aria-hidden="true">
+ 
+    <main class="game-stage">
+ 
+        {{-- Nama room untuk pembaca layar --}}
+        <h1 class="sr-only">{{ $room->nama_room }}</h1>
+ 
         <form action="{{ route('assesment.start', $room->id_room) }}"
-              method="POST">
+              method="POST"
+              class="game-form"
+              novalidate>
             @csrf
-
-            <div class="mb-4">
-                <label for="nama"
-                       class="block text-sm font-medium text-gray-700 mb-1">
-                    Nama Siswa
-                </label>
-
-                <input
-                    type="text"
-                    id="nama"
-                    name="nama"
-                    placeholder="Tulis namamu di sini..."
-                    autocomplete="off"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2
-                           text-gray-800 focus:outline-none focus:ring-2
-                           focus:ring-green-400
-                           @error('nama') border-red-400 @enderror"
-                    value="{{ old('nama') }}"
-                >
-                @error('nama')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="kode_room"
-                       class="block text-sm font-medium text-gray-700 mb-1">
-                    Kode Room
-                </label>
-
-                <input
-                    type="text"
-                    id="kode_room"
-                    name="kode_room"
-                    placeholder="Masukkan kode dari guru"
-                    autocomplete="off"
-                    maxlength="10"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2
-                           text-gray-800 focus:outline-none focus:ring-2 
-                           focus:ring-green-400
-                           @error('kode_room') border-red-400 @enderror"
-                >
-
-                @error('kode_room')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <button type="submit"
-                    class="w-full bg-green-500 hover:bg-green-600 text-white
-                           font-semibold py-2 rounded-lg transition">
-                Mulai Kuis
+ 
+            {{-- Papan kayu --}}
+            <section class="board">
+                <img class="board__img"
+                     src="{{ asset('images/bulletin-board.webp') }}"
+                     alt="" aria-hidden="true">
+ 
+                {{-- Judul di papan kecil atas --}}
+                <p class="board__title" aria-hidden="true">Kuis</p>
+ 
+                {{-- Input nama --}}
+                <div class="field field--nama">
+                    <label for="nama" class="field__label">Ketik nama</label>
+                    <input
+                        type="text"
+                        id="nama"
+                        name="nama"
+                        autocomplete="off"
+                        value="{{ old('nama') }}"
+                        class="field__input @error('nama') is-invalid @enderror"
+                        @error('nama') aria-invalid="true" aria-describedby="nama-error" @enderror
+                    >
+                    @error('nama')
+                        <p class="field__error" id="nama-error">{{ $message }}</p>
+                    @enderror
+                </div>
+ 
+                {{-- Input kode room --}}
+                <div class="field field--kode">
+                    <label for="kode_room" class="field__label">Kode</label>
+                    <input
+                        type="text"
+                        id="kode_room"
+                        name="kode_room"
+                        autocomplete="off"
+                        maxlength="10"
+                        class="field__input @error('kode_room') is-invalid @enderror"
+                        @error('kode_room') aria-invalid="true" aria-describedby="kode-error" @enderror
+                    >
+                    @error('kode_room')
+                        <p class="field__error" id="kode-error">{{ $message }}</p>
+                    @enderror
+                </div>
+            </section>
+ 
+            {{-- Tombol Mulai --}}
+            <button type="submit" class="btn-mulai">
+                <img src="{{ asset('images/papan-polos.webp') }}" alt="" aria-hidden="true">
+                <span>Mulai</span>
             </button>
-
-        {{-- Link kembali ke daftar room --}}
-        <a href="{{ route('game.index') }}"
-           class="block text-center text-sm text-gray-400
-                  hover:text-gray-600 mt-4">
-            ← Kembali ke daftar room
-        </a>
-
-    </div>
-
+        </form>
+    </main>
+ 
+    {{-- Tombol Home (kiri bawah) --}}
+    <a href="{{ route('game.index') }}" class="icon-btn icon-btn--home" aria-label="Kembali ke daftar room">
+        <img src="{{ asset('images/home-btn.webp') }}" alt="">
+    </a>
+ 
+    {{-- Tombol Full Screen (kanan bawah) --}}
+    <button type="button" class="icon-btn icon-btn--fullscreen" id="btn-fullscreen" aria-label="Layar penuh">
+        <img src="{{ asset('images/full-screen-btn.webp') }}" alt="">
+    </button>
+ <script src="{{ asset('js/assesmentShow.js') }}"></script>
 </body>
 </html>

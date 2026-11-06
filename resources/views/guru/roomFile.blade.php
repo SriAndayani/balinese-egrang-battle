@@ -106,7 +106,7 @@
                     {{-- data-teks dipakai oleh kotak "Cari soal..." di bawah --}}
                     <div class="soal-item" data-teks="{{ \Illuminate\Support\Str::lower(
                                                 $soal->pertanyaan . ' ' .
-                                                ($soal->kategori?->nama_kategori ?? '')
+                                                ($soal->kategori?->nama_kategori ?? ''). ' ' .
                                                 ($soal->pembuat?->role === 'admin' ? 'soal admin' : 'Soal saya')
                                             ) }}">
                         <label class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">

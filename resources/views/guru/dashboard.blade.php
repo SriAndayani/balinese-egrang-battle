@@ -13,7 +13,7 @@
     $menus = [
         ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'guru.dashboard',         'active' => 'guru.dashboard'],
         ['label' => 'Kelola Room', 'icon' => 'room.svg', 'route' => 'guru.room.index',  'active' => 'guru.room.*'],
-        ['label' => 'Hasil Siswa',     'icon' => 'chart.svg', 'route' => '#',        'active' => 'admin.soal.*'],
+        ['label' => 'Hasil Siswa',     'icon' => 'chart.svg', 'route' => 'guru.hasil.index',        'active' => 'guru.hasil.*'],
     ];
 @endphp
 

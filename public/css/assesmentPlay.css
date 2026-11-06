@@ -1,0 +1,382 @@
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
+        format('truetype');
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
+        format('truetype');
+    font-weight: 700; 
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    font-family:"Fredoka",sans-serif;
+}
+
+.game-soal {
+    /* Landscape (laptop / TV) */
+    --bw: min(80dvh, 54vw);                    /* lebar papan */
+    --aw: calc(var(--bw) * 1.65);              /* lebar area jawaban */
+    --ans-h: calc(var(--bw) * 0.16);           /* tinggi minimum tombol jawaban */
+    --badge: calc(var(--bw) * 0.11);           /* lingkaran huruf a/b/c/d */
+    --st: max(22px, calc(var(--bw) * 0.065));  /* ikon centang / silang */
+    --nav: clamp(48px, 9vmin, 110px);          /* tombol kiri & kanan */
+
+    --fs-q:   clamp(15px, calc(var(--bw) * 0.05), 80px);
+    --fs-ans: clamp(15px, calc(var(--bw) * 0.045), 72px);
+
+    --cream: #fff0c4;
+    --brown: #6b3a17;
+    --brown-dark: #4a2508;
+
+    margin: 0;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    font-family: 'Fredoka', system-ui, sans-serif;
+    background: #5a8dff;
+}
+
+/* Portrait (HP): jawaban ditumpuk 1 kolom */
+@media (orientation: portrait) {
+    .game-soal {
+        --bw: min(84vw, 50dvh);
+        --aw: var(--bw);
+        --ans-h: calc(var(--bw) * 0.19);
+        --badge: calc(var(--bw) * 0.13);
+        --st: max(22px, calc(var(--bw) * 0.075));
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---------- Background ---------- */
+.game-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ---------- Nomor soal ---------- */
+.hud {
+    position: absolute;
+    z-index: 2;
+    top: max(14px, 3dvh);
+    left: max(16px, 4vw);
+    margin: 0;
+    font-size: max(18px, calc(var(--bw) * 0.075));
+    font-weight: 700;
+    color: var(--cream);
+    text-shadow: 0 calc(var(--bw) * 0.012) 0 #d9822b;
+}
+.hud small {
+    font-size: .55em;
+    font-weight: 600;
+    opacity: .9;
+}
+
+@media (orientation: portrait) {
+    .hud {
+        left: calc((100vw - var(--bw)) / 2);
+        font-size: max(18px, calc(var(--bw) * 0.09));
+    }
+}
+
+/* ---------- Layout utama ---------- */
+.quiz {
+    position: relative;
+    z-index: 1;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--bw) * 0.04);
+    padding: 3dvh 0;
+}
+
+@media (orientation: portrait) {
+    .quiz {
+        padding-top: clamp(48px, 9dvh, 90px);
+        padding-bottom: calc(var(--nav) + 32px);
+    }
+}
+
+/* ---------- Papan soal ---------- */
+.board {
+    position: relative;
+    width: var(--bw);
+    aspect-ratio: 527 / 308;
+}
+
+.board__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    user-select: none;
+    pointer-events: none;
+    filter: drop-shadow(0 calc(var(--bw) * 0.02) calc(var(--bw) * 0.03) rgb(0 0 0 / .25));
+}
+
+/* Area gabus tempat soal muncul. Atur 4 angka ini jika kurang pas. */
+.board__content {
+    position: absolute;
+    top: 13%;
+    bottom: 13%;
+    left: 8.5%;
+    right: 8.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--bw) * 0.02);
+    overflow-y: auto;
+    text-align: center;
+}
+
+.board__question {
+    margin: 0;
+    font-size: var(--fs-q);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--brown-dark);
+    text-shadow: 0 1px 0 rgb(255 225 160 / .55);
+    overflow-wrap: anywhere;
+}
+
+.board__figure {
+    max-width: 100%;
+    max-height: 55%;
+    min-height: 0;
+    object-fit: contain;
+    border-radius: calc(var(--bw) * 0.02);
+}
+
+/* ---------- Pilihan jawaban ---------- */
+.answers {
+    width: min(var(--aw), 92vw);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--bw) * 0.035);
+}
+
+@media (orientation: portrait) {
+    .answers {
+        grid-template-columns: 1fr;
+        gap: calc(var(--bw) * 0.03);
+    }
+}
+
+.answer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--bw) * 0.03);
+    box-sizing: border-box;
+    min-height: var(--ans-h);
+    padding: calc(var(--ans-h) * 0.12) calc(var(--bw) * 0.035) calc(var(--ans-h) * 0.12) calc(var(--bw) * 0.025);
+    border: 0;
+    border-radius: calc(var(--ans-h) * 0.32);
+    background: #fde2a0;
+    box-shadow: 0 calc(var(--bw) * 0.012) 0 rgb(214 160 60 / .6);
+    color: var(--brown);
+    font-family: inherit;
+    font-size: var(--fs-ans);
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .15s ease, background-color .3s ease,
+                color .3s ease, box-shadow .3s ease, opacity .3s ease;
+}
+
+.answer__badge {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: var(--badge);
+    height: var(--badge);
+    border-radius: 50%;
+    background: #fbbf24;
+    color: var(--brown);
+    font-size: calc(var(--badge) * 0.5);
+    font-weight: 700;
+    transition: background-color .3s ease, color .3s ease;
+}
+
+.answer__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--bw) * 0.01);
+}
+.answer__text { overflow-wrap: anywhere; }
+.answer__img {
+    max-width: 100%;
+    max-height: calc(var(--ans-h) * 1.1);
+    object-fit: contain;
+    align-self: flex-start;
+    border-radius: calc(var(--bw) * 0.015);
+}
+
+/* Ikon status (dibuat murni dengan CSS) */
+.answer__status {
+    position: relative;
+    flex: none;
+    width: var(--st);
+    height: var(--st);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform .4s cubic-bezier(.3, 1.7, .5, 1), opacity .2s ease;
+}
+.answer__status::before,
+.answer__status::after { content: none; position: absolute; }
+
+/* Hover / tekan (hanya sebelum dikunci) */
+.answers:not(.is-locked) .answer:hover  { transform: translateY(-3px); }
+.answers:not(.is-locked) .answer:active { transform: translateY(2px); box-shadow: none; }
+
+.answer:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+/* ---------- Setelah menjawab ---------- */
+.answers.is-locked .answer { cursor: default; }
+.answers.is-locked .answer:not(.is-correct):not(.is-wrong) { opacity: .6; }
+
+/* BENAR (hijau) */
+.answer.is-correct {
+    background: #78e3ae;
+    color: #064e2b;
+    box-shadow: 0 calc(var(--bw) * 0.012) 0 rgb(30 150 95 / .55);
+    animation: answer-pop .55s cubic-bezier(.3, 1.6, .5, 1);
+}
+.answer.is-correct .answer__badge  { background: #05b560; color: #033b1f; }
+.answer.is-correct .answer__status { background: #00c640; opacity: 1; transform: scale(1); }
+.answer.is-correct .answer__status::before {
+    content: '';
+    left: 50%;
+    top: 46%;
+    width: calc(var(--st) * 0.26);
+    height: calc(var(--st) * 0.5);
+    border: solid #fff;
+    border-width: 0 calc(var(--st) * 0.12) calc(var(--st) * 0.12) 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* SALAH (merah) */
+.answer.is-wrong {
+    background: #ff9fa0;
+    color: #6e1414;
+    box-shadow: 0 calc(var(--bw) * 0.012) 0 rgb(210 70 70 / .55);
+    animation: answer-shake .45s ease;
+}
+.answer.is-wrong .answer__badge  { background: #e53535; color: #4d0a0a; }
+.answer.is-wrong .answer__status { background: #ff4b4b; opacity: 1; transform: scale(1); }
+.answer.is-wrong .answer__status::before,
+.answer.is-wrong .answer__status::after {
+    content: '';
+    left: 50%;
+    top: 50%;
+    width: calc(var(--st) * 0.55);
+    height: calc(var(--st) * 0.12);
+    border-radius: 999px;
+    background: #fff;
+}
+.answer.is-wrong .answer__status::before { transform: translate(-50%, -50%) rotate(45deg); }
+.answer.is-wrong .answer__status::after  { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* Jawaban benar yang "dibuka" setelah siswa salah: muncul sedikit terlambat */
+.answer.is-reveal,
+.answer.is-reveal .answer__badge,
+.answer.is-reveal .answer__status { transition-delay: .45s; }
+.answer.is-reveal { animation-delay: .45s; }
+
+@keyframes answer-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+@keyframes answer-shake {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-3%); }
+    40%      { transform: translateX(3%); }
+    60%      { transform: translateX(-2%); }
+    80%      { transform: translateX(2%); }
+}
+
+/* ---------- Tombol Next (kanan bawah) ---------- */
+.nav-slot {
+    position: fixed;
+    z-index: 3;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    margin: 0;
+}
+.nav-slot--next { right: max(16px, env(safe-area-inset-right)); }
+.nav-slot[hidden] { display: none; }
+
+.nav-btn {
+    display: block;
+    width: var(--nav);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .12s ease;
+}
+.nav-btn img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 3px 4px rgb(0 0 0 / .3));
+}
+.nav-btn:hover  { transform: scale(1.08); }
+.nav-btn:active { transform: scale(.94); }
+.nav-btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+/* Tombol kanan muncul dengan efek membal setelah menjawab */
+.nav-slot--next:not([hidden]) .nav-btn {
+    animation: nav-pop .5s cubic-bezier(.3, 1.6, .5, 1);
+}
+@keyframes nav-pop {
+    0%   { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .answer, .answer__badge, .answer__status, .nav-btn { transition: none; }
+    .answer.is-correct, .answer.is-wrong,
+    .nav-slot--next:not([hidden]) .nav-btn { animation: none; }
+}

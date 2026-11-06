@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\VerifikasiGuruController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\SoalController;
 use App\Http\Controllers\Guru\RoomController;
+use App\Http\Controllers\Guru\HasilSiswaController;
 
 // halaman welcome bawaan laravel
 // Route::get('/', function () {
@@ -98,7 +99,12 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
 
 
     //------ LIHAT HASIL SISWA -------
-
+    Route::get('/guru/hasil', [HasilSiswaController::class, 'index'])
+    ->name('guru.hasil.index');
+    Route::get('/guru/hasil/{room}', [HasilSiswaController::class, 'show'])
+        ->name('guru.hasil.show');
+    Route::post('/guru/hasil/{room}/hapus', [HasilSiswaController::class, 'destroy'])
+        ->name('guru.hasil.destroy');
 });
 
 

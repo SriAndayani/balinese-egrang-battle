@@ -1,0 +1,262 @@
+/* ==========================================================
+   Halaman masuk kuis (tema game)
+   Semua ukuran diturunkan dari --h (tinggi papan), jadi
+   tampilan otomatis menyesuaikan HP, laptop, sampai TV IFP.
+   ========================================================== */
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
+        format('truetype');
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
+        format('truetype');
+    font-weight: 700; 
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    font-family:"Fredoka",sans-serif;
+}
+
+.game-entry {
+    /* Tinggi papan: dibatasi oleh tinggi DAN lebar layar */
+    --h: min(66dvh, 125vw);
+    --bw: calc(var(--h) * 0.693);          /* lebar papan (rasio gambar 305:440) */
+
+    --cream: #fde2a0;
+    --cream-text: #fff0c4;
+    --wood-dark: #6b3a17;
+    --wood-shadow: #4a2508;
+
+    margin: 0;
+    min-height: 100dvh;
+    overflow: hidden;
+    font-family: 'Fredoka', system-ui, sans-serif;
+    background: #4a8cff;                    /* warna cadangan sebelum gambar termuat */
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---------- Background ---------- */
+.game-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ---------- Stage ---------- */
+.game-stage {
+    position: relative;
+    z-index: 1;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--h) * 0.02);
+}
+
+/* ---------- Papan ---------- */
+.board {
+    position: relative;
+    width: var(--bw);
+    height: var(--h);
+}
+
+.board__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    pointer-events: none;
+    filter: drop-shadow(0 calc(var(--h) * 0.02) calc(var(--h) * 0.03) rgb(0 0 0 / .25));
+}
+
+.board__title {
+    position: absolute;
+    top: 17%;
+    left: 27%;
+    width: 46%;
+    height: 11%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(var(--bw) * 0.085);
+    font-weight: 700;
+    color: var(--cream-text);
+    text-shadow: 0 calc(var(--bw) * 0.012) 0 var(--wood-shadow);
+    letter-spacing: .02em;
+}
+
+/* ---------- Field ---------- */
+.field {
+    position: absolute;
+    left: 24%;
+    width: 52%;
+}
+.field--nama { top: 32.5%; }
+.field--kode { top: 58%; }
+
+.field__label {
+    display: block;
+    margin-bottom: calc(var(--bw) * 0.01);
+    font-size: calc(var(--bw) * 0.06);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream-text);
+    text-shadow: 0 calc(var(--bw) * 0.01) 0 var(--wood-shadow);
+}
+
+.field__input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(var(--h) * 0.145);
+    padding: 0 calc(var(--bw) * 0.05);
+    border: calc(var(--bw) * 0.012) solid #e2b866;
+    border-radius: calc(var(--bw) * 0.03);
+    background: var(--cream);
+    box-shadow: inset 0 calc(var(--bw) * 0.015) calc(var(--bw) * 0.02) rgb(120 70 20 / .25);
+    font-family: inherit;
+    font-size: max(16px, calc(var(--bw) * 0.07));   /* min 16px agar iOS tidak zoom */
+    font-weight: 600;
+    color: var(--wood-dark);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.field__input:focus {
+    border-color: #ff9d1c;
+    box-shadow:
+        inset 0 calc(var(--bw) * 0.015) calc(var(--bw) * 0.02) rgb(120 70 20 / .25),
+        0 0 0 calc(var(--bw) * 0.015) rgb(255 255 255 / .85);
+}
+
+.field__input.is-invalid {
+    border-color: #e5484d;
+}
+
+.field__error {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: calc(var(--bw) * 0.01) 0 0;
+    font-size: max(11px, calc(var(--bw) * 0.045));
+    font-weight: 600;
+    line-height: 1.15;
+    color: #ffe1e1;
+    text-shadow: 0 1px 0 var(--wood-shadow), 0 0 4px var(--wood-shadow);
+}
+
+/* ---------- Tombol Mulai ---------- */
+.btn-mulai {
+    position: relative;
+    display: block;
+    width: calc(var(--bw) * 0.62);
+    aspect-ratio: 183 / 80;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .12s ease;
+}
+
+.btn-mulai img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 calc(var(--h) * 0.012) calc(var(--h) * 0.015) rgb(0 0 0 / .3));
+}
+
+.btn-mulai span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: calc(var(--bw) * 0.12);
+    font-weight: 700;
+    color: var(--cream-text);
+    text-shadow: 0 calc(var(--bw) * 0.012) 0 var(--wood-shadow);
+}
+
+.btn-mulai:hover  { transform: translateY(-2px) scale(1.03); }
+.btn-mulai:active { transform: translateY(2px) scale(.97); }
+.btn-mulai:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+/* ---------- Tombol Home & Fullscreen ---------- */
+.icon-btn {
+    position: fixed;
+    z-index: 2;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: clamp(44px, 8vmin, 96px);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .12s ease;
+}
+.icon-btn--home       { left:  max(16px, env(safe-area-inset-left)); }
+.icon-btn--fullscreen { right: max(16px, env(safe-area-inset-right)); }
+
+.icon-btn img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 3px 4px rgb(0 0 0 / .3));
+}
+
+.icon-btn:hover  { transform: scale(1.08); }
+.icon-btn:active { transform: scale(.94); }
+.icon-btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+.icon-btn[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-mulai, .icon-btn, .field__input { transition: none; }
+}
