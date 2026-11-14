@@ -22,9 +22,9 @@
 --mulai-lebar:min(24vw,30svh);         /* lebar tombol Mulai */
 
 --judul-top:21%;                       /* tulisan "Pemain 1" di papan kecil atas */
---karakter-top:15%;                    /* ujung atas gambar anak */
---karakter-lebar:80%;                  /* lebar gambar anak (dari lebar papan) */
---label-top:60%;                       /* tulisan "Ketik nama" */
+--karakter-top:30%;                    /* ujung atas gambar anak */
+--karakter-lebar:30%;                  /* lebar gambar anak (dari lebar papan) */
+--label-top:61%;                       /* tulisan "Ketik nama" */
 --input-top:68%;                       /* kotak isian nama */
 --input-kiri:21%;                      /* jarak kotak dari tepi kiri papan */
 --input-lebar:54%;                     /* lebar kotak isian */

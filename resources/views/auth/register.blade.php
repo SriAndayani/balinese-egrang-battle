@@ -13,13 +13,13 @@
 
     {{-- Logo --}}
     <div class="flex justify-center">
-        <div class="w-20 h-20 border-2 border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-xs">
-            LOGO
-        </div>
+        <img src="{{ asset('images/logo.webp') }}"
+            alt="Logo"
+            class="w-30 h-30 object-contain">
     </div>
 
     {{-- Judul --}}
-    <h1 class="text-3xl font-bold text-gray-800 text-center mt-4">Daftar Akun Guru</h1>
+    <h1 class="text-3xl font-bold text-gray-800 text-center mt-1">Daftar Akun Guru</h1>
     <p class="text-gray-500 text-center">Buat akun baru</p>
 
     <form method="POST" action="{{ route('register.proses') }}" class="mt-6">

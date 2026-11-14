@@ -25,7 +25,7 @@
                     <img src="{{ asset('images/papan-polos.webp') }}" alt="" decoding="async" draggable="false">
                     <span class="room-label">
                         <b>{{ $room->nama_room }}</b>
-                        <small>{{ $mode === 'battle' ? 'Main berdua' : 'Main bersama' }}</small>
+                        <small>{{ $mode === 'battle' ? '' : '' }}</small>
                     </span>
                 </a>
             @empty

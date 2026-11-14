@@ -31,14 +31,14 @@
 
 .battle-body{
   --baris-atas:46svh;                    /* tinggi bagian atas (arena dan karakter) */
-  --arena-tinggi:23svh;                  /* tinggi gambar arena */
-  --karakter-tinggi:calc(var(--arena-tinggi) * 1.2);   /* tinggi karakter berdiri */
+  --arena-tinggi:36svh;                  /* tinggi gambar arena */
+  --karakter-tinggi:calc(var(--arena-tinggi) * 0.7);   /* tinggi karakter berdiri */
   --jatuh-tinggi:calc(var(--karakter-tinggi) * .5);    /* tinggi gambar karakter jatuh */
 
-  --mulai-x:12%;                         /* posisi kaki karakter di garis start (dari lebar arena) */
-  --jarak-lintasan:64%;                  /* jarak dari start sampai garis finish */
-  --lane-a-y:39%;  --geser-a:3%;         /* jalur Pemain 1 (belakang): posisi kaki dari atas arena, geser kanan */
-  --lane-b-y:60%;  --geser-b:0%;         /* jalur Pemain 2 (depan) */
+  --mulai-x:6%;                         /* posisi kaki karakter di garis start (dari lebar arena) */
+  --jarak-lintasan:82%;                  /* jarak dari start sampai garis finish */
+  --lane-a-y:52%;  --geser-a:3%;         /* jalur Pemain 1 (belakang): posisi kaki dari atas arena, geser kanan */
+  --lane-b-y:64%;  --geser-b:0.085%;         /* jalur Pemain 2 (depan) */
 
   --biru:#5b8ff7;  --biru-tua:#1f3a8a;
   --merah-muda:#f4a09b;  --merah-tua:#a8322f;
@@ -256,14 +256,10 @@ img{ user-select:none; -webkit-user-drag:none; }
 }
 .btn-layar{ 
   right:clamp(9px,1vw,30px); 
-  bottom:calc(0.30svh + env(safe-area-inset-bottom,0px));
+  bottom:calc(1.6svh + env(safe-area-inset-bottom,0px));
 }
 .btn-sudut:active{ transform:translateY(4px) scale(.96); }
 .btn-sudut:focus-visible{ outline:3px solid #fff; outline-offset:4px; border-radius:50%; }
-
-.btn-layar {
-  width:clamp(60px,6.5vw,130px);
-}
 
 /* ============================================================
    LAYAR PEMENANG
