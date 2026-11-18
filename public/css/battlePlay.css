@@ -33,7 +33,7 @@
   --baris-atas:46svh;                    /* tinggi bagian atas (arena dan karakter) */
   --arena-tinggi:36svh;                  /* tinggi gambar arena */
   --karakter-tinggi:calc(var(--arena-tinggi) * 0.7);   /* tinggi karakter berdiri */
-  --jatuh-tinggi:calc(var(--karakter-tinggi) * .5);    /* tinggi gambar karakter jatuh */
+  --jatuh-tinggi:calc(var(--karakter-tinggi) * .4);    /* tinggi gambar karakter jatuh */
 
   --mulai-x:6%;                         /* posisi kaki karakter di garis start (dari lebar arena) */
   --jarak-lintasan:82%;                  /* jarak dari start sampai garis finish */
@@ -243,7 +243,7 @@ img{ user-select:none; -webkit-user-drag:none; }
    ============================================================ */
 .btn-sudut{
   position:fixed; z-index:30;
-  width:clamp(42px,4.4vw,84px);
+  width:clamp(42px,3vw,84px);
   display:block; padding:0; border:0; background:none; cursor:pointer;
   filter:drop-shadow(0 6px 6px rgba(0,0,0,.35));
   transition:transform .08s;

@@ -18,16 +18,16 @@
 
 .setup-body{
 --papan-lebar:min(30vw,60vh);          /* lebar satu papan (cadangan untuk browser lama) */
---papan-lebar:min(30vw,60svh);         /* lebar satu papan */
---mulai-lebar:min(24vw,30svh);         /* lebar tombol Mulai */
+--papan-lebar:min(20vw,50svh);         /* lebar satu papan */
+--mulai-lebar:min(20vw,25svh);         /* lebar tombol Mulai */
 
 --judul-top:21%;                       /* tulisan "Pemain 1" di papan kecil atas */
 --karakter-top:30%;                    /* ujung atas gambar anak */
---karakter-lebar:30%;                  /* lebar gambar anak (dari lebar papan) */
+--karakter-lebar:32%;                  /* lebar gambar anak (dari lebar papan) */
 --label-top:61%;                       /* tulisan "Ketik nama" */
 --input-top:68%;                       /* kotak isian nama */
---input-kiri:21%;                      /* jarak kotak dari tepi kiri papan */
---input-lebar:54%;                     /* lebar kotak isian */
+--input-kiri:28%;                      /* jarak kotak dari tepi kiri papan */
+--input-lebar:40%;                     /* lebar kotak isian */
 }
 
 /* ===== Dasar halaman ===== */
@@ -79,7 +79,7 @@ font-size:calc(var(--papan-lebar) * .070);
 .label-nama{
 top:var(--label-top);
 font-size:calc(var(--papan-lebar) * .075);
-left:-4%;
+left:1%;
 }
 
 .karakter{
@@ -147,9 +147,9 @@ filter:drop-shadow(0 6px 6px rgba(0,0,0,.35));
 transition:transform .08s;
 -webkit-tap-highlight-color:transparent;
 }
-.btn-sudut img{ display:block; width:100%; height:auto; pointer-events:none; }
+.btn-sudut img{ display:block; width:50%; height:auto; pointer-events:none; }
 .btn-home{ left:clamp(12px,2.5vw,40px); }
-.btn-layar{ right:clamp(12px,2.5vw,40px); }
+.btn-layar{ right:clamp(5px, 1vw, 15px); }
 .btn-sudut:active{ transform:translateY(4px) scale(.96); }
 .btn-sudut:focus-visible{ outline:3px solid #fff; outline-offset:4px; border-radius:50%; }
 

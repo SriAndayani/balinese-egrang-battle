@@ -54,8 +54,7 @@
  
         {{-- Tombol Mulai --}}
         <button type="submit" class="btn-mulai" id="btn-mulai">
-            <img src="{{ asset('images/papan-polos.webp') }}" alt="" draggable="false">
-            <span>Mulai</span>
+            <img src="{{ asset('images/start-button.webp') }}" alt="" draggable="false">
         </button>
     </form>
  

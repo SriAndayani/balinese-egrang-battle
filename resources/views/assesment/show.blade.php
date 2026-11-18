@@ -25,14 +25,11 @@
               novalidate>
             @csrf
  
-            {{-- Papan kayu --}}
+            {{-- Papan Inputan --}}
             <section class="board">
                 <img class="board__img"
                      src="{{ asset('images/bulletin-board.webp') }}"
                      alt="" aria-hidden="true">
- 
-                {{-- Judul di papan kecil atas --}}
-                <p class="board__title" aria-hidden="true">Kuis</p>
  
                 {{-- Input nama --}}
                 <div class="field field--nama">
@@ -71,8 +68,7 @@
  
             {{-- Tombol Mulai --}}
             <button type="submit" class="btn-mulai">
-                <img src="{{ asset('images/papan-polos.webp') }}" alt="" aria-hidden="true">
-                <span>Mulai</span>
+                <img src="{{ asset('images/start-button.webp') }}" alt="" aria-hidden="true">
             </button>
         </form>
     </main>

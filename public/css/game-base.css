@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf') format('truetype');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Balinese';
+    src: url('/fonts/noto-sans-balinese/NotoSansBalinese-Regular.woff2') format('woff2');
+    font-weight: 400 700;
+    font-display: swap;
+}
+
+
+* {
+    font-family: 'Fredoka', "Noto Sans Balinese", sans-serif;
+}
+
+[hidden] { display: none !important; }
+
+@media (orientation: portrait) and (max-width: 700px) {
+    .battle-body::after {
+        content: "Putar layar ke samping untuk bermain";
+        position: fixed; inset: 0; z-index: 9999;
+        display: grid; place-items: center;
+        padding: 2rem; text-align: center;
+        background: #1f3a8a; color: #fff;
+        font-size: 1.5rem; font-weight: 700;
+    }
+}

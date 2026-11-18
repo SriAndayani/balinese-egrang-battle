@@ -4,40 +4,48 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta http-equiv="X-UA-Compatible" content="ie=edge">
- <title>Document</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+ <title>Ngiring Melajah Basa Bali - Web</title>
  <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 </head>
-<body>
-    <header>
-        <h2 class="logo"></h2>
-        <nav class="navigation">
-            <a href="{{ route('login') }}">Login<span></span></a>
-            <a href="{{ route('register') }}">Sign in<span></span></a>
-        </nav>
-    </header>
+<body class="beranda">
 
-    <section class="parallax">
-        <img src="{{ asset('images/grass.png') }}" id="grass">
+<img class="latar" src="{{ asset('images/background.webp') }}" alt=""
+        decoding="async" fetchpriority="high" draggable="false">
 
-        {{-- Pilihan mode permainan --}}
-        <nav class="pilih-mode" aria-label="Pilih mode permainan">
-            {{-- Ganti url('/kuis') dan url('/battle') dengan route milikmu, misalnya route('kuis') --}}
-            <a class="mode-btn" href="{{ route('game.room', 'assesment') }}">
-                <img src="{{ asset('images/papan-kayu.webp') }}" alt="" decoding="async" draggable="false">
-                <span class="mode-label">
-                    <b>Kuis</b>
-                    <small>Main sendiri</small>
-                </span>
-            </a>
+{{-- ===== Panggung: semua elemen ditata di dalam kotak ini ===== --}}
+<main class="panggung">
 
-            <a class="mode-btn" href="{{ route('game.room', 'battle') }}">
-                <img src="{{ asset('images/papan-kayu.webp') }}" alt="" decoding="async" draggable="false">
-                <span class="mode-label">
-                    <b>Battle</b>
-                    <small>Main berdua</small>
-                </span>
-            </a>
-        </nav>
-    </section>
+    {{-- Judul --}}
+    <h1 class="judul">
+        <img src="{{ asset('images/tittle-board.webp') }}" alt="Ngiring Malajah Basa Bali"
+                decoding="async" fetchpriority="high" draggable="false">
+    </h1>
+
+    {{-- Karakter (hiasan, tidak perlu dibacakan pembaca layar) --}}
+    <img class="karakter karakter-iluh" src="{{ asset('images/iluh-namaste-pose.png') }}" alt=""
+            decoding="async" draggable="false">
+    <img class="karakter karakter-gede" src="{{ asset('images/gede-namaste-pose.png') }}" alt=""
+            decoding="async" draggable="false">
+
+    {{-- Pilihan mode permainan --}}
+    <nav class="menu" aria-label="Pilih mode permainan">
+        <a class="tombol tombol-uji" href="{{ route('game.room', 'assesment') }}">
+            <img src="{{ asset('images/assessment-btn.webp') }}" alt="Uji Kemampuan"
+                    decoding="async" draggable="false">
+        </a>
+
+        <a class="tombol tombol-egrang" href="{{ route('game.room', 'battle') }}">
+            <img src="{{ asset('images/battle-btn.webp') }}" alt="Balap Egrang"
+                    decoding="async" draggable="false">
+        </a>
+    </nav>
+</main>
+
+{{-- ===== Tombol login (menempel di pojok layar) ===== --}}
+<a class="tombol-login" href="{{ route('login') }}">
+    <img src="{{ asset('images/login-btn.webp') }}" alt="Login" decoding="async" draggable="false">
+</a>
+
 </body>
 </html>

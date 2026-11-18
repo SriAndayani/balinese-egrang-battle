@@ -1,167 +1,197 @@
-@font-face {
-    font-family: 'Fredoka';
-    src: url('/fonts/fredoka/Fredoka-Variable.ttf')
-         format('truetype');
-    font-weight: 100 300 700;
-    font-style: normal;
-    font-display: swap;
-}
+/* public/css/beranda.css
+   Halaman awal: judul, dua karakter, dua tombol mode, dan tombol login.
 
-* {
+   CARA KERJA (singkat):
+   1. Latar belakang memenuhi seluruh layar (object-fit: cover).
+   2. Semua yang lain ditaruh di dalam satu "PANGGUNG" berbentuk 16:9 (landscape)
+      atau 9:16 (portrait), selalu di tengah layar. Posisi dan ukuran tiap elemen
+      ditulis dalam PERSEN dari panggung, jadi seluruh komposisi membesar atau
+      mengecil bersama (IFP besar, HP kecil) tanpa berubah susunan.
+   3. Landscape atau portrait dipilih otomatis oleh @media (orientation: portrait).
+   4. Tombol login menempel di pojok LAYAR (bukan pojok panggung).
+
+   MAU MENGGESER ELEMEN? Ubah angkanya di blok "PENGATURAN" di bawah.
+   Tips: buka DevTools, pilih <body class="beranda">, lalu ubah variabelnya langsung
+   di panel Styles sampai pas, baru salin angkanya ke sini. */
+
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Fredoka', sans-serif;
 }
 
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: hidden;
+/* ============================================================
+   PENGATURAN: LANDSCAPE (bawaan)
+   Semua angka = persen dari panggung.
+   ============================================================ */
+.beranda {
+    /* Judul (papan "Ngiring Malajah Basa Bali"), selalu di tengah */
+    --judul-lebar: 38%;
+    --judul-atas:  3%;
+
+    /* Karakter. Lebar saja yang diatur; tinggi mengikuti gambar. */
+    --iluh-kiri:   15%;   --iluh-bawah: 8%;   --iluh-lebar: 20%;   /* anak perempuan (kiri) */
+    --gede-kanan:  15%;   --gede-bawah: 8%;   --gede-lebar: 20%;   /* anak laki-laki (kanan) */
+
+    /* Dua tombol mode, ditumpuk di tengah */
+    --tombol-lebar: 27%;
+    --uji-atas:     56%;      /* tombol Uji Kemampuan */
+    --egrang-atas:  70%;      /* tombol Balap Egrang */
+
+    /* Tombol login (pojok layar). clamp(terkecil, ideal, terbesar) */
+    --login-lebar: clamp(48px, 5vw, 200px);
+
+    /* Bagian latar belakang yang dijaga tetap terlihat saat gambar terpotong */
+    --fokus-latar: 50% 50%;
 }
 
-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
+/* ============================================================
+   PENGATURAN: PORTRAIT (HP berdiri, tablet berdiri)
+   Hanya angka yang berbeda dari landscape yang perlu ditulis ulang.
+   ============================================================ */
+@media (orientation: portrait) {
+    .beranda {
+        --judul-lebar: 76%;
+        --judul-atas:  11%;
+
+        --iluh-kiri:   2%;   --iluh-bawah: 10%;   --iluh-lebar: 45%;
+        --gede-kanan:  2%;   --gede-bawah: 10%;   --gede-lebar: 45%;
+
+        --tombol-lebar: 60%;
+        --uji-atas:     75%;
+        --egrang-atas:  85%;
+
+        --login-lebar: clamp(44px, 12vw, 140px);
+
+        --fokus-latar: 60% 50%;
+    }
 }
 
-.logo {
-
-}
-
-.navigation a {
+/* ============================================================
+   HALAMAN DAN LATAR BELAKANG
+   ============================================================ */
+.beranda {
     position: relative;
-    font-size: 1.1em;
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    margin-left: 20px;
-    padding: 6px 15px;
-    transition: 0.5s;
+    height: 100vh;               /* cadangan browser lama */
+    height: 100svh;              /* tinggi layar yang terlihat (aman untuk HP) */
+    overflow: hidden;            /* satu layar penuh, tanpa scroll */
+    display: grid;
+    place-items: center;         /* panggung selalu di tengah layar */
+    background: #4a8df0;         /* warna langit selama gambar dimuat */
 }
 
-.navigation a:hover {
-    color: #333;
-}
-
-.navigation a span {
+.latar {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: #fff;
-    border-radius: 30px;
-    z-index: -1;
-    transform: scale(0);
-    opacity: 0;
-    transition: 0.5s;
-}
-
-.navigration a:hover span {
-    transform: scale(1);
-    transition: 0.5s;
-}
-
-.parallax {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: url('../images/background.webp') no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-.parallax img {
-    position: relative;
-    top: -10%;
-    left: 0;
-    width: 100%;
+    object-fit: cover;           /* menutupi layar; bagian lebih dipotong, tidak digepengkan */
+    object-position: var(--fokus-latar);
+    z-index: 0;
     pointer-events: none;
-    overflow: hidden;
 }
 
-.pilih-mode{
-  position:absolute;
-  left:0; right:0;
-  bottom:4%;                                  
-  z-index:10;                                 
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
-  gap:clamp(16px, 8vw, 160px);                
-  padding:0 4%;
+/* ============================================================
+   PANGGUNG: kotak 16:9 yang muat di layar, tempat semua elemen ditata
+   ============================================================ */
+.panggung {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 16 / 9;
+    width: min(100vw, 177.78vh);       /* cadangan */
+    width: min(100vw, 177.78svh);      /* 177.78 = 100 x 16/9 */
 }
 
-.mode-btn{
-  position:relative;
-  display:block;
-  width:clamp(200px, 22vw, 520px);           
-  text-decoration:none;
-  filter:drop-shadow(0 10px 10px rgba(0,0,0,.28));
-  transition:transform .12s ease-out;
-  -webkit-tap-highlight-color:transparent;
-  user-select:none;
+@media (orientation: portrait) {
+    .panggung {
+        aspect-ratio: 9 / 16;
+        width: min(100vw, 56.25vh);    /* cadangan */
+        width: min(100vw, 56.25svh);   /* 56.25 = 100 x 9/16 */
+    }
 }
 
-.parallax .mode-btn img{
-  position:static;
-  top:auto; left:auto;
-  display:block;
-  width:100%;
-  height:auto;
-  pointer-events:none;
+/* Semua gambar di dalam panggung: mengikuti lebar kotaknya, tidak bisa diseret */
+.judul img,
+.karakter,
+.tombol img,
+.tombol-login img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
-.mode-label{
-  position:absolute;
-  inset:12% 14% 14% 14%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  line-height:1;
-  color:#fff3d6;
+/* ===== Judul ===== */
+.judul {
+    position: absolute;
+    top: var(--judul-atas);
+    left: calc((100% - var(--judul-lebar)) / 2);    /* tepat di tengah */
+    width: var(--judul-lebar);
+    z-index: 3;
+    filter: drop-shadow(0 1.2svh 1.2svh rgba(0, 0, 0, .25));
 }
 
-.mode-label b{
-  font-weight:700;
-  font-size:clamp(1.4rem, 3vw, 3.8rem);
-  -webkit-text-stroke:.14em #6b3220;
-  paint-order:stroke fill;                    
-  text-shadow:0 .06em 0 rgba(0,0,0,.25);
+/* ===== Karakter ===== */
+.karakter {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+.karakter-iluh { left:  var(--iluh-kiri);  bottom: var(--iluh-bawah); width: var(--iluh-lebar); }
+.karakter-gede { right: var(--gede-kanan); bottom: var(--gede-bawah); width: var(--gede-lebar); }
+
+/* ===== Tombol mode ===== */
+.menu {
+    position: absolute;
+    inset: 0;                    /* seukuran panggung */
+    z-index: 3;
+    pointer-events: none;        /* area kosong tidak menghalangi, hanya tombolnya yang bisa diklik */
 }
 
-.mode-label small{
-  margin-top:.35em;
-  font-weight:600;
-  font-size:clamp(.75rem, 1.25vw, 1.6rem);
-  -webkit-text-stroke:.2em #6b3220;
-  paint-order:stroke fill;
+.tombol {
+    position: absolute;
+    left: calc((100% - var(--tombol-lebar)) / 2);   /* tepat di tengah */
+    width: var(--tombol-lebar);
+    pointer-events: auto;
+    filter: drop-shadow(0 1svh 1svh rgba(0, 0, 0, .28));
+    transition: transform .12s ease-out;
+    -webkit-tap-highlight-color: transparent;
+}
+.tombol-uji    { top: var(--uji-atas); }
+.tombol-egrang { top: var(--egrang-atas); }
+
+@media (hover: hover) {
+    .tombol:hover { transform: scale(1.05) translateY(-3%); }
+}
+.tombol:active { transform: scale(.96) translateY(3%); }
+.tombol:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 999px; }
+
+/* ===== Tombol login (menempel di pojok LAYAR) ===== */
+.tombol-login {
+    position: fixed;
+    z-index: 10;
+    width: var(--login-lebar);
+    right:  max(2vw,  env(safe-area-inset-right));
+    bottom: max(2svh, env(safe-area-inset-bottom));
+    filter: drop-shadow(0 .6svh .6svh rgba(0, 0, 0, .3));
+    transition: transform .12s ease-out;
+    -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+    .tombol-login:hover { transform: scale(1.08); }
+}
+.tombol-login:active { transform: scale(.94); }
+.tombol-login:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 50%; }
+
+/* Di portrait, tombol login pindah ke pojok kanan ATAS (sesuai desain) */
+@media (orientation: portrait) {
+    .tombol-login {
+        bottom: auto;
+        top: max(2svh, env(safe-area-inset-top));
+    }
 }
 
-@media (hover:hover){
-  .mode-btn:hover{ transform:scale(1.05) translateY(-4px); }
-}
-.mode-btn:active{ transform:scale(.96) translateY(4px); }
-.mode-btn:focus-visible{ outline:3px solid #fff; outline-offset:6px; border-radius:20px; }
-
-@media (max-width:640px){
-  .pilih-mode{ flex-direction:column; align-items:center; bottom:4%; gap:8px; }
-  .mode-btn{ width:min(56vw, 260px); }
-}
-
-@media (prefers-reduced-motion:reduce){
-  .mode-btn{ transition:none; }
+@media (prefers-reduced-motion: reduce) {
+    .tombol, .tombol-login { transition: none; }
 }

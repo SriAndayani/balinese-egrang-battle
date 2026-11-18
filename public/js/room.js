@@ -4,21 +4,25 @@
 //   2. Memperbarui daftar room tiap 5 detik tanpa memuat ulang halaman.
 
 // ---------- 1. Ambil elemen yang dibutuhkan dari halaman ----------
-var daftar     = document.getElementById("room-list"); // wadah semua kartu room
-var tombolKiri = document.getElementById("prev");      // panah kiri
-var tombolKanan = document.getElementById("next");     // panah kanan
+var daftar      = document.getElementById("room-list"); // wadah semua kartu room
+var tombolKiri  = document.getElementById("prev");      // panah kiri
+var tombolKanan = document.getElementById("next");      // panah kanan
 
 // Halaman yang sedang dilihat. 0 = halaman pertama.
 var halamanSekarang = 0;
 
 // ---------- 2. Berapa room yang tampil per halaman? ----------
-// HP berdiri: 4 room. Layar lebar: 3 room.
+// Angkanya TIDAK ditulis di sini, tapi dibaca dari CSS (variabel --per-halaman di rooms.css).
+// Jadi mengubah jumlah per halaman (atau per orientasi layar) cukup di SATU tempat: CSS.
 function jumlahPerHalaman() {
-  var hpBerdiri = window.matchMedia("(max-width: 700px), (orientation: portrait)").matches;
-  if (hpBerdiri) {
-    return 4;
+  var nilai = parseInt(
+    getComputedStyle(document.body).getPropertyValue("--per-halaman"),
+    10
+  );
+  if (nilai > 0) {
+    return nilai;
   }
-  return 3;
+  return 3;   // cadangan kalau variabelnya tidak terbaca
 }
 
 // ---------- 3. Tampilkan room sesuai halaman ----------
@@ -63,12 +67,13 @@ tombolKanan.addEventListener("click", function () {
   tampilkanHalaman();
 });
 
-// Kalau layar diputar (landscape/portrait), hitung ulang
+// Kalau layar diputar (landscape/portrait) atau ukurannya berubah, hitung ulang
 window.addEventListener("resize", tampilkanHalaman);
 
 // Tampilkan halaman pertama saat halaman dibuka
 tampilkanHalaman();
 
+// Ringkasan isi daftar (alamat + teks tiap kartu), untuk mendeteksi ada tidaknya perubahan
 function ringkasan(wadah) {
   var hasil = "";
   var tautan = wadah.querySelectorAll("a");
