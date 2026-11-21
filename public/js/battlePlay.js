@@ -133,7 +133,17 @@ function renderSoal(player, soal) {
         btn.className = 'answer-btn';
         btn.textContent = jawaban.teks_jawaban;
         btn.dataset.id = jawaban.id_jawaban;   // disimpan untuk dikirim ke server
-        btn.addEventListener('click', () => handleAnswer(player, jawaban.id_jawaban));
+        // pointerdown: bereaksi saat jari menyentuh, dan tiap jari dihitung sendiri-sendiri
+        btn.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;   // abaikan klik kanan
+            handleAnswer(player, jawaban.id_jawaban);
+        });
+
+        // Cadangan untuk keyboard (Enter/Spasi). Klik dari keyboard punya detail 0,
+        // sedangkan klik susulan dari sentuhan/mouse (detail 1) diabaikan.
+        btn.addEventListener('click', (e) => {
+            if (e.detail === 0) handleAnswer(player, jawaban.id_jawaban);
+        });
         el.answers.appendChild(btn);
     });
 }

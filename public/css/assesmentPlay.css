@@ -22,7 +22,7 @@
 
 .game-soal {
     /* Landscape (laptop / TV) */
-    --bw: min(80dvh, 54vw);                    /* lebar papan */
+    --bw: min(95dvh, 65vw);                    /* lebar papan */
     --aw: calc(var(--bw) * 1.65);              /* lebar area jawaban */
     --ans-h: calc(var(--bw) * 0.16);           /* tinggi minimum tombol jawaban */
     --badge: calc(var(--bw) * 0.11);           /* lingkaran huruf a/b/c/d */
@@ -124,43 +124,48 @@
 .board {
     position: relative;
     width: var(--bw);
-    aspect-ratio: 527 / 308;
 }
 
 .board__img {
-    position: absolute;
+    display: block;
+    position: relative;
     inset: 0;
     width: 100%;
-    height: 100%;
-    object-fit: fill;
+    height: auto;
+    object-fit: contain;
     user-select: none;
     pointer-events: none;
-    filter: drop-shadow(0 calc(var(--bw) * 0.02) calc(var(--bw) * 0.03) rgb(0 0 0 / .25));
+    filter: drop-shadow(
+        0 calc(var(--bw) * 0.02)
+        calc(var(--bw) * 0.03)
+        rgb(0 0 0 / .25)
+    );
 }
 
 /* Area gabus tempat soal muncul. Atur 4 angka ini jika kurang pas. */
 .board__content {
     position: absolute;
-    top: 13%;
-    bottom: 13%;
-    left: 8.5%;
-    right: 8.5%;
+    top: 17%;
+    bottom: 17%;
+    left: 14%;
+    right: 14%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: calc(var(--bw) * 0.02);
     overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
     text-align: center;
 }
 
 .board__question {
     margin: 0;
-    font-size: var(--fs-q);
+    font-size: calc(var(--fs-q) * 0.70);
     font-weight: 600;
-    line-height: 1.3;
-    color: var(--brown-dark);
-    text-shadow: 0 1px 0 rgb(255 225 160 / .55);
+    line-height: 1.25;
+    color: rgb(255 225 160 / .75);
     overflow-wrap: anywhere;
 }
 

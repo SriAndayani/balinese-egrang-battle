@@ -15,7 +15,7 @@ export default defineConfig({
        port: 5173,
        strictPort: true,
        hmr: {
-              host: '10.49.243.162', //ganti pake IP Address laptopku
+              host: '192.168.100.183', //ganti pake IP Address laptopku
          }, 
     },
 });

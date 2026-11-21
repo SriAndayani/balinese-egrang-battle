@@ -5,98 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Guru</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="auth-body">
 
 {{-- Kartu registrasi --}}
-<div class="bg-white w-full max-w-md rounded-xl border border-gray-300 shadow-sm p-8">
+<div class="auth-card">
 
     {{-- Logo --}}
-    <div class="flex justify-center">
-        <img src="{{ asset('images/logo.webp') }}"
-            alt="Logo"
-            class="w-30 h-30 object-contain">
+    <div class="auth-logo">
+        <img src="{{ asset('images/logo.webp') }}" alt="Logo Ngiring Malajah Basa Bali">
     </div>
 
     {{-- Judul --}}
-    <h1 class="text-3xl font-bold text-gray-800 text-center mt-1">Daftar Akun Guru</h1>
-    <p class="text-gray-500 text-center">Buat akun baru</p>
+    <h1 class="auth-title">Daftar Akun Guru</h1>
+    <p class="auth-subtitle">Buat akun baru</p>
 
-    <form method="POST" action="{{ route('register.proses') }}" class="mt-6">
+    <form method="POST" action="{{ route('register.proses') }}" class="auth-form">
         @csrf
 
         {{-- Username --}}
-        <div>
-            <label for="username" class="block text-sm text-gray-600 mb-1">Username</label>
+        <div class="auth-field">
+            <label for="username" class="auth-label">Username</label>
             <input type="text" id="username" name="username"
                    value="{{ old('username') }}"
                    placeholder="Input username"
                    required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                          focus:outline-none focus:ring-2 focus:ring-blue-400
-                          @error('username') border-red-400 @enderror">
+                   class="auth-input @error('username') is-invalid @enderror">
             @error('username')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="auth-error">{{ $message }}</p>
             @enderror
         </div>
 
         {{-- Email --}}
-        <div class="mt-4">
-            <label for="email" class="block text-sm text-gray-600 mb-1">Email</label>
+        <div class="auth-field">
+            <label for="email" class="auth-label">Email</label>
             <input type="email" id="email" name="email"
                    value="{{ old('email') }}"
                    placeholder="Input email"
                    required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                          focus:outline-none focus:ring-2 focus:ring-blue-400
-                          @error('email') border-red-400 @enderror">
+                   class="auth-input @error('email') is-invalid @enderror">
             @error('email')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="auth-error">{{ $message }}</p>
             @enderror
         </div>
 
         {{-- Password --}}
-        <div class="mt-4">
-            <label for="password" class="block text-sm text-gray-600 mb-1">Password</label>
+        <div class="auth-field">
+            <label for="password" class="auth-label">Password</label>
             <input type="password" id="password" name="password"
                    placeholder="Minimal 6 karakter"
                    required
                    autocomplete="new-password"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                          focus:outline-none focus:ring-2 focus:ring-blue-400
-                          @error('password') border-red-400 @enderror">
+                   class="auth-input @error('password') is-invalid @enderror">
             @error('password')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="auth-error">{{ $message }}</p>
             @enderror
         </div>
 
-        {{-- Ulangi Password --}}
-        <div class="mt-4">
-            <label for="password_confirmation" class="block text-sm text-gray-600 mb-1">Konfirmasi Password</label>
+        {{-- Konfirmasi Password --}}
+        <div class="auth-field">
+            <label for="password_confirmation" class="auth-label">Konfirmasi Password</label>
             <input type="password" id="password_confirmation" name="password_confirmation"
                    placeholder="Ketik ulang password"
                    required
                    autocomplete="new-password"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                          focus:outline-none focus:ring-2 focus:ring-blue-400">
+                   class="auth-input">
         </div>
 
         {{-- Tombol Daftar --}}
-        <button type="submit"
-                class="w-full mt-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600
-                       text-white font-semibold transition">
-            Daftar
-        </button>
+        <button type="submit" class="auth-btn">Daftar</button>
 
         {{-- Kembali ke login --}}
-        <p class="text-center text-xs text-gray-500 mt-3">
+        <p class="auth-text">
             Sudah punya akun?
-            <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Masuk di sini</a>
+            <a href="{{ route('login') }}" class="auth-link">Masuk di sini</a>
         </p>
 
-        <p class="text-center text-xs text-red-500 mt-3">
-            *akun guru memerlukan verifikasi dari admin
-        </p>
+        <p class="auth-note">*akun guru memerlukan verifikasi dari admin</p>
+
+        {{-- Tombol kembali --}}
+        <a href="{{ route('game.index') }}" class="auth-back">← Kembali ke beranda</a>
     </form>
 </div>
 

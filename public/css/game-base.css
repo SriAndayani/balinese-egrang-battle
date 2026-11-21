@@ -30,3 +30,20 @@
         font-size: 1.5rem; font-weight: 700;
     }
 }
+
+/* ============================================================
+   CONFETTI (dipakai bersama oleh layar pemenang battle dan hasil kuis)
+   Kepingannya dibuat oleh public/js/confetti.js
+   ============================================================ */
+.confetti-piece {
+    position: fixed; border-radius: 2px; z-index: 1000; pointer-events: none;
+    animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+    0%   { transform: translateY(-10px) rotate(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confetti-piece { display: none; }
+}

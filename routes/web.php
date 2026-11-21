@@ -80,6 +80,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:guru'])->group(function () {
     //------ DASHBOARD -------
     Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('/guru/dashboardGuru', [RoomController::class, 'dashboard'])->name('guru.dashboardGuru');
 
     //------ KELOLA ROOM -------
     Route::get('/guru/room', [VerifikasiGuruController::class, 'index'])

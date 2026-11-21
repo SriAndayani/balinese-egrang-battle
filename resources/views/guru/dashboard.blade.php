@@ -6,84 +6,66 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard Guru')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/dashboardGuru.css') }}">
 </head>
 <body class="bg-gray-100">
 
 @php
     $menus = [
-        ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'guru.dashboard',         'active' => 'guru.dashboard'],
+        ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'guru.dashboardGuru',         'active' => 'guru.dashboardGuru'],
         ['label' => 'Kelola Room', 'icon' => 'room.svg', 'route' => 'guru.room.index',  'active' => 'guru.room.*'],
         ['label' => 'Hasil Siswa',     'icon' => 'chart.svg', 'route' => 'guru.hasil.index',        'active' => 'guru.hasil.*'],
     ];
 @endphp
 
-<div class="flex min-h-screen">
+<div class="guru-shell">
 
     {{-- ============ SIDEBAR ============ --}}
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between">
+    <aside class="guru-sidebar">
         <div>
-            {{-- Logo / Title --}}
-            <div class="px-6 py-5 border-b border-gray-200">
-                <span class="text-xl font-bold text-gray-800">Dashboard Admin</span>
+            {{-- Logo --}}
+            <div class="guru-logo">
+                <img src="{{ asset('images/logo.webp') }}" alt="Logo Ngiring Malajah Basa Bali">
             </div>
 
             {{-- Menu: dibuat otomatis dari daftar $menus di atas --}}
-            <nav class="mt-4 flex flex-col gap-1 px-3">
+            <nav class="guru-nav" aria-label="Menu guru">
                 @foreach ($menus as $menu)
+                    @php $aktif = request()->routeIs($menu['active']); @endphp
                     <a href="{{ Route::has($menu['route']) ? route($menu['route']) : '#' }}"
-                       class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
-                              {{ request()->routeIs($menu['active']) ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
-                        <img
-                            src="{{ asset('icons/' . $menu['icon']) }}"
-                            alt=""
-                            class="w-5 h-5 shrink-0"
-                        >
-                        <span>{{ $menu['label'] }}</span> 
+                       class="guru-nav__item {{ $aktif ? 'is-active' : '' }}"
+                       @if ($aktif) aria-current="page" @endif>
+                        <img src="{{ asset('icons/' . $menu['icon']) }}" alt="">
+                        <span>{{ $menu['label'] }}</span>
                     </a>
                 @endforeach
             </nav>
         </div>
 
         {{-- Logout --}}
-        <div class="px-3 py-4 border-t border-gray-200">
+        <div class="guru-logout-wrap">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit"
-                        class="flex items-center justify-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
-                               text-gray-600 hover:bg-gray-100 w-full text-left">
+                <button type="submit" class="guru-logout">
                     <span>Logout</span>
-                    <img
-                        src="{{ asset('icons/logout.svg') }}"
-                        alt="Logout Icon"
-                        class="w-5 h-5"    
-                    >
+                    <img src="{{ asset('icons/logout.svg') }}" alt="">
                 </button>
             </form>
         </div>
     </aside>
 
     {{-- ============ KONTEN UTAMA ============ --}}
-    <div class="flex-1 flex flex-col">
+    <main class="guru-main">
 
-        {{-- Navbar atas (kosong dulu, bisa diisi breadcrumb nanti) --}}
-        <header class="bg-white border-b border-gray-200 px-6 py-3">
-            <div class="text-sm text-gray-400"></div>
-        </header>
-
-        {{-- Isi halaman --}}
-        <main class="flex-1 p-6">
-
-            {{-- Pesan sukses/gagal dari controller (dipakai semua halaman admin) --}}
+        <div class="guru-main__inner">
+            {{-- Pesan sukses dari controller --}}
             @if (session('success'))
-                <div class="mb-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
-                    {{ session('success') }}
-                </div>
+                <div class="guru-alert guru-alert--success" role="status">{{ session('success') }}</div>
             @endif
 
             @yield('content')
-        </main>
-    </div>
-
+        </div>
+    </main>
 </div>
 <script src="{{ asset('js/guruRoom.js') }}"></script>
 </body>

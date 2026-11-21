@@ -1,0 +1,277 @@
+/* =========================================================
+   auth.css — dipakai bersama oleh halaman Login & Register
+   Tema: Ngiring Malajah Basa Bali
+   ========================================================= */
+
+/* =========================================================
+   Font lokal (TTF) — letakkan file di public/fonts/
+   Sesuaikan nama file di bawah dengan file milik Anda.
+   ========================================================= */
+@font-face {
+    font-family: 'Nunito';
+    src: url('/fonts/nunito/Nunito-VariableFont.ttf') format('truetype');
+    font-weight: 200 1000;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/fonts/fredoka/Fredoka-Variable.ttf') format('truetype');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    /* Palet utama */
+    --golden-yellow: #FBB825;
+    --bright-yellow: #F6D549;
+    --orange:        #E47B18;
+    --terracotta:    #B1540C;
+    --dark-brown:    #7E2D08;
+    --deep-brown:    #401A0A;
+
+    /* Warna pendukung */
+    --cream:         #F4E8DF;
+    --peach:         #F3C29A;
+    --sky-blue:      #A6D3DA;
+    --light-blue:    #6AC1E9;
+    --leaf-green:    #9ABB1C;
+    --forest-green:  #587E0D;
+
+    --danger:        #B42318;
+    --danger-bg:     #FDECEA;
+}
+
+[hidden] { display: none !important; }
+
+/* ---------- Halaman ---------- */
+.auth-body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--deep-brown);
+    background:
+        radial-gradient(ellipse at 85% 95%, rgba(166, 211, 218, .55), transparent 55%),
+        linear-gradient(165deg, var(--peach) 0%, #F7D8BC 38%, var(--cream) 100%);
+    background-attachment: fixed;
+}
+
+/* ---------- Hiasan bunga (di belakang kartu) ---------- */
+.auth-flowers {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+.auth-flowers svg { position: absolute; display: block; }
+
+.flower--white { --petal: #FFFDF8; --edge: #E9A878; --heart: #FBB825; }
+.flower--gold  { --petal: #F6D549; --edge: #E47B18; --heart: #E47B18; }
+
+/* Posisi: sudut-sudut layar, sengaja tidak simetris */
+.fl-1 { width: 260px; top: -70px;   left: -60px;  transform: rotate(-12deg); }
+.fl-2 { width: 150px; top: 14%;     left: 9%;     transform: rotate(24deg);  opacity: .95; }
+.fl-3 { width: 200px; bottom: -60px; left: 5%;    transform: rotate(40deg); }
+.fl-4 { width: 300px; top: -90px;   right: -80px; transform: rotate(18deg); }
+.fl-5 { width: 130px; top: 30%;     right: 8%;    transform: rotate(-30deg); opacity: .95; }
+.fl-6 { width: 230px; bottom: -70px; right: 2%;   transform: rotate(8deg); }
+.fl-7 { width: 100px; bottom: 22%;  left: 14%;    transform: rotate(-18deg); }
+
+.lf-1 { width: 190px; top: 8%;      left: -40px;  transform: rotate(35deg); }
+.lf-2 { width: 220px; bottom: 4%;   left: -50px;  transform: rotate(-30deg); }
+.lf-3 { width: 200px; top: 16%;     right: -40px; transform: rotate(150deg); }
+.lf-4 { width: 230px; bottom: 6%;   right: -50px; transform: rotate(210deg); }
+
+@media (max-width: 640px) {
+    .fl-2, .fl-5, .fl-7 { display: none; }
+    .fl-1 { width: 180px; }
+    .fl-4 { width: 200px; }
+    .fl-3, .fl-6 { width: 150px; }
+    .lf-1, .lf-2, .lf-3, .lf-4 { width: 130px; }
+}
+
+/* ---------- Kartu ---------- */
+.auth-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 28rem;
+    padding: 2rem;
+    background: rgba(255, 252, 247, .95);
+    border: 2px solid var(--peach);
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 40px -12px rgba(126, 45, 8, .28);
+}
+
+.auth-logo {
+    display: flex;
+    justify-content: center;
+}
+.auth-logo img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 9999px;
+    box-shadow: 0 6px 16px -4px rgba(126, 45, 8, .35);
+}
+
+.auth-title {
+    margin: .5rem 0 0;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+    font-size: 2rem;
+    line-height: 1.15;
+    font-weight: 600;
+    text-align: center;
+    color: var(--dark-brown);
+}
+.auth-subtitle {
+    margin: .125rem 0 0;
+    text-align: center;
+    color: var(--terracotta);
+}
+
+.auth-form { margin-top: 1.5rem; }
+.auth-field { margin-top: 1rem; }
+.auth-field:first-child { margin-top: 0; }
+
+.auth-label {
+    display: block;
+    margin-bottom: .25rem;
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--dark-brown);
+}
+
+/* ---------- Pilihan role ---------- */
+.role-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+}
+.role-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .55rem 0;
+    font: inherit;
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    background: #fff;
+    border: 2px solid var(--peach);
+    border-radius: .75rem;
+    cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s, transform .1s;
+}
+.role-btn:hover { border-color: var(--golden-yellow); }
+.role-btn:active { transform: scale(.98); }
+.role-btn.is-active {
+    color: var(--deep-brown);
+    background: var(--bright-yellow);
+    border-color: var(--golden-yellow);
+}
+
+/* ---------- Input ---------- */
+.auth-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: .6rem .8rem;
+    font: inherit;
+    font-size: .9rem;
+    color: var(--deep-brown);
+    background: #fff;
+    border: 2px solid var(--peach);
+    border-radius: .75rem;
+    transition: border-color .15s, box-shadow .15s;
+}
+.auth-input::placeholder { color: #A98B7A; }
+.auth-input:focus {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 4px rgba(228, 123, 24, .22);
+}
+.auth-input.is-invalid { border-color: var(--danger); }
+
+/* ---------- Pesan error ---------- */
+.auth-alert {
+    margin-top: 1rem;
+    padding: .75rem;
+    font-size: .875rem;
+    color: var(--danger);
+    background: var(--danger-bg);
+    border: 1px solid #F5C2BD;
+    border-radius: .75rem;
+}
+.auth-error {
+    margin: .25rem 0 0;
+    font-size: .75rem;
+    color: var(--danger);
+}
+
+/* ---------- Tombol utama ---------- */
+.auth-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: .7rem 0;
+    font: inherit;
+    font-weight: 800;
+    color: var(--deep-brown);
+    background: linear-gradient(180deg, var(--golden-yellow), var(--orange));
+    border: 0;
+    border-radius: .75rem;
+    box-shadow: 0 4px 0 var(--terracotta);
+    cursor: pointer;
+    transition: transform .1s, box-shadow .1s, filter .15s;
+}
+.auth-btn:hover { filter: brightness(1.05); }
+.auth-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--terracotta);
+}
+.auth-btn:focus-visible,
+.role-btn:focus-visible {
+    outline: 3px solid var(--deep-brown);
+    outline-offset: 2px;
+}
+
+/* ---------- Tautan di bawah ---------- */
+.auth-text {
+    margin: .75rem 0 0;
+    text-align: center;
+    font-size: .75rem;
+    color: var(--dark-brown);
+}
+.auth-text + .auth-text { margin-top: .5rem; }
+
+.auth-link {
+    color: var(--terracotta);
+    font-weight: 700;
+    text-decoration: none;
+}
+.auth-link:hover { color: var(--dark-brown); text-decoration: underline; }
+
+.auth-note {
+    margin: .5rem 0 0;
+    text-align: center;
+    font-size: .75rem;
+    color: var(--danger);
+}
+
+.auth-back {
+    display: block;
+    margin-top: .5rem;
+    text-align: center;
+    font-size: .75rem;
+    color: var(--terracotta);
+    text-decoration: none;
+}
+.auth-back:hover { color: var(--dark-brown); }

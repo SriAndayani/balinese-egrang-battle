@@ -1,0 +1,259 @@
+/* public/css/assessmentResult.css
+   Halaman hasil kuis: kartu pemenang yang bisa diunduh sebagai gambar.
+
+   Font, [hidden], dan confetti ada di game-base.css, jadi muat file itu LEBIH DULU.
+
+   CARA KERJA:
+   1. Semua ukuran di dalam kartu memakai satuan "em" (relatif ke ukuran huruf dasar).
+      Jadi cukup MENGUBAH SATU ANGKA (--ukuran-kartu) untuk membesarkan atau mengecilkan
+      seluruh kartu. Di layar, angka itu mengikuti ukuran layar (IFP besar, HP kecil).
+   2. Saat kartu diubah menjadi gambar (html2canvas), ukuran dikunci di 20px lewat
+      "mode unduh" (bagian paling bawah), supaya gambar hasil unduhan SAMA di semua perangkat.
+   3. Kartu dirancang agar tidak bergantung pada fitur CSS yang tidak didukung html2canvas
+      (text-stroke, filter, animasi). Garis tepi huruf dibuat dari text-shadow. */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================================
+   PENGATURAN
+   ============================================================ */
+.hasil-body {
+    --rasio: 1.7778;                 /* lebar dibagi tinggi layar acuan (16:9) */
+    --k-lebar: .0125;                /* ukuran kartu dari LEBAR layar */
+    --k-tinggi: .022;                /* ukuran kartu dari TINGGI layar (supaya muat tanpa scroll) */
+    --fokus-latar: 50% 50%;          /* bagian latar yang dijaga terlihat saat terpotong */
+
+    /* ----- Dihitung otomatis. Tidak perlu diubah. ----- */
+    --tinggi-layar: 100vh;           /* cadangan browser lama */
+    --W: min(100vw, calc(var(--tinggi-layar) * var(--rasio)));
+    /* Ukuran huruf dasar kartu: yang lebih kecil dari batas lebar dan batas tinggi,
+       tapi tidak pernah di bawah 11px. */
+    --ukuran-kartu: max(11px, min(calc(var(--W) * var(--k-lebar)), calc(var(--tinggi-layar) * var(--k-tinggi))));
+
+    min-height: var(--tinggi-layar);
+    overflow-x: hidden;
+    background: #4a8df0;             /* warna langit selama gambar dimuat */
+}
+
+@supports (height: 1svh) {
+    .hasil-body { --tinggi-layar: 100svh; }
+}
+
+/* HP berdiri dan tablet berdiri: kartu hampir selebar layar */
+@media (orientation: portrait) {
+    .hasil-body {
+        --rasio: .5625;              /* 9:16 */
+        --k-lebar: .036;
+        --fokus-latar: 45% 50%;
+    }
+}
+
+/* ============================================================
+   LATAR
+   ============================================================ */
+.latar {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--fokus-latar);
+    z-index: 0;
+    pointer-events: none;
+}
+.redup {                              /* lapisan gelap tipis agar kartu menonjol */
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(20, 16, 50, .6);
+}
+
+.hasil-halaman {
+    position: relative;
+    z-index: 2;
+    min-height: var(--tinggi-layar);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1em;
+    padding: 1.2em 0;
+    font-size: var(--ukuran-kartu);   /* dari sini semua ukuran "em" di bawah dihitung */
+}
+
+/* ============================================================
+   KARTU HASIL
+   ============================================================ */
+
+/* Pembungkus luar: animasi muncul dan bayangan. TIDAK ikut diunduh. */
+.kartu-bingkai {
+    animation: muncul .5s cubic-bezier(.34, 1.56, .64, 1) both;
+    filter: drop-shadow(0 .9em .9em rgba(0, 0, 0, .35));
+}
+@keyframes muncul {
+    from { transform: scale(.85); opacity: 0; }
+    to   { transform: none;       opacity: 1; }
+}
+
+/* #score-card = bagian yang diubah menjadi gambar. Di layar ia tidak punya tampilan sendiri. */
+
+.kartu-hasil {
+    --coklat: #6b3220;
+    width: 26em;
+    max-width: 94vw;
+    padding: 1.5em 1.5em 1.6em;
+    text-align: center;
+    color: #5b2e14;
+    background: linear-gradient(#fff3d6, #ffe3a3);
+    border: .55em solid #b87333;
+    border-radius: 1.6em;
+    box-shadow: 0 .5em 0 #7a4a1c;     /* tepi bawah tebal: kesan 3D */
+}
+
+.piala {
+    font-size: 3.6em;
+    line-height: 1.1;
+}
+
+/* Judul krem dengan garis tepi coklat. Garisnya dari text-shadow (bukan text-stroke)
+   supaya ikut tergambar saat diunduh. */
+.judul-hasil {
+    margin-top: .05em;
+    font-size: 2.2em;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #fff3d6;
+    text-shadow:
+        -.07em -.07em 0 var(--coklat),
+         .07em -.07em 0 var(--coklat),
+        -.07em  .07em 0 var(--coklat),
+         .07em  .07em 0 var(--coklat),
+         0      .11em 0 var(--coklat);
+}
+
+.nama-siswa {
+    margin-top: .35em;
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+.nama-room {
+    margin-top: .15em;
+    font-size: .95em;
+    font-weight: 600;
+    color: #8a5a2b;
+    overflow-wrap: anywhere;
+}
+
+/* ----- Nilai akhir ----- */
+.blok-nilai {
+    margin: 1em 0 .85em;
+    padding: .7em .6em .75em;
+    background: rgba(255, 255, 255, .6);
+    border: .18em solid #e8c27a;
+    border-radius: 1em;
+}
+.blok-nilai .label { font-size: .9em; font-weight: 600; color: #8a5a2b; }
+.blok-nilai .angka {
+    font-size: 3.8em;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #2a9d4b;
+    text-shadow: 0 .04em 0 rgba(0, 0, 0, .18);
+}
+.blok-nilai .dari { font-size: .85em; color: #8a5a2b; }
+
+/* ----- Jawaban benar dan salah ----- */
+.statistik {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .7em;
+}
+.statistik > div {
+    padding: .6em .4em;
+    border: .15em solid;
+    border-radius: .9em;
+}
+.statistik-benar { background: #d9f5e0; border-color: #8fd6a3; }
+.statistik-salah { background: #fde0dc; border-color: #f0a59e; }
+.statistik .angka { font-size: 2.1em; font-weight: 700; line-height: 1.1; }
+.statistik-benar .angka { color: #2a9d4b; }
+.statistik-salah .angka { color: #d64545; }
+.statistik .label { font-size: .8em; font-weight: 600; color: #8a5a2b; }
+
+.waktu {
+    margin-top: 1em;
+    font-size: .75em;
+    color: #8a5a2b;
+}
+
+/* ============================================================
+   TOMBOL (di luar kartu, jadi tidak ikut terunduh)
+   ============================================================ */
+.aksi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .7em;
+    width: 26em;
+    max-width: 94vw;
+}
+.tombol-game {
+    display: block;
+    width: 100%;
+    padding: .65em 1em;
+    font: inherit;
+    font-size: 1.1em;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 .08em 0 rgba(0, 0, 0, .25);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform .08s;
+    -webkit-tap-highlight-color: transparent;
+}
+.tombol-hijau {
+    background: linear-gradient(#5fd35f, #2fa82f);
+    box-shadow: 0 .3em 0 #1f7a1f, 0 .55em .7em rgba(0, 0, 0, .25), inset 0 .15em 0 rgba(255, 255, 255, .45);
+}
+.tombol-coklat {
+    background: linear-gradient(#e0a560, #b87333);
+    box-shadow: 0 .3em 0 #7a4a1c, 0 .55em .7em rgba(0, 0, 0, .25), inset 0 .15em 0 rgba(255, 255, 255, .35);
+}
+@media (hover: hover) {
+    .tombol-game:not(:disabled):hover { transform: translateY(-.1em); }
+}
+.tombol-game:not(:disabled):active { transform: translateY(.25em); }
+.tombol-game:disabled { filter: grayscale(.6); cursor: wait; }
+.tombol-game:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* ============================================================
+   MODE UNDUH
+   Kelas ini ditambahkan oleh assessmentResult.js HANYA pada SALINAN kartu
+   yang sedang difoto html2canvas, bukan pada halaman yang dilihat pengguna.
+   ============================================================ */
+.sedang-unduh * {
+    animation: none !important;
+    transition: none !important;
+}
+#score-card.mode-unduh {
+    width: max-content;
+    padding: 1.6em;                                  /* bingkai langit biru di sekeliling kartu */
+    background: linear-gradient(#8fc3ff, #4a8df0);
+    font-size: 20px;                                 /* ukuran TETAP: gambar sama di semua perangkat */
+}
+#score-card.mode-unduh .kartu-hasil {
+    max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kartu-bingkai { animation: none; }
+}

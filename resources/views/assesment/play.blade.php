@@ -26,7 +26,7 @@
         {{-- PAPAN SOAL --}}
         <section class="board">
             <img class="board__img"
-                 src="{{ asset('images/wood-boards.webp') }}"
+                 src="{{ asset('images/question-board.webp') }}"
                  alt="" aria-hidden="true">
  
             <div class="board__content">

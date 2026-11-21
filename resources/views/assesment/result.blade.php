@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil Kuis - {{ $result->nama }}</title>
+    <link rel="stylesheet" href="{{ asset('css/game-base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/assesmentResult.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{--
@@ -15,118 +17,85 @@
     --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body class="min-h-screen bg-gray-100 flex items-center
-             justify-center p-6">
+<body class="hasil-body">
 
-    <div class="w-full max-w-md">
+    {{-- Latar belakang + lapisan gelap tipis --}}
+    <img class="latar" src="{{ asset('images/background.webp') }}" alt=""
+         decoding="async" fetchpriority="high" draggable="false">
+    <div class="redup" aria-hidden="true"></div>
 
-        {{--
-            SCORE CARD.
+    <main class="hasil-halaman">
 
-            Elemen dengan id="score-card" ini yang akan
-            di-capture oleh html2canvas dan diunduh sebagai JPEG.
+        {{-- Pembungkus luar: hanya untuk animasi muncul dan bayangan (TIDAK ikut diunduh) --}}
+        <div class="kartu-bingkai">
 
-            Semua konten yang ingin muncul di gambar hasil
-            harus berada di dalam div ini.
-        --}}
-        <div id="score-card"
-             class="bg-white rounded-xl shadow p-8 text-center mb-4">
+            {{--
+                SCORE CARD.
 
-            {{-- Icon/emoji sebagai dekorasi --}}
-            <div class="text-5xl mb-4">🎉</div>
+                Elemen id="score-card" inilah yang diubah menjadi gambar oleh html2canvas
+                (lihat public/js/assessmentResult.js). Semua yang ingin muncul di gambar
+                hasil unduhan harus berada di dalam elemen ini.
+            --}}
+            <div id="score-card">
+                <article class="kartu-hasil">
 
-            <h1 class="text-2xl font-bold text-gray-800 mb-1">
-                Selamat, {{ $result->nama }}!
-            </h1>
+                    <div class="piala" aria-hidden="true">&#127942;</div>
 
-            <p class="text-gray-500 text-sm mb-6">
-                {{ $result->room->nama_room }}
-            </p>
+                    <h1 class="judul-hasil">Selamat!</h1>
+                    <p class="nama-siswa">{{ $result->nama }}</p>
+                    <p class="nama-room">{{ $result->room->nama_room }}</p>
 
-            {{-- Skor utama ditampilkan besar di tengah --}}
-            <div class="bg-green-50 rounded-xl py-6 mb-6">
-                <p class="text-sm text-gray-500 mb-1">Nilai Akhir</p>
-                <p class="text-6xl font-bold text-green-600">
-                    {{ $result->skor }}
-                </p>
-                <p class="text-sm text-gray-400 mt-1">dari 100</p>
-            </div>
+                    {{-- Nilai akhir --}}
+                    <section class="blok-nilai">
+                        <p class="label">Nilai Akhir</p>
+                        <p class="angka">{{ $result->skor }}</p>
+                        <p class="dari">dari 100</p>
+                    </section>
 
-            {{-- Statistik benar dan salah berdampingan --}}
-            <div class="grid grid-cols-2 gap-4 mb-4">
+                    {{-- Jawaban benar dan salah berdampingan --}}
+                    <section class="statistik">
+                        <div class="statistik-benar">
+                            <p class="angka">{{ $jumlahBenar }}</p>
+                            <p class="label">Jawaban Benar</p>
+                        </div>
+                        <div class="statistik-salah">
+                            <p class="angka">{{ $jumlahSalah }}</p>
+                            <p class="label">Jawaban Salah</p>
+                        </div>
+                    </section>
 
-                <div class="bg-green-50 rounded-lg p-4">
-                    <p class="text-3xl font-bold text-green-600">
-                        {{ $jumlahBenar }}
+                    {{--
+                        Waktu selesai. $result->waktu_selesai adalah Carbon karena Model
+                        sudah memakai cast 'datetime'.
+                        locale('id') + translatedFormat() menghasilkan nama bulan bahasa
+                        Indonesia, contoh: "15 Juni 2025, 14:30".
+                    --}}
+                    <p class="waktu">
+                        Diselesaikan pada:
+                        {{ $result->waktu_selesai?->locale('id')->translatedFormat('d F Y, H:i') }}
                     </p>
-                    <p class="text-sm text-gray-500 mt-1">Jawaban Benar</p>
-                </div>
 
-                <div class="bg-red-50 rounded-lg p-4">
-                    <p class="text-3xl font-bold text-red-500">
-                        {{ $jumlahSalah }}
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1">Jawaban Salah</p>
-                </div>
-
+                </article>
             </div>
-
-            {{-- Waktu selesai --}}
-            <p class="text-xs text-gray-400">
-                Diselesaikan pada:
-                {{--
-                    $result->waktu_selesai adalah Carbon instance
-                    karena kita sudah set cast 'datetime' di Model.
-
-                    format() adalah method Carbon untuk memformat tanggal.
-                    'd M Y, H:i' → contoh: "15 Jun 2025, 14:30"
-                --}}
-                {{ $result->waktu_selesai?->format('d M Y, H:i') }}
-            </p>
-
         </div>
 
-        {{-- TOMBOL DOWNLOAD --}}
-        <button onclick="downloadCard()"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white
-                       font-semibold py-3 rounded-xl transition mb-3">
-            📥 Download Score Card
-        </button>
+        {{-- Tombol di bawah kartu (di luar #score-card, jadi tidak ikut tergambar) --}}
+        <div class="aksi">
+            {{-- data-nama dipakai untuk nama file unduhan. Memakai atribut data (bukan menulis
+                 nama langsung di JavaScript) supaya nama siswa tidak bisa menyelipkan kode. --}}
+            <button type="button" class="tombol-game tombol-hijau" id="btn-unduh"
+                    data-nama="{{ $result->nama }}">
+                Unduh Kartu Skor
+            </button>
 
-        {{-- TOMBOL KEMBALI --}}
-        <a href="{{ route('game.index') }}"
-           class="block text-center text-sm text-gray-400
-                  hover:text-gray-600">
-            ← Kembali ke daftar room
-        </a>
+            <a class="tombol-game tombol-coklat" href="{{ route('game.index') }}">
+                Kembali ke daftar room
+            </a>
+        </div>
 
-    </div>
+    </main>
 
-    <script>
-    function downloadCard() {
-
-        const element = document.getElementById('score-card');
-        html2canvas(element, {
-            scale: 2,
-
-            useCORS: true,
-
-            backgroundColor: '#ffffff',
-
-        }).then(canvas => {
-
-            const imageData = canvas.toDataURL('image/jpeg', 0.9);
-
-            const link = document.createElement('a');
-
-            link.href = imageData;
-
-            link.download = `hasil-kuis-{{ $result->nama }}.jpg`;
-
-            link.click();
-        });
-    }
-    </script>
+    <script src="{{ asset('js/assesmentResult.js') }}"></script>
 
 </body>
 </html>

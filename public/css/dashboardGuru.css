@@ -1,0 +1,314 @@
+/* ================= FONT AREA ================= */
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 200 1000;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('../fonts/Fredoka-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+[hidden] { display: none !important; }
+
+/* ================= PALET WARNA ================= */
+
+:root {
+    /* Palet utama */
+    --golden-yellow: #FBB825;
+    --bright-yellow: #F6D549;
+    --orange:        #E47B18;
+    --terracotta:    #B1540C;
+    --dark-brown:    #7E2D08;
+    --deep-brown:    #401A0A;
+
+    /* Warna pendukung */
+    --cream:         #F4E8DF;
+    --peach:         #F3C29A;
+    --sky-blue:      #A6D3DA;
+    --light-blue:    #6AC1E9;
+    --leaf-green:    #9ABB1C;
+    --forest-green:  #587E0D;
+}
+
+.guru-body {
+    margin: 0;
+    font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--deep-brown);
+    background: var(--cream);
+}
+
+.guru-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.guru-sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    flex: 0 0 16.75rem;
+    width: 16.75rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(246, 213, 73, .65) 0%, var(--cream) 100%);
+    border-right: 2px solid var(--peach);
+    box-shadow: 6px 0 24px -12px rgba(126, 45, 8, .35);
+}
+
+.guru-logo {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 0;
+}
+.guru-logo img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 9999px;
+    box-shadow: 0 6px 16px -4px rgba(126, 45, 8, .4);
+}
+
+.guru-nav {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    padding: 0 1rem;
+    margin-bottom: auto;
+    margin-top: 2rem;
+}
+
+.guru-nav__item {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .65rem 1rem;
+    font-size: .95rem;
+    font-weight: 800;
+    color: var(--deep-brown);
+    text-decoration: none;
+    background: rgba(255, 255, 255, .6);
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    transition: background-color .15s, border-color .15s, transform .1s;
+}
+.guru-nav__item img { width: 1.5rem; height: 1.5rem; flex-shrink: 0; }
+.guru-nav__item:hover {
+    background: #fff;
+    border-color: var(--bright-yellow);
+}
+.guru-nav__item:active { transform: scale(.98); }
+
+.guru-nav__item.is-active {
+    background: linear-gradient(180deg, var(--golden-yellow), var(--orange));
+    border-color: var(--orange);
+    box-shadow: 0 3px 0 var(--terracotta);
+}
+.guru-nav__item.is-active img { filter: brightness(0) invert(1); } /* ikon jadi putih di menu aktif */
+
+.guru-nav__item:focus-visible,
+.guru-logout:focus-visible {
+    outline: 3px solid var(--deep-brown);
+    outline-offset: 2px;
+}
+
+.guru-logout-wrap {
+    padding: .5rem;
+    background: var(--peach);
+    border-top: 2px solid rgba(126, 45, 8, .12);
+}
+.guru-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    width: 100%;
+    padding: .8rem 1rem;
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 800;
+    color: var(--deep-brown);
+    background: transparent;
+    border: 0;
+    border-radius: .75rem;
+    cursor: pointer;
+    transition: background-color .15s;
+}
+.guru-logout:hover { background: rgba(255, 255, 255, .55); }
+.guru-logout img { width: 1.4rem; height: 1.4rem; }
+
+/* ================= KONTEN ================= */
+.guru-main {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding: 2rem 2.25rem;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 100% 100%, rgba(166, 211, 218, .6), transparent 50%),
+        linear-gradient(160deg, var(--cream) 0%, #F7D8BC 55%, var(--peach) 100%);
+}
+.guru-main__inner { position: relative; z-index: 1; }
+
+
+.guru-deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+.guru-deco--1 { width: 300px; right: -90px; bottom: -90px; opacity: .9; transform: rotate(15deg); }
+.guru-deco--2 { width: 170px; right: 17%;   bottom: 6%;     opacity: .8; transform: rotate(-25deg); }
+
+.guru-alert {
+    margin-bottom: 1rem;
+    padding: .75rem 1rem;
+    font-size: .9rem;
+    font-weight: 700;
+    border-radius: .75rem;
+}
+.guru-alert--success {
+    color: var(--deep-brown);
+    background: rgba(154, 187, 28, .35);
+    border: 2px solid var(--leaf-green);
+}
+
+/* ================= DASHBOARD ================= */
+.guru-title {
+    margin: 0;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.25rem;
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--dark-brown);
+}
+.guru-greeting {
+    margin: .25rem 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--terracotta);
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    padding: 1.5rem;
+    min-height: 10.5rem;
+    color: var(--deep-brown);
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 0 rgba(126, 45, 8, .18), 0 18px 30px -14px rgba(126, 45, 8, .4);
+}
+.stat-card--total  { background: linear-gradient(145deg, var(--bright-yellow), var(--golden-yellow)); }
+.stat-card--active { background: linear-gradient(145deg, #B5D23E, var(--leaf-green)); }
+
+.stat-card__head {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+.stat-card__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: #fff;
+    border-radius: 9999px;
+    box-shadow: 0 3px 0 rgba(126, 45, 8, .2);
+}
+.stat-card__icon img { width: 1.5rem; height: 1.5rem; }
+
+.stat-card__label {
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+.stat-card__value {
+    margin-top: auto;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    font-weight: 600;
+    color: var(--deep-brown);
+}
+.stat-card__hint {
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--dark-brown);
+}
+
+/* titik "aktif" berdenyut */
+.pulse-dot {
+    position: relative;
+    width: .9rem;
+    height: .9rem;
+    background: var(--forest-green);
+    border: 2px solid #fff;
+    border-radius: 9999px;
+}
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: 2px solid var(--forest-green);
+    border-radius: 9999px;
+    opacity: 0;
+    animation: pulse 1.8s ease-out infinite;
+}
+@keyframes pulse {
+    0%   { transform: scale(.6); opacity: .8; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .pulse-dot::after { animation: none; }
+}
+
+/* bunga watermark di dalam kartu */
+.stat-card__flower {
+    position: absolute;
+    right: -28px;
+    bottom: -28px;
+    width: 130px;
+    opacity: .55;
+    transform: rotate(20deg);
+    pointer-events: none;
+}
+
+/* ================= RESPONSIF ================= */
+@media (max-width: 860px) {
+    .guru-shell { flex-direction: column; }
+    .guru-sidebar {
+        position: static;
+        flex: none;
+        width: 100%;
+        height: auto;
+        border-right: 0;
+        border-bottom: 2px solid var(--peach);
+    }
+    .guru-logo img { width: 80px; height: 80px; }
+    .guru-logo { padding-top: 1rem; }
+    .guru-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
+    .guru-main { padding: 1.5rem 1rem; }
+}
+@media (max-width: 560px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .guru-title { font-size: 1.85rem; }
+}

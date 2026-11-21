@@ -5,94 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="auth-body">
 
 {{-- Kartu login --}}
-<div class="bg-white w-full max-w-md rounded-xl border border-gray-300 shadow-sm p-8">
+<div class="auth-card">
 
     {{-- Logo --}}
-    <div class="flex justify-center">
-        <img src="{{ asset('images/logo.webp') }}"
-            alt="Logo"
-            class="w-30 h-30 object-contain">
+    <div class="auth-logo">
+        <img src="{{ asset('images/logo.webp') }}" alt="Logo Ngiring Malajah Basa Bali">
     </div>
 
     {{-- Judul --}}
-    <h1 class="text-3xl font-bold text-gray-800 text-center mt-1">Selamat Datang!</h1>
-    <p class="text-gray-500 text-center">Masuk ke akun anda</p>
+    <h1 class="auth-title">Selamat Datang!</h1>
+    <p class="auth-subtitle">Masuk ke akun anda</p>
 
     {{-- Form --}}
-    <form method="POST"
-          action="{{ route('login.proses') }}"
-          class="mt-6">
+    <form method="POST" action="{{ route('login.proses') }}" class="auth-form">
         @csrf
 
         {{-- Input tersembunyi: menyimpan role yang dipilih (guru / admin) --}}
         <input type="hidden" name="role" id="role-input" value="{{ old('role', 'guru') }}">
 
         {{-- Pilihan role --}}
-        <label class="block text-sm text-gray-600 mb-2">Masuk sebagai:</label>
-        <div class="grid grid-cols-2 gap-2">
-            <button type="button" id="btn-guru"
-                    class="role-btn flex items-center justify-center gap-2 py-2 rounded-lg border text-sm font-medium transition">
-                👤 Guru
-            </button>
-            <button type="button" id="btn-admin"
-                    class="role-btn flex items-center justify-center gap-2 py-2 rounded-lg border text-sm font-medium transition">
-                ⭐ Admin
-            </button>
+        <span class="auth-label">Masuk sebagai:</span>
+        <div class="role-group">
+            <button type="button" id="btn-guru" class="role-btn">👤 Guru</button>
+            <button type="button" id="btn-admin" class="role-btn">⭐ Admin</button>
         </div>
 
         {{-- Pesan error (kalau login gagal) --}}
         @if ($errors->any())
-            <div class="mt-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+            <div class="auth-alert" role="alert">
                 {{ $errors->first() }}
             </div>
         @endif
 
         {{-- Username --}}
-        <div class="mt-4">
-            <label for="username" class="block text-sm text-gray-600 mb-1">Username</label>
+        <div class="auth-field">
+            <label for="username" class="auth-label">Username</label>
             <input type="text" id="username" name="username"
                    value="{{ old('username') }}"
                    placeholder="username"
                    required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                          focus:outline-none focus:ring-2 focus:ring-blue-400">
+                   class="auth-input">
         </div>
 
         {{-- Password --}}
-        <div class="mt-4">
-            <label for="password" class="block text-sm text-gray-600 mb-1">Password</label>
+        <div class="auth-field">
+            <label for="password" class="auth-label">Password</label>
             <input type="password" id="password" name="password"
                    placeholder="password"
                    required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                          focus:outline-none focus:ring-2 focus:ring-blue-400">
+                   class="auth-input">
         </div>
 
         {{-- Tombol Masuk --}}
-        <button type="submit"
-                class="w-full mt-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600
-                       text-white font-semibold transition">
-            Masuk
-        </button>
+        <button type="submit" class="auth-btn">Masuk</button>
 
         {{-- Link daftar: HANYA tampil untuk Guru --}}
-        <p id="register-text" class="text-center text-xs text-gray-500 mt-3">
+        <p id="register-text" class="auth-text">
             Belum punya akun?
-            <a href="{{ Route::has('register') ? route('register') : '#' }}"
-               class="text-blue-500 hover:underline">Daftar di sini</a>
+            <a href="{{ Route::has('register') ? route('register') : '#' }}" class="auth-link">Daftar di sini</a>
         </p>
-            {{-- link untuk forgot password --}}
-        <p id="forgot-password" class="text-center text-xs text-gray-500 mt-3">
-            <a href="{{ Route::has('#') ? route('#') : '#' }}"
-               class="text-blue-500 hover:underline">lupa password?</a>
+
+        {{-- Link lupa password --}}
+        <p id="forgot-password" class="auth-text">
+            <a href="#" class="auth-link">lupa password?</a>
         </p>
+
+        {{-- Tombol kembali --}}
+        <a href="{{ route('game.index') }}" class="auth-back">← Kembali ke beranda</a>
     </form>
 </div>
+
 <script src="{{ asset('js/login.js') }}"></script>
 
 </body>
