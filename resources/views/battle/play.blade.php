@@ -10,7 +10,7 @@
     <title>Battle - {{ $room->nama_room }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/battlePlay.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/battle/battlePlay.css') }}">
 </head>
 <body class="battle-body">
 

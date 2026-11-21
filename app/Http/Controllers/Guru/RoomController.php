@@ -24,17 +24,6 @@ class RoomController extends Controller
  
         return view('guru.room', compact('daftarRoom'));
     }
-
-    public function dashboard()
-    {
-        // Hanya room milik guru yang sedang login
-        $roomGuru = Room::where('id_user', Auth::id());
-
-        return view('guru.dashboardGuru', [
-            'totalRoom' => (clone $roomGuru)->count(),
-            'roomAktif' => (clone $roomGuru)->where('status', true)->count(),
-        ]);
-    }
  
     public function create()
     {

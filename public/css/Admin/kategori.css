@@ -1,0 +1,145 @@
+/* =========================================================
+   Halaman Kelola Kategori (admin) — Ngiring Malajah Basa Bali
+   Lokasi: public/css/adminKategori.css
+   Semua class diawali "kt-" supaya tidak bentrok dengan Tailwind.
+   ========================================================= */
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 600 ;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+.kt {
+    --kt-ink: #3B1F0E;
+    --kt-ink-strong: #2A160A;
+    --kt-muted: #7A5A44;
+    --kt-line: #F1DCC2;
+    --kt-line-2: #EBD5BB;
+    --kt-orange: linear-gradient(180deg, #F7B531 0%, #EE9A1E 55%, #E5861A 100%);
+    font-family: 'Nunito', system-ui, sans-serif;
+    color: var(--kt-ink);
+    max-width: 1056px;
+    display: flex; flex-direction: column; gap: 24px;
+}
+.kt *, .kt *::before, .kt *::after { box-sizing: border-box; }
+.kt button, .kt input { font-family: inherit; }
+.kt input::placeholder { color: #A08670; }
+.kt :focus-visible { outline: 3px solid #B45309; outline-offset: 2px; }
+.kt form { margin: 0; }
+.kt .kt-hidden { display: none !important; }
+.kt-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Judul */
+.kt-head { display: flex; align-items: center; gap: 16px; }
+.kt-head__icon {
+    width: 56px; height: 56px; flex: none; border-radius: 18px;
+    background: var(--kt-orange); border: 2px solid #C96F12; box-shadow: 0 4px 0 #B9630E;
+    display: flex; align-items: center; justify-content: center; color: var(--kt-ink);
+}
+.kt-title { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--kt-ink-strong); }
+
+/* Error */
+.kt-error {
+    display: flex; gap: 12px; align-items: flex-start; padding: 16px 20px; border-radius: 18px;
+    background: #FEECE8; border: 2px solid #F5B5A8; color: #9F1D12; font-weight: 700; font-size: 15px;
+}
+.kt-error svg { flex: none; margin-top: 1px; }
+.kt-error p { margin: 0 0 4px; }
+.kt-error p:last-child { margin-bottom: 0; }
+
+/* Kartu */
+.kt-card {
+    background: #FFFDF8; border: 2px solid var(--kt-line); border-radius: 26px;
+    box-shadow: 0 7px 0 #EBCDAA, 0 16px 34px rgba(120, 72, 20, .10);
+    padding: clamp(18px, 2.5vw, 28px);
+}
+.kt-card--table { padding: 12px; overflow-x: auto; }
+.kt-card__title {
+    margin: 0; display: flex; align-items: center; gap: 10px;
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 22px; color: var(--kt-ink-strong);
+}
+.kt-card__plus {
+    width: 32px; height: 32px; border-radius: 50%; background: #FDE7B0; color: #8A4A0C;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Input */
+.kt-input {
+    min-height: 56px; padding: 0 20px; border-radius: 16px;
+    border: 2px solid var(--kt-line-2); background: #FFF8EE;
+    font-size: 17px; font-weight: 700; color: var(--kt-ink);
+    transition: border-color .15s, box-shadow .15s;
+}
+.kt-input:focus { outline: none; border-color: #EE9A1E; box-shadow: 0 0 0 4px rgba(238, 154, 30, .25); }
+.kt-tambah { margin-top: 14px !important; display: flex; flex-wrap: wrap; gap: 12px; }
+.kt-tambah .kt-input { flex: 1 1 260px; }
+
+/* Tombol */
+.kt-btn {
+    min-height: 44px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-weight: 800; font-size: 14px; transition: transform .15s;
+}
+.kt-btn:hover { transform: translateY(-2px); }
+.kt-btn--primary {
+    min-height: 56px; padding: 0 32px; gap: 8px;
+    background: var(--kt-orange); border: 2px solid #C96F12; box-shadow: 0 5px 0 #B9630E;
+    color: var(--kt-ink); font-family: 'Baloo 2', sans-serif; font-size: 18px;
+}
+.kt-btn--ubah { background: #FFF3DC; border: 2px solid #E9B65C; box-shadow: 0 3px 0 #E9B65C; color: #7A4A06; }
+.kt-btn--hapus { background: #FFF1EE; border: 2px solid #F0B4A6; box-shadow: 0 3px 0 #F0B4A6; color: #A3271A; }
+.kt-btn--simpan { background: linear-gradient(180deg, #5DB653, #3F9A38); border: 2px solid #2F7A2A; box-shadow: 0 3px 0 #2A6526; color: #FFFFFF; }
+.kt-btn--batal { background: #FAF6DA; border: 2px solid var(--kt-line-2); box-shadow: 0 3px 0 var(--kt-line-2); color: var(--kt-ink); }
+
+/* Tabel */
+.kt-table { width: 100%; min-width: 520px; border-collapse: separate; border-spacing: 0 10px; font-size: 16px; }
+.kt-table th {
+    padding: 6px 16px; text-align: left;
+    font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #8A5A30;
+}
+.kt-table .kt-col-no { width: 64px; }
+.kt-table .kt-right { text-align: right; }
+
+.kt-row td {
+    padding: 14px 16px; vertical-align: middle; background: #FFFFFF;
+    border-top: 2px solid var(--kt-line); border-bottom: 2px solid var(--kt-line);
+    transition: background .15s;
+}
+.kt-row td:first-child { border-left: 2px solid var(--kt-line); border-radius: 18px 0 0 18px; }
+.kt-row td:last-child { border-right: 2px solid var(--kt-line); border-radius: 0 18px 18px 0; }
+.kt-row:hover td { background: #FFF8EE; }
+.kt-row.is-editing td { background: #FFF1D6; }
+
+.kt-no {
+    width: 36px; height: 36px; border-radius: 12px; background: #FDE7B0; color: #7A3E08;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 17px;
+}
+.kt-nama { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 19px; color: var(--kt-ink-strong); }
+
+.kt-ubah { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.kt-input--ubah {
+    flex: 1 1 200px; min-height: 44px; padding: 0 14px; border-radius: 12px;
+    background: #FFFFFF; border-color: #EE9A1E; font-size: 16px;
+}
+.kt-aksi { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+
+.kt-empty {
+    padding: 40px 16px; text-align: center; background: #FFF6EA;
+    border: 2px dashed var(--kt-line); border-radius: 18px;
+    font-weight: 700; color: var(--kt-muted);
+}
+
+@media (max-width: 640px) {
+    .kt-title { font-size: 32px; }
+}

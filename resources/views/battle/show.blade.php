@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="only light">
     <title>Battle Mode — {{ $room->nama_room }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/battleShow.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/battle/battleShow.css') }}">
 </head>
 <body class="setup-body">
 

@@ -8,15 +8,31 @@
 @section('title', $mengubah ? 'Ubah Soal' : 'Tambah Soal')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/Admin/soalForm.css') }}">
 
-    <h1 class="text-2xl font-bold text-gray-800">{{ $mengubah ? 'Ubah Soal' : 'Tambah Soal' }}</h1>
+<div class="sf">
+
+    {{-- Judul --}}
+    <div class="sf-head">
+        <span class="sf-head__icon" aria-hidden="true">
+            @if ($mengubah)
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+            @else
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            @endif
+        </span>
+        <h1 class="sf-title">{{ $mengubah ? 'Ubah Soal' : 'Tambah Soal' }}</h1>
+    </div>
 
     {{-- Ringkasan error. unique() menghapus pesan kembar (misalnya "semua jawaban harus diisi" yang muncul 4 kali) --}}
     @if ($errors->any())
-        <div class="mt-4 max-w-3xl p-3 rounded-lg bg-red-50 text-red-600 text-sm">
-            @foreach (collect($errors->all())->unique() as $pesan)
-                <p>{{ $pesan }}</p>
-            @endforeach
+        <div class="sf-error" role="alert">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
+            <div>
+                @foreach (collect($errors->all())->unique() as $pesan)
+                    <p>{{ $pesan }}</p>
+                @endforeach
+            </div>
         </div>
     @endif
 
@@ -24,106 +40,122 @@
     <form method="POST"
           enctype="multipart/form-data"
           action="{{ $mengubah ? route('admin.soal.update', $soal) : route('admin.soal.store') }}"
-          class="mt-6 max-w-3xl bg-white rounded-xl border border-gray-200 p-6 space-y-5">
+          class="sf-card">
         @csrf
 
-        {{-- Pertanyaan --}}
-        <div>
-            <label for="pertanyaan" class="block text-sm text-gray-600 mb-1">Pertanyaan</label>
+        {{-- 1. Pertanyaan --}}
+        <div class="sf-field">
+            <label for="pertanyaan" class="sf-label"><span class="sf-num">1</span> Pertanyaan</label>
             <textarea id="pertanyaan" name="pertanyaan" rows="3" required maxlength="255"
                       placeholder="Tulis pertanyaan di sini"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
-                             focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('pertanyaan', $soal?->pertanyaan) }}</textarea>
+                      class="sf-input sf-textarea">{{ old('pertanyaan', $soal?->pertanyaan) }}</textarea>
         </div>
 
-        {{-- Kategori --}}
-        <div>
-            <label for="id_kategori" class="block text-sm text-gray-600 mb-1">Kategori</label>
-            <select id="id_kategori" name="id_kategori" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white
-                           focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option value="">-- Pilih kategori --</option>
-                @foreach ($daftarKategori as $kategori)
-                    <option value="{{ $kategori->id_kategori }}"
-                            @selected((string) old('id_kategori', $soal?->id_kategori) === (string) $kategori->id_kategori)>
-                        {{ $kategori->nama_kategori }}
-                    </option>
-                @endforeach
-            </select>
+        {{-- 2. Kategori --}}
+        <div class="sf-field">
+            <label for="id_kategori" class="sf-label"><span class="sf-num">2</span> Kategori</label>
+            <div class="sf-select">
+                <select id="id_kategori" name="id_kategori" required class="sf-input">
+                    <option value="">-- Pilih kategori --</option>
+                    @foreach ($daftarKategori as $kategori)
+                        <option value="{{ $kategori->id_kategori }}"
+                                @selected((string) old('id_kategori', $soal?->id_kategori) === (string) $kategori->id_kategori)>
+                            {{ $kategori->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
             @if ($daftarKategori->isEmpty())
-                <p class="text-xs text-red-500 mt-1">
+                <p class="sf-warn">
                     Belum ada kategori.
-                    <a href="{{ route('admin.kategori.index') }}" class="underline">Buat kategori dulu</a>.
+                    <a href="{{ route('admin.kategori.index') }}">Buat kategori dulu</a>.
                 </p>
             @endif
         </div>
 
-        {{-- Gambar (opsional) --}}
-        <div>
-            <label for="gambar" class="block text-sm text-gray-600 mb-1">Gambar (opsional, maksimal 2 MB)</label>
+        {{-- 3. Gambar (opsional) --}}
+        <div class="sf-field">
+            <label for="gambar" class="sf-label">
+                <span class="sf-num">3</span> Gambar <small>(opsional, maksimal 2 MB)</small>
+            </label>
 
             @if ($mengubah && $soal->gambar)
-                <div class="mb-2 flex items-center gap-3">
-                    <img src="{{ asset('storage/' . $soal->gambar) }}" alt="Gambar soal"
-                         class="h-20 rounded-lg border border-gray-200">
-                    <label class="flex items-center gap-2 text-sm text-gray-600">
+                <div class="sf-gambar-lama">
+                    <img src="{{ asset('storage/' . $soal->gambar) }}" alt="Gambar soal">
+                    <label class="sf-hapus-gambar">
                         <input type="checkbox" name="hapus_gambar" value="1">
                         Hapus gambar ini
                     </label>
                 </div>
             @endif
 
-            <input type="file" id="gambar" name="gambar" accept="image/*"
-                   class="block w-full text-sm text-gray-600
-                          file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0
-                          file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200">
+            <label class="sf-file" for="gambar">
+                <span class="sf-file__btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+                    Pilih gambar
+                </span>
+                <span class="sf-file__nama" id="nama-file">Belum ada file dipilih</span>
+                <input type="file" id="gambar" name="gambar" accept="image/*">
+            </label>
+
             @if ($mengubah && $soal->gambar)
-                <p class="text-xs text-gray-400 mt-1">Pilih file baru untuk mengganti gambar yang sekarang.</p>
+                <p class="sf-note">Pilih file baru untuk mengganti gambar yang sekarang.</p>
             @endif
         </div>
 
-        {{-- Pilihan jawaban --}}
-        <div>
-            <p class="text-sm text-gray-600 mb-2">Pilihan jawaban</p>
+        {{-- 4. Pilihan jawaban --}}
+        <div class="sf-field">
+            <p class="sf-label"><span class="sf-num">4</span> Pilihan jawaban</p>
 
-            <div class="space-y-2">
+            <div class="sf-opsi">
                 @foreach (range(0, 3) as $i)
-                    <div class="flex items-center gap-3">
-                        {{-- Bulatan untuk menandai jawaban yang benar. value = urutan (0-3) --}}
-                        <input type="radio" name="benar" value="{{ $i }}" required
-                               @checked((string) old('benar', $indexBenar) === (string) $i)
-                               class="w-4 h-4">
-
-                        <span class="w-5 text-sm font-medium text-gray-500">{{ chr(65 + $i) }}</span>
+                    <div class="sf-opsi__row">
+                        <label class="sf-opsi__pilih">
+                            {{-- Bulatan untuk menandai jawaban yang benar. value = urutan (0-3) --}}
+                            <input type="radio" name="benar" value="{{ $i }}" required
+                                   aria-label="Tandai jawaban {{ chr(65 + $i) }} sebagai benar"
+                                   @checked((string) old('benar', $indexBenar) === (string) $i)>
+                            <span class="sf-opsi__dot" aria-hidden="true">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                            </span>
+                            <span class="sf-opsi__huruf">{{ chr(65 + $i) }}</span>
+                        </label>
 
                         {{-- name="jawaban[0]" ... "jawaban[3]" : dikirim sebagai array --}}
                         <input type="text" name="jawaban[{{ $i }}]"
                                value="{{ old('jawaban.' . $i, $teks[$i] ?? '') }}"
                                placeholder="Jawaban {{ chr(65 + $i) }}" required
-                               class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm
-                                      focus:outline-none focus:ring-2 focus:ring-blue-400">
+                               aria-label="Jawaban {{ chr(65 + $i) }}"
+                               class="sf-input sf-opsi__input">
+
+                        <span class="sf-opsi__benar">Benar</span>
                     </div>
                 @endforeach
             </div>
 
-            <p class="text-xs text-gray-400 mt-2">
+            <p class="sf-note sf-note--icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5v.5"/></svg>
                 Pilih bulatan di sebelah kiri untuk menandai jawaban yang benar.
             </p>
         </div>
 
         {{-- Tombol --}}
-        <div class="flex justify-end gap-2 pt-4 border-t border-gray-200">
-            <a href="{{ route('admin.soal.index') }}"
-               class="px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 hover:bg-gray-300
-                      text-gray-700 transition">
-                Batal
-            </a>
-            <button type="submit"
-                    class="px-5 py-2 rounded-lg text-sm font-medium bg-blue-500 hover:bg-blue-600
-                           text-white transition">
+        <div class="sf-actions">
+            <a href="{{ route('admin.soal.index') }}" class="sf-btn sf-btn--ghost">Batal</a>
+            <button type="submit" class="sf-btn sf-btn--primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
                 Simpan
             </button>
         </div>
     </form>
+</div>
 
+{{-- Tampilkan nama file yang dipilih --}}
+<script>
+    document.getElementById('gambar')?.addEventListener('change', function () {
+        document.getElementById('nama-file').textContent =
+            this.files.length ? this.files[0].name : 'Belum ada file dipilih';
+    });
+</script>
 @endsection

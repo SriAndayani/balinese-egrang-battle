@@ -3,20 +3,26 @@
 @section('title', 'Kelola Soal')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/Admin/soal.css') }}">
+
+<div class="ks">
 
     {{-- ============ JUDUL + TOMBOL ATAS ============ --}}
-    <div class="flex flex-wrap items-center justify-between gap-3">
-        <h1 class="text-2xl font-bold text-gray-800">Kelola Soal</h1>
+    <div class="ks-top">
+        <div class="ks-head">
+            <span class="ks-head__icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>
+            </span>
+            <h1 class="ks-title">Kelola Soal</h1>
+        </div>
 
-        <div class="flex gap-2">
-            <a href="{{ route('admin.kategori.index') }}"
-               class="px-4 py-2 rounded-lg text-sm font-medium bg-white border border-gray-300
-                      text-gray-700 hover:bg-gray-100 transition">
+        <div class="ks-top__aksi">
+            <a href="{{ route('admin.kategori.index') }}" class="ks-btn ks-btn--ghost">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6h11"/><path d="M10 12h11"/><path d="M10 18h11"/><path d="M4 5l2 1-2 1"/><path d="M3.5 12h3"/><path d="M4 17l2 1-2 1"/></svg>
                 Tambah Kategori
             </a>
-            <a href="{{ route('admin.soal.create') }}"
-               class="px-4 py-2 rounded-lg text-sm font-medium bg-blue-500 hover:bg-blue-600
-                      text-white transition">
+            <a href="{{ route('admin.soal.create') }}" class="ks-btn ks-btn--primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
                 Tambah Soal
             </a>
         </div>
@@ -24,137 +30,136 @@
 
     {{-- Pesan error (misalnya soal gagal dihapus karena masih dipakai) --}}
     @if ($errors->any())
-        <div class="mt-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm">
-            @foreach ($errors->all() as $pesan)
-                <p>{{ $pesan }}</p>
-            @endforeach
+        <div class="ks-error" role="alert">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
+            <div>
+                @foreach ($errors->all() as $pesan)
+                    <p>{{ $pesan }}</p>
+                @endforeach
+            </div>
         </div>
     @endif
 
     {{-- ============ FILTER KATEGORI ============
          onchange="this.form.submit()" : begitu pilihan diganti, form langsung dikirim.
     --}}
-    <form method="GET" action="{{ route('admin.soal.index') }}" class="mt-4">
-        <select name="kategori" onchange="this.form.submit()"
-                class="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white
-                       focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Semua kategori</option>
-            @foreach ($daftarKategori as $kategori)
-                <option value="{{ $kategori->id_kategori }}"
-                        @selected((string) $kategoriDipilih === (string) $kategori->id_kategori)>
-                    {{ $kategori->nama_kategori }}
-                </option>
-            @endforeach
-        </select>
+    <form method="GET" action="{{ route('admin.soal.index') }}" class="ks-filter">
+        <label for="filter-kategori" class="ks-sr">Filter kategori</label>
+        <div class="ks-filter__box">
+            <svg class="ks-filter__ikon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>
+            <select id="filter-kategori" name="kategori" onchange="this.form.submit()">
+                <option value="">Semua kategori</option>
+                @foreach ($daftarKategori as $kategori)
+                    <option value="{{ $kategori->id_kategori }}"
+                            @selected((string) $kategoriDipilih === (string) $kategori->id_kategori)>
+                        {{ $kategori->nama_kategori }}
+                    </option>
+                @endforeach
+            </select>
+            <svg class="ks-filter__panah" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
     </form>
 
     {{-- Warna badge kategori (dipilih berdasarkan id kategori, bergilir) --}}
     @php
-        $warnaBadge = [
-            'bg-blue-100 text-blue-700',
-            'bg-pink-100 text-pink-700',
-            'bg-green-100 text-green-700',
-            'bg-purple-100 text-purple-700',
-        ];
+        $warnaBadge = ['ks-badge--1', 'ks-badge--2', 'ks-badge--3', 'ks-badge--4'];
     @endphp
 
     {{-- ============ TABEL SOAL ============ --}}
-    <div class="mt-4 bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 text-gray-500 text-left">
-                    <tr>
-                        <th class="px-4 py-3 w-12 font-medium">#</th>
-                        <th class="px-4 py-3 font-medium">Pertanyaan</th>
-                        <th class="px-4 py-3 font-medium">Kategori</th>
-                        <th class="px-4 py-3 font-medium">Pembuat</th>
-                        <th class="px-4 py-3 font-medium text-center">Gambar</th>
-                        <th class="px-4 py-3 font-medium text-right">Aksi</th>
+    <section class="ks-card">
+        <table class="ks-table">
+            <thead>
+                <tr>
+                    <th class="ks-col-no">#</th>
+                    <th>Pertanyaan</th>
+                    <th>Kategori</th>
+                    <th>Pembuat</th>
+                    <th class="ks-center">Gambar</th>
+                    <th class="ks-right">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @forelse ($daftarSoal as $soal)
+                    <tr class="ks-row">
+                        {{-- Nomor lanjut antar halaman (halaman 2 mulai dari 11, dst.) --}}
+                        <td>
+                            <span class="ks-no">{{ $daftarSoal->firstItem() + $loop->index }}</span>
+                        </td>
+
+                        <td class="ks-pertanyaan">
+                            {{ Str::limit($soal->pertanyaan, 80) }}
+                        </td>
+
+                        <td>
+                            @if ($soal->kategori)
+                                <span class="ks-badge {{ $warnaBadge[$soal->id_kategori % count($warnaBadge)] }}">
+                                    {{ $soal->kategori->nama_kategori }}
+                                </span>
+                            @else
+                                <span class="ks-strip">-</span>
+                            @endif
+                        </td>
+
+                        <td>
+                            <p class="ks-pembuat">{{ $soal->pembuat?->username ?? '-' }}</p>
+                            <p class="ks-role">{{ ucfirst($soal->pembuat?->role ?? '') }}</p>
+                        </td>
+
+                        <td class="ks-center">
+                            @if ($soal->gambar)
+                                <a href="{{ asset('storage/' . $soal->gambar) }}" target="_blank"
+                                   title="Lihat gambar" aria-label="Lihat gambar" class="ks-gambar">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+                                </a>
+                            @else
+                                <span class="ks-strip">-</span>
+                            @endif
+                        </td>
+
+                        {{-- @can memakai SoalPolicy: tombol hanya muncul kalau diizinkan --}}
+                        <td>
+                            <div class="ks-aksi">
+                                @can('update', $soal)
+                                    <a href="{{ route('admin.soal.edit', $soal) }}" class="ks-btn ks-btn--ubah">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+                                        Ubah
+                                    </a>
+                                @endcan
+
+                                @can('delete', $soal)
+                                    <form method="POST" action="{{ route('admin.soal.destroy', $soal) }}"
+                                          onsubmit="return confirm('Hapus soal ini?')">
+                                        @csrf
+                                        <button type="submit" class="ks-btn ks-btn--hapus">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>
+                                            Hapus
+                                        </button>
+                                    </form>
+                                @endcan
+                            </div>
+                        </td>
                     </tr>
-                </thead>
 
-                <tbody class="divide-y divide-gray-200">
-                    @forelse ($daftarSoal as $soal)
-                        <tr>
-                            {{-- Nomor lanjut antar halaman (halaman 2 mulai dari 11, dst.) --}}
-                            <td class="px-4 py-3 text-gray-500">
-                                {{ $daftarSoal->firstItem() + $loop->index }}
-                            </td>
+                @empty
+                    <tr>
+                        <td colspan="6" class="ks-empty">
+                            Belum ada soal pada pilihan ini.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </section>
 
-                            <td class="px-4 py-3 text-gray-800 max-w-md">
-                                {{ Str::limit($soal->pertanyaan, 80) }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                @if ($soal->kategori)
-                                    <span class="px-2.5 py-1 rounded-md text-xs font-medium
-                                                 {{ $warnaBadge[$soal->id_kategori % count($warnaBadge)] }}">
-                                        {{ $soal->kategori->nama_kategori }}
-                                    </span>
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
-                            </td>
-
-                            <td class="px-4 py-3">
-                                <p class="text-gray-800">{{ $soal->pembuat?->username ?? '-' }}</p>
-                                <p class="text-xs text-gray-400">{{ ucfirst($soal->pembuat?->role ?? '') }}</p>
-                            </td>
-
-                            <td class="px-4 py-3 text-center">
-                                @if ($soal->gambar)
-                                    <a href="{{ asset('storage/' . $soal->gambar) }}" target="_blank"
-                                       title="Lihat gambar" class="text-lg">🖼️</a>
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
-                            </td>
-
-                            {{-- @can memakai SoalPolicy: tombol hanya muncul kalau diizinkan --}}
-                            <td class="px-4 py-3">
-                                <div class="flex justify-end gap-2">
-                                    @can('update', $soal)
-                                        <a href="{{ route('admin.soal.edit', $soal) }}"
-                                           class="px-3 py-1.5 rounded-lg text-xs font-medium
-                                                  bg-yellow-400 hover:bg-yellow-500 text-white transition">
-                                            Ubah
-                                        </a>
-                                    @endcan
-
-                                    @can('delete', $soal)
-                                        <form method="POST" action="{{ route('admin.soal.destroy', $soal) }}"
-                                              onsubmit="return confirm('Hapus soal ini?')">
-                                            @csrf
-                                            <button type="submit"
-                                                    class="px-3 py-1.5 rounded-lg text-xs font-medium
-                                                           bg-red-500 hover:bg-red-600 text-white transition">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    @endcan
-                                </div>
-                            </td>
-                        </tr>
-
-                    @empty
-                        <tr>
-                            <td colspan="6" class="px-4 py-8 text-center text-gray-500">
-                                Belum ada soal pada pilihan ini.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <p class="mt-3 text-xs text-gray-400">
+    <p class="ks-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5v.5"/></svg>
         Soal buatan guru hanya bisa dihapus oleh admin (moderasi). Mengubah isinya hanya bisa dilakukan pembuatnya.
     </p>
 
     {{-- Nomor halaman --}}
-    <div class="mt-4">
+    <div class="ks-pagination">
         {{ $daftarSoal->links() }}
     </div>
-
+</div>
 @endsection

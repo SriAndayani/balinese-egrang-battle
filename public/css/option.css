@@ -59,6 +59,25 @@
     --fokus-latar: 50% 50%;
 }
 
+/* PALET WARNA */
+
+.rf, .rf-modal {
+    --rf-ink: #3B1F0E;
+    --rf-ink-strong: #2A160A;
+    --rf-muted: #7A5A44;
+    --rf-card: #FFFDF8;
+    --rf-soft: #FFF8EE;
+    --rf-line: #F1DCC2;
+    --rf-line-2: #EBD5BB;
+    --rf-gold: #E9C98F;
+    --rf-orange: linear-gradient(180deg, #F7B531 0%, #EE9A1E 55%, #E5861A 100%);
+    --rf-orange-border: #C96F12;
+    --rf-orange-shadow: #B9630E;
+    --rf-green: #2F6B2B;
+    font-family: 'Nunito', system-ui, sans-serif;
+    color: var(--rf-ink);
+}
+
 /* ============================================================
    PENGATURAN: PORTRAIT (HP berdiri, tablet berdiri)
    Hanya angka yang berbeda dari landscape yang perlu ditulis ulang.

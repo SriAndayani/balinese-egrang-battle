@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soal {{ $nomorSoal }} - {{ $room->nama_room }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/assesmentPlay.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/assesment/assesmentPlay.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="game-soal">

@@ -25,4 +25,15 @@ class GuruController extends Controller
             'username'  => Auth::user()->username,
         ]);
     }
+
+    public function dashboardGuru()
+    {
+        // Hanya room milik guru yang sedang login
+        $roomGuru = Room::where('id_user', Auth::id());
+
+        return view('guru.dashboardGuru', [
+            'totalRoom' => (clone $roomGuru)->count(),
+            'roomAktif' => (clone $roomGuru)->where('status', true)->count(),
+        ]);
+    }
 }

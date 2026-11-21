@@ -3,18 +3,22 @@
 @section('title', 'Detail Hasil - ' . $room->nama_room)
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/Guru/hasilDetail.css') }}">
 
-    <a href="{{ route('guru.hasil.index') }}" class="text-sm text-gray-500 hover:text-gray-700">
-        ← Kembali ke daftar
+<div class="rf rf--full">
+
+    <a href="{{ route('guru.hasil.index') }}" class="hd-back">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        Kembali ke daftar
     </a>
 
     {{-- ============ JUDUL ROOM ============ --}}
-    <div class="mt-2 flex flex-wrap items-start justify-between gap-3">
+    <div class="hd-top">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">{{ $room->nama_room }}</h1>
-            <p class="text-sm text-gray-500 mt-1">
+            <h1 class="rf-title">{{ $room->nama_room }}</h1>
+            <p class="hd-kode-line">
                 Kode Room:
-                <span class="font-mono tracking-wider text-gray-700">{{ $room->kode_room ?? '-' }}</span>
+                <span class="kr-kode">{{ $room->kode_room ?? '-' }}</span>
             </p>
         </div>
 
@@ -22,9 +26,8 @@
             <form method="POST" action="{{ route('guru.hasil.destroy', $room) }}"
                   onsubmit="return confirm('Hapus SEMUA hasil siswa di room {{ $room->nama_room }}? Tindakan ini tidak bisa dibatalkan.')">
                 @csrf
-                <button type="submit"
-                        class="px-4 py-1.5 rounded-lg text-sm font-medium border border-gray-300
-                               text-gray-700 hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition">
+                <button type="submit" class="rf-btn kr-btn-hapus">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>
                     Hapus semua hasil
                 </button>
             </form>
@@ -33,7 +36,7 @@
 
     {{-- Belum ada siswa yang mengerjakan --}}
     @if ($jumlahSiswa === 0)
-        <div class="mt-6 bg-white rounded-xl border border-dashed border-gray-300 p-8 text-center text-gray-500 text-sm">
+        <div class="kr-empty hd-empty">
             Belum ada siswa yang mengerjakan room ini.
         </div>
     @else
@@ -41,196 +44,184 @@
         {{-- ============================================================
              1. RINGKASAN
              ============================================================ --}}
-        <div class="mt-6 bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="font-semibold text-gray-800">Ringkasan</h2>
+        <section class="hd-card">
+            <h2 class="hd-card__title">Ringkasan</h2>
 
-            <div class="mt-4 grid grid-cols-3 gap-4 text-center">
-                <div>
-                    <p class="text-xs uppercase tracking-wide text-gray-500">Jumlah Siswa</p>
-                    <p class="text-3xl font-bold text-blue-600 mt-1">{{ $jumlahSiswa }}</p>
+            <div class="hd-stats">
+                <div class="hd-stat">
+                    <p class="rf-overline">Jumlah Siswa</p>
+                    <p class="hd-stat__value">{{ $jumlahSiswa }}</p>
                 </div>
-                <div>
-                    <p class="text-xs uppercase tracking-wide text-gray-500">Skor Rata-rata</p>
-                    <p class="text-3xl font-bold text-blue-600 mt-1">{{ $rataRata }}</p>
+                <div class="hd-stat">
+                    <p class="rf-overline">Skor Rata-rata</p>
+                    <p class="hd-stat__value">{{ $rataRata }}</p>
                 </div>
-                <div>
-                    <p class="text-xs uppercase tracking-wide text-gray-500">Skor Tertinggi</p>
-                    <p class="text-3xl font-bold text-blue-600 mt-1">{{ $tertinggi->skor }}</p>
-                    <p class="text-sm text-gray-500">{{ $tertinggi->nama }}</p>
+                <div class="hd-stat">
+                    <p class="rf-overline">Skor Tertinggi</p>
+                    <p class="hd-stat__value">{{ $tertinggi->skor }}</p>
+                    <p class="hd-stat__sub">{{ $tertinggi->nama }}</p>
                 </div>
             </div>
 
             {{-- Dua grafik berdampingan. Dibuat dari kotak HTML biasa (tanpa library). --}}
-            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="hd-charts">
 
                 {{-- Grafik 1: benar / salah / tidak dijawab per soal --}}
-                <div>
-                    <h3 class="text-sm font-medium text-gray-700 text-center">Benar atau salah per soal</h3>
+                <div class="hd-chart">
+                    <h3 class="hd-chart__title">Benar atau salah per soal</h3>
 
-                    <div class="mt-3 flex items-end gap-2 h-40 border-b border-l border-gray-200 px-2">
+                    <div class="hd-chart__area hd-chart__area--soal">
                         @foreach ($perSoal as $s)
-                            <div class="flex-1 h-full flex flex-col-reverse"
+                            <div class="hd-bar-stack"
                                  title="Soal {{ $s['nomor'] }}: {{ $s['benar'] }} benar, {{ $s['salah'] }} salah, {{ $s['kosong'] }} tidak dijawab">
-                                <div class="bg-green-500" style="height: {{ $s['pb'] }}%"></div>
-                                <div class="bg-red-400"   style="height: {{ $s['ps'] }}%"></div>
-                                <div class="bg-gray-200"  style="height: {{ $s['pk'] }}%"></div>
+                                <div class="hd-seg hd-seg--benar"  style="height: {{ $s['pb'] }}%"></div>
+                                <div class="hd-seg hd-seg--salah"  style="height: {{ $s['ps'] }}%"></div>
+                                <div class="hd-seg hd-seg--kosong" style="height: {{ $s['pk'] }}%"></div>
                             </div>
                         @endforeach
                     </div>
 
-                    <div class="flex gap-2 px-2 mt-1">
+                    <div class="hd-chart__labels hd-chart__labels--soal">
                         @foreach ($perSoal as $s)
-                            <div class="flex-1 text-center text-xs text-gray-500">S{{ $s['nomor'] }}</div>
+                            <div>S{{ $s['nomor'] }}</div>
                         @endforeach
                     </div>
 
-                    <div class="mt-3 flex flex-wrap justify-center gap-4 text-xs text-gray-600">
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-500 inline-block"></span> Benar</span>
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 bg-red-400 inline-block"></span> Salah</span>
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-200 inline-block"></span> Tidak dijawab</span>
+                    <div class="hd-legend">
+                        <span><span class="hd-legend__box hd-seg--benar"></span> Benar</span>
+                        <span><span class="hd-legend__box hd-seg--salah"></span> Salah</span>
+                        <span><span class="hd-legend__box hd-seg--kosong"></span> Tidak dijawab</span>
                     </div>
                 </div>
 
                 {{-- Grafik 2: sebaran skor --}}
-                <div>
-                    <h3 class="text-sm font-medium text-gray-700 text-center">Sebaran skor</h3>
+                <div class="hd-chart">
+                    <h3 class="hd-chart__title">Sebaran skor</h3>
 
-                    <div class="mt-3 flex items-end gap-1 h-40 border-b border-l border-gray-200 px-2">
+                    <div class="hd-chart__area hd-chart__area--skor">
                         @foreach ($grafikSkor as $b)
-                            <div class="flex-1 h-full flex flex-col justify-end items-center"
+                            <div class="hd-bar-col"
                                  title="Skor {{ $b['dari'] }} - {{ $b['sampai'] }}: {{ $b['jumlah'] }} siswa">
                                 @if ($b['jumlah'] > 0)
-                                    <span class="text-xs text-gray-600">{{ $b['jumlah'] }}</span>
+                                    <span class="hd-bar-col__num">{{ $b['jumlah'] }}</span>
                                 @endif
-                                <div class="w-full bg-blue-500" style="height: {{ $b['persen'] }}%"></div>
+                                <div class="hd-bar-col__bar" style="height: {{ $b['persen'] }}%"></div>
                             </div>
                         @endforeach
                     </div>
 
-                    <div class="flex gap-1 px-2 mt-1">
+                    <div class="hd-chart__labels hd-chart__labels--skor">
                         @foreach ($grafikSkor as $b)
-                            <div class="flex-1 text-center text-[10px] text-gray-500">{{ $b['dari'] }}</div>
+                            <div>{{ $b['dari'] }}</div>
                         @endforeach
                     </div>
-                    <p class="mt-2 text-center text-xs text-gray-400">Rentang skor (jumlah siswa di atas batang)</p>
+                    <p class="hd-chart__note">Rentang skor (jumlah siswa di atas batang)</p>
                 </div>
             </div>
-        </div>
+        </section>
 
         {{-- ============================================================
              2. PERINGKAT (3 besar)
              ============================================================ --}}
-        <div class="mt-6 bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="font-semibold text-gray-800">Peringkat</h2>
+        <section class="hd-card">
+            <h2 class="hd-card__title">Peringkat</h2>
 
-            <div class="mt-4 max-w-xl rounded-lg border border-gray-200 overflow-hidden">
-                <table class="w-full text-sm">
-                    <thead class="bg-blue-500 text-white text-left">
+            <div class="hd-table-wrap hd-table-wrap--rank">
+                <table class="hd-table">
+                    <thead>
                         <tr>
-                            <th class="px-4 py-2 font-medium">Peringkat</th>
-                            <th class="px-4 py-2 font-medium">Nama</th>
-                            <th class="px-4 py-2 font-medium text-right">Skor</th>
+                            <th>Peringkat</th>
+                            <th>Nama</th>
+                            <th class="hd-right">Skor</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @foreach (['🥇', '🥈', '🥉'] as $i => $medali)
+                    <tbody>
+                        @foreach (['emas', 'perak', 'perunggu'] as $i => $medali)
                             @php $p = $peringkat[$i] ?? null; @endphp
                             <tr>
-                                <td class="px-4 py-2">{{ $medali }} {{ $i + 1 }}</td>
-                                <td class="px-4 py-2 text-gray-800">{{ $p->nama ?? '-' }}</td>
-                                <td class="px-4 py-2 text-right">{{ $p->skor ?? '-' }}</td>
+                                <td>
+                                    <span class="hd-medal hd-medal--{{ $medali }}">{{ $i + 1 }}</span>
+                                </td>
+                                <td class="hd-strong">{{ $p->nama ?? '-' }}</td>
+                                <td class="hd-right hd-strong">{{ $p->skor ?? '-' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
         {{-- ============================================================
              3. HASIL PER SISWA (klik baris untuk membuka rincian)
              <details> adalah elemen HTML bawaan untuk dropdown, tanpa JavaScript.
              ============================================================ --}}
-        <div class="mt-6 bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="font-semibold text-gray-800">Hasil per Siswa</h2>
+        <section class="hd-card">
+            <h2 class="hd-card__title">Hasil per Siswa</h2>
 
-            <div class="mt-4 rounded-lg border border-gray-200 overflow-hidden">
+            <div class="hd-table-wrap">
 
                 {{-- Judul kolom --}}
-                <div class="grid grid-cols-12 bg-blue-500 text-white text-sm font-medium px-4 py-2">
-                    <div class="col-span-3">Siswa</div>
-                    <div class="col-span-3">Dikumpulkan</div>
-                    <div class="col-span-2 text-center">Skor</div>
-                    <div class="col-span-2 text-center">Benar</div>
-                    <div class="col-span-2 text-center">Salah</div>
+                <div class="hd-grid hd-grid--siswa hd-grid__head">
+                    <div>Siswa</div>
+                    <div>Dikumpulkan</div>
+                    <div class="hd-center">Skor</div>
+                    <div class="hd-center">Benar</div>
+                    <div class="hd-center">Salah</div>
                 </div>
 
                 @foreach ($siswa as $s)
-                    <details class="group border-t border-gray-200">
-                        <summary class="grid grid-cols-12 items-center px-4 py-3 text-sm cursor-pointer
-                                        list-none [&::-webkit-details-marker]:hidden hover:bg-gray-50">
-                            <div class="col-span-3 flex items-center gap-2 font-medium text-gray-800">
-                                <img
-                                    src="{{ asset('icons/chevron-right.svg') }}"
-                                    class="w-3 h-3 transition group-open:hidden"
-                                    alt=""
-                                >
-                                <img
-                                    src="{{ asset('icons/chevron-down.svg') }}"
-                                    class="w-3 h-3 hidden group-open:block transition"
-                                    alt=""
-                                >
+                    <details class="hd-details">
+                        <summary class="hd-grid hd-grid--siswa">
+                            <div class="hd-name">
+                                <svg class="hd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
                                 {{ $s['nama'] }}
                             </div>
-                            <div class="col-span-3 text-gray-600">{{ $s['waktu'] }}</div>
-                            <div class="col-span-2 text-center font-medium text-gray-800">{{ $s['skor'] }}</div>
-                            <div class="col-span-2 text-center text-green-600">{{ $s['benar'] }}</div>
-                            <div class="col-span-2 text-center text-red-500">{{ $s['salah'] }}</div>
+                            <div class="hd-muted">{{ $s['waktu'] }}</div>
+                            <div class="hd-center hd-strong">{{ $s['skor'] }}</div>
+                            <div class="hd-center hd-benar">{{ $s['benar'] }}</div>
+                            <div class="hd-center hd-salah">{{ $s['salah'] }}</div>
                         </summary>
 
                         {{-- Rincian: soal, jawaban yang dipilih, benar/salah --}}
-                        <div class="px-4 pb-4 bg-gray-50">
-                            <table class="w-full text-sm">
+                        <div class="hd-rincian">
+                            <table class="hd-subtable">
                                 <thead>
-                                    <tr class="text-left text-gray-500">
-                                        <th class="py-2 w-10 font-medium">No</th>
-                                        <th class="py-2 font-medium">Soal</th>
-                                        <th class="py-2 font-medium">Jawaban</th>
-                                        <th class="py-2 w-16 text-center font-medium">Hasil</th>
+                                    <tr>
+                                        <th class="hd-col-no">No</th>
+                                        <th>Soal</th>
+                                        <th>Jawaban</th>
+                                        <th class="hd-col-hasil">Hasil</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200">
+                                <tbody>
                                     @foreach ($s['baris'] as $b)
                                         <tr>
-                                            <td class="py-2 text-gray-500">{{ $b->nomor }}</td>
-                                            <td class="py-2 pr-3">
-                                                <div class="flex items-center gap-2">
+                                            <td class="hd-muted">{{ $b->nomor }}</td>
+                                            <td>
+                                                <div class="hd-cell">
                                                     @if ($b->gambar_soal)
-                                                        <img src="{{ asset('storage/' . $b->gambar_soal) }}" alt=""
-                                                             class="h-10 w-10 object-cover rounded border border-gray-200">
+                                                        <img src="{{ asset('storage/' . $b->gambar_soal) }}" alt="" class="hd-thumb">
                                                     @endif
-                                                    <span class="text-gray-800">
-                                                        {{ Str::limit($b->pertanyaan ?? '(soal sudah dihapus)', 70) }}
-                                                    </span>
+                                                    <span>{{ Str::limit($b->pertanyaan ?? '(soal sudah dihapus)', 70) }}</span>
                                                 </div>
                                             </td>
-                                            <td class="py-2 pr-3">
-                                                <div class="flex items-center gap-2">
+                                            <td>
+                                                <div class="hd-cell">
                                                     @if ($b->gambar_jawaban)
-                                                        <img src="{{ asset('storage/' . $b->gambar_jawaban) }}" alt=""
-                                                             class="h-8 w-8 object-cover rounded border border-gray-200">
+                                                        <img src="{{ asset('storage/' . $b->gambar_jawaban) }}" alt="" class="hd-thumb hd-thumb--sm">
                                                     @endif
-                                                    <span class="{{ $b->teks_jawaban ? 'text-gray-800' : 'text-gray-400 italic' }}">
+                                                    <span class="{{ $b->teks_jawaban ? '' : 'hd-kosong' }}">
                                                         {{ $b->teks_jawaban ?? 'Tidak dijawab' }}
                                                     </span>
                                                 </div>
                                             </td>
-                                            <td class="py-2 text-center text-base">
+                                            <td class="hd-center">
                                                 @if ($b->status === 'benar')
-                                                    <span class="text-green-600 font-bold">✓</span>
+                                                    <span class="hd-hasil hd-hasil--benar" title="Benar">✓</span>
                                                 @elseif ($b->status === 'salah')
-                                                    <span class="text-red-500 font-bold">✗</span>
+                                                    <span class="hd-hasil hd-hasil--salah" title="Salah">✗</span>
                                                 @else
-                                                    <span class="text-gray-400">–</span>
+                                                    <span class="hd-hasil hd-hasil--kosong" title="Tidak dijawab">–</span>
                                                 @endif
                                             </td>
                                         </tr>
@@ -241,92 +232,75 @@
                     </details>
                 @endforeach
             </div>
-        </div>
+        </section>
 
         {{-- ============================================================
              4. HASIL PER SOAL (klik baris untuk melihat siswa yang menjawab)
              ============================================================ --}}
-        <div class="mt-6 mb-8 bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="font-semibold text-gray-800">Hasil per Soal</h2>
+        <section class="hd-card">
+            <h2 class="hd-card__title">Hasil per Soal</h2>
 
-            <div class="mt-4 rounded-lg border border-gray-200 overflow-hidden">
+            <div class="hd-table-wrap">
 
                 {{-- Judul kolom --}}
-                <div class="grid grid-cols-12 bg-blue-500 text-white text-sm font-medium px-4 py-2">
-                    <div class="col-span-6">Soal</div>
-                    <div class="col-span-3 text-center">Benar</div>
-                    <div class="col-span-3 text-center">Salah</div>
+                <div class="hd-grid hd-grid--soal hd-grid__head">
+                    <div>Soal</div>
+                    <div class="hd-center">Benar</div>
+                    <div class="hd-center">Salah</div>
                 </div>
 
                 @foreach ($perSoal as $s)
-                    <details class="group border-t border-gray-200">
-                        <summary class="grid grid-cols-12 items-center px-4 py-3 text-sm cursor-pointer
-                                        list-none [&::-webkit-details-marker]:hidden hover:bg-gray-50">
-                        <div class="col-span-6 flex items-center gap-2 text-gray-800">
-                            <img
-                                src="{{ asset('icons/chevron-right.svg') }}"
-                                class="w-3 h-3 transition group-open:hidden"
-                                alt=""
-                            >
-                            <img
-                                src="{{ asset('icons/chevron-down.svg') }}"
-                                class="w-3 h-3 hidden group-open:block transition"
-                                alt=""
-                            >
-                            <span class="font-medium">{{ $s['nomor'] }}.</span>
-                            @if ($s['gambar'])
-                                <img
-                                    src="{{ asset('storage/' . $s['gambar']) }}"
-                                    alt=""
-                                    class="h-10 w-10 object-cover rounded border border-gray-200"
-                                >
-                            @endif
-                            <span>
-                                {{ Str::limit($s['pertanyaan'], 70) }}
-
-                                @if ($s['kosong'] > 0)
-                                    <span class="block text-xs text-gray-400">
-                                        {{ $s['kosong'] }} tidak dijawab
-                                    </span>
+                    <details class="hd-details">
+                        <summary class="hd-grid hd-grid--soal">
+                            <div class="hd-name hd-name--soal">
+                                <svg class="hd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                <span class="hd-nomor">{{ $s['nomor'] }}.</span>
+                                @if ($s['gambar'])
+                                    <img src="{{ asset('storage/' . $s['gambar']) }}" alt="" class="hd-thumb">
                                 @endif
-                            </span>
-                        </div>
-                            <div class="col-span-3 text-center text-green-600">{{ $s['benar'] }}</div>
-                            <div class="col-span-3 text-center text-red-500">{{ $s['salah'] }}</div>
+                                <span>
+                                    {{ Str::limit($s['pertanyaan'], 70) }}
+
+                                    @if ($s['kosong'] > 0)
+                                        <span class="hd-tidak-dijawab">{{ $s['kosong'] }} tidak dijawab</span>
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="hd-center hd-benar">{{ $s['benar'] }}</div>
+                            <div class="hd-center hd-salah">{{ $s['salah'] }}</div>
                         </summary>
 
                         {{-- Rincian: siapa saja yang menjawab dan jawabannya --}}
-                        <div class="px-4 pb-4 bg-gray-50">
-                            <table class="w-full text-sm">
+                        <div class="hd-rincian">
+                            <table class="hd-subtable">
                                 <thead>
-                                    <tr class="text-left text-gray-500">
-                                        <th class="py-2 font-medium">Siswa</th>
-                                        <th class="py-2 font-medium">Jawaban</th>
-                                        <th class="py-2 w-16 text-center font-medium">Hasil</th>
+                                    <tr>
+                                        <th>Siswa</th>
+                                        <th>Jawaban</th>
+                                        <th class="hd-col-hasil">Hasil</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200">
+                                <tbody>
                                     @foreach ($s['baris'] as $b)
                                         <tr>
-                                            <td class="py-2 pr-3 text-gray-800">{{ $b->nama }}</td>
-                                            <td class="py-2 pr-3">
-                                                <div class="flex items-center gap-2">
+                                            <td class="hd-strong">{{ $b->nama }}</td>
+                                            <td>
+                                                <div class="hd-cell">
                                                     @if ($b->gambar_jawaban)
-                                                        <img src="{{ asset('storage/' . $b->gambar_jawaban) }}" alt=""
-                                                             class="h-8 w-8 object-cover rounded border border-gray-200">
+                                                        <img src="{{ asset('storage/' . $b->gambar_jawaban) }}" alt="" class="hd-thumb hd-thumb--sm">
                                                     @endif
-                                                    <span class="{{ $b->teks_jawaban ? 'text-gray-800' : 'text-gray-400 italic' }}">
+                                                    <span class="{{ $b->teks_jawaban ? '' : 'hd-kosong' }}">
                                                         {{ $b->teks_jawaban ?? 'Tidak dijawab' }}
                                                     </span>
                                                 </div>
                                             </td>
-                                            <td class="py-2 text-center text-base">
+                                            <td class="hd-center">
                                                 @if ($b->status === 'benar')
-                                                    <span class="text-green-600 font-bold">✓</span>
+                                                    <span class="hd-hasil hd-hasil--benar" title="Benar">✓</span>
                                                 @elseif ($b->status === 'salah')
-                                                    <span class="text-red-500 font-bold">✗</span>
+                                                    <span class="hd-hasil hd-hasil--salah" title="Salah">✗</span>
                                                 @else
-                                                    <span class="text-gray-400">–</span>
+                                                    <span class="hd-hasil hd-hasil--kosong" title="Tidak dijawab">–</span>
                                                 @endif
                                             </td>
                                         </tr>
@@ -337,8 +311,8 @@
                     </details>
                 @endforeach
             </div>
-        </div>
+        </section>
 
     @endif
-
+</div>
 @endsection

@@ -1,0 +1,124 @@
+/* =========================================================
+   Halaman Verifikasi Guru (admin) — Ngiring Malajah Basa Bali
+   Lokasi: public/css/adminVerifikasi.css
+   Semua class diawali "vg-" supaya tidak bentrok dengan Tailwind.
+   ========================================================= */
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 600 ;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+.vg {
+    --vg-ink: #3B1F0E;
+    --vg-ink-strong: #2A160A;
+    --vg-muted: #7A5A44;
+    --vg-line: #F1DCC2;
+    --vg-orange: linear-gradient(180deg, #F7B531 0%, #EE9A1E 55%, #E5861A 100%);
+    font-family: 'Nunito', system-ui, sans-serif;
+    color: var(--vg-ink);
+    display: flex; flex-direction: column; gap: 20px;
+}
+.vg *, .vg *::before, .vg *::after { box-sizing: border-box; }
+.vg button { font-family: inherit; }
+.vg :focus-visible { outline: 3px solid #B45309; outline-offset: 2px; }
+.vg form { margin: 0; }
+
+/* Judul */
+.vg-head { display: flex; align-items: center; gap: 16px; }
+.vg-head__icon {
+    width: 56px; height: 56px; flex: none; border-radius: 18px;
+    background: var(--vg-orange); border: 2px solid #C96F12; box-shadow: 0 4px 0 #B9630E;
+    display: flex; align-items: center; justify-content: center; color: var(--vg-ink);
+}
+.vg-title { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--vg-ink-strong); }
+
+/* Tab filter */
+.vg-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.vg-tab {
+    min-height: 44px; padding: 0 8px 0 18px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #FFFDF8; border: 2px solid #EBD5BB; box-shadow: 0 4px 0 #EBD5BB;
+    color: var(--vg-ink); text-decoration: none; font-weight: 800; font-size: 15px;
+    transition: transform .15s;
+}
+.vg-tab:hover { transform: translateY(-2px); color: var(--vg-ink); }
+.vg-tab__count {
+    min-width: 28px; height: 28px; padding: 0 8px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; background: #FDE7B0; color: #7A3E08;
+}
+.vg-tab.is-active { background: var(--vg-orange); border-color: #C96F12; box-shadow: 0 4px 0 #B9630E; }
+.vg-tab.is-active .vg-tab__count { background: var(--vg-ink); color: #FDD58A; }
+
+/* Daftar card */
+.vg-list { margin-top: 4px; display: flex; flex-direction: column; gap: 18px; width: 100%; }
+.vg-card {
+    background: #FFFDF8; border: 2px solid var(--vg-line); border-radius: 24px;
+    box-shadow: 0 6px 0 #EBCDAA, 0 14px 30px rgba(120, 72, 20, .10);
+    padding: 20px 24px;
+}
+.vg-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.vg-identitas { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.vg-identitas__teks { min-width: 0; }
+.vg-avatar {
+    width: 52px; height: 52px; flex: none; border-radius: 50%;
+    background: linear-gradient(180deg, #FDF0C4, #FBE0B4); border: 2px solid #F1D29A;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 22px; color: #8A4A0C;
+}
+.vg-nama { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 21px; line-height: 1.2; color: var(--vg-ink-strong); }
+.vg-email, .vg-tanggal { display: flex; align-items: center; gap: 6px; font-weight: 700; }
+.vg-email { margin: 2px 0 0; font-size: 15px; color: #5E4634; word-break: break-all; }
+.vg-tanggal { margin: 4px 0 0; font-size: 13px; color: var(--vg-muted); }
+.vg-email svg, .vg-tanggal svg { flex: none; }
+
+.vg-badge {
+    flex: none; display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 800;
+}
+.vg-dot { width: 10px; height: 10px; border-radius: 50%; }
+.vg-badge--active { background: #EEF6E8; border: 2px solid #B9D8A6; color: #2F6B2B; }
+.vg-badge--active .vg-dot { background: #3F9A38; }
+.vg-badge--pending { background: #FFF3DC; border: 2px solid #E9B65C; color: #7A4A06; }
+.vg-badge--pending .vg-dot { background: #E5861A; }
+
+.vg-card__aksi {
+    display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px;
+    margin-top: 16px; padding-top: 16px; border-top: 2px dashed var(--vg-line);
+}
+
+/* Tombol */
+.vg-btn {
+    min-height: 44px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-weight: 800; font-size: 15px; transition: transform .15s;
+}
+.vg-btn:hover { transform: translateY(-2px); }
+.vg-btn--terima {
+    padding: 0 20px; color: #FFFFFF;
+    background: linear-gradient(180deg, #5DB653, #3F9A38);
+    border: 2px solid #2F7A2A; box-shadow: 0 4px 0 #2A6526;
+}
+.vg-btn--hapus { background: #FFF1EE; border: 2px solid #F0B4A6; box-shadow: 0 3px 0 #F0B4A6; color: #A3271A; }
+
+.vg-empty {
+    padding: 40px 16px; text-align: center; background: #FFF6EA;
+    border: 2px dashed var(--vg-line); border-radius: 22px;
+    font-weight: 700; color: var(--vg-muted);
+}
+
+@media (max-width: 640px) {
+    .vg-title { font-size: 32px; }
+    .vg-card__top { flex-direction: column-reverse; }
+}

@@ -40,6 +40,7 @@ Route::middleware(['guest'])->group(function(){
 Route::middleware(['auth', 'role:admin'])->group(function () {
     //------ DASHBOARD -------
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboardAdmin', [AdminController::class, 'dashboardAdmin'])->name('admin.dashboardAdmin');
 
     //------ VERIFIKASI GURU -------
     Route::get('/admin/verifikasi-guru', [VerifikasiGuruController::class, 'index'])
@@ -80,7 +81,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:guru'])->group(function () {
     //------ DASHBOARD -------
     Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
-    Route::get('/guru/dashboardGuru', [RoomController::class, 'dashboard'])->name('guru.dashboardGuru');
+    Route::get('/guru/dashboardGuru', [GuruController::class, 'dashboardGuru'])->name('guru.dashboardGuru');
 
     //------ KELOLA ROOM -------
     Route::get('/guru/room', [VerifikasiGuruController::class, 'index'])

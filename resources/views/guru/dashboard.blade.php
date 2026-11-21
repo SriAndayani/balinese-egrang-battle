@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard Guru')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/dashboardGuru.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Guru/dashboardGuru.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Guru/detailRoom.css') }}">
 </head>
 <body class="bg-gray-100">
 
@@ -67,6 +68,7 @@
         </div>
     </main>
 </div>
-<script src="{{ asset('js/guruRoom.js') }}"></script>
+<script src="{{ asset('js/dashboardGuru/guruRoom.js') }}"></script>
+<script src="{{ asset('js/dashboardGuru/detailRoom.js') }}"></script>
 </body>
 </html>

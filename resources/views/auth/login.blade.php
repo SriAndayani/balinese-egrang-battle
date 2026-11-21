@@ -70,11 +70,6 @@
             <a href="{{ Route::has('register') ? route('register') : '#' }}" class="auth-link">Daftar di sini</a>
         </p>
 
-        {{-- Link lupa password --}}
-        <p id="forgot-password" class="auth-text">
-            <a href="#" class="auth-link">lupa password?</a>
-        </p>
-
         {{-- Tombol kembali --}}
         <a href="{{ route('game.index') }}" class="auth-back">← Kembali ke beranda</a>
     </form>

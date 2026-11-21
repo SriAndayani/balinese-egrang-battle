@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masukkan Nama - {{ $room->nama_room }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/assesmentShow.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/assesment/assesmentShow.css') }}">
 </head>
 <body class="game-entry">
  
