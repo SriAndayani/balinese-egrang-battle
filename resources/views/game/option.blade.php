@@ -63,6 +63,6 @@
     </a>
  
     {{-- JavaScript halaman room --}}
-    <script src="{{ asset('js/rooms.js') }}"></script>
+    <script src="{{ asset('js/option.js') }}"></script>
 </body>
 </html>

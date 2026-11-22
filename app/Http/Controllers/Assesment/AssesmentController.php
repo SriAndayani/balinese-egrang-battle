@@ -27,10 +27,19 @@ class AssesmentController extends Controller
         // Ambil data room dari database
         $room = Room::findOrFail($room);
 
-        // Validasi input nama siswa.
+        // Validasi input nama siswa dan kode room.
         $request->validate([
             'nama' => 'required|string|max:255',
+            'kode_room' => 'required|string|max:10',
+
         ]);
+
+        // Kode yang diketik siswa harus sama dengan kode room (huruf besar/kecil tidak dibedakan).
+        if (strtoupper(trim($request->kode_room)) !== strtoupper((string) $room->kode_room)) {
+            return back()
+                ->withErrors(['kode_room' => 'Kode room tidak valid.'])
+                ->withInput($request->only('nama'));
+        }
 
         // Mengambil semua soal yang terkait dengan room ini
         $soals = $room->soals()->with('jawabans')->get();

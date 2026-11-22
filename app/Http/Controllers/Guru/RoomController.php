@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 
 class RoomController extends Controller
 {
+    const JUMLAH_SOAL= 10;
 
     public function index()
     {
@@ -42,9 +43,9 @@ class RoomController extends Controller
             ->whereIn('id_soal', $validated['soal'])
             ->pluck('id_soal');
  
-        if ($idSoal->isEmpty()) {
+        if ($idSoal->count() !== self::JUMLAH_SOAL) {
             return back()->withInput()
-                ->withErrors(['soal' => 'Soal yang dipilih tidak tersedia untukmu.']);
+                ->withErrors(['soal' => 'Soal yang dipilih tidak tersedia untukmu. Soal harus berjumlah ' . self::JUMLAH_SOAL . '.']);
         }
  
         DB::transaction(function () use ($request, $validated, $idSoal) {
@@ -85,9 +86,9 @@ class RoomController extends Controller
             ->whereIn('id_soal', $validated['soal'])
             ->pluck('id_soal');
  
-        if ($idSoal->isEmpty()) {
+        if ($idSoal->count() !== self::JUMLAH_SOAL) {
             return back()->withInput()
-                ->withErrors(['soal' => 'Soal yang dipilih tidak tersedia untukmu.']);
+                ->withErrors(['soal' => 'Soal yang dipilih tidak tersedia untukmu.Soal harus berjumlah ' . self::JUMLAH_SOAL . '.']);
         }
  
         DB::transaction(function () use ($request, $validated, $room, $idSoal) {

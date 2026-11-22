@@ -64,9 +64,20 @@ document.addEventListener('DOMContentLoaded', function () {
     var cekSoal = Array.prototype.slice.call(form.querySelectorAll('input[name="soal[]"]'));
     var jumlah  = document.getElementById('jumlah-dipilih');
 
+    var JUMLAH_SOAL      = 10;   // harus sama dengan RoomController::JUMLAH_SOAL
+    var tombolSimpan     = document.getElementById('btn-simpan-room');
+    var peringatanSoal   = document.getElementById('peringatan-soal');
+    var jumlahPeringatan = document.getElementById('jumlah-peringatan');
+
     function hitungDipilih() {
-        if (!jumlah) return;
-        jumlah.textContent = cekSoal.filter(function (c) { return c.checked; }).length;
+        var total = cekSoal.filter(function (c) { return c.checked; }).length;
+        var pas   = total === JUMLAH_SOAL;
+
+        if (jumlah) jumlah.textContent = total;
+        if (jumlahPeringatan) jumlahPeringatan.textContent = total;
+        // Tombol Simpan hanya aktif kalau soal yang dipilih tepat 10
+        if (tombolSimpan) tombolSimpan.disabled = !pas;
+        if (peringatanSoal) peringatanSoal.hidden = pas;        
     }
     cekSoal.forEach(function (c) { c.addEventListener('change', hitungDipilih); });
     hitungDipilih();

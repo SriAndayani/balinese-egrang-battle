@@ -184,7 +184,7 @@
             <div class="rf-soal-head">
                 <div class="rf-soal-head__left">
                     <p class="rf-label"><span class="rf-num">4</span> Pilih soal untuk room ini</p>
-                    <span class="rf-badge"><span id="jumlah-dipilih">{{ count($soalTerpilih) }}</span> dipilih</span>
+                    <span class="rf-badge"><span id="jumlah-dipilih">{{ count($soalTerpilih) }}</span>/10 dipilih</span>
                 </div>
                 <div class="rf-search">
                     <label for="cari-soal" class="rf-sr">Cari soal</label>
@@ -231,16 +231,17 @@
                 <p class="rf-empty" id="soal-tidak-ketemu" hidden>Tidak ada soal yang cocok dengan pencarianmu.</p>
             </div>
 
-            <p class="rf-note rf-note--icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5v.5"/></svg>
-                Yang tampil: soal buatanmu dan soal dari admin. Soal guru lain tidak terlihat.
+            <p class="rf-note rf-note--warning" id="peringatan-soal" role="alert"
+               @if (count($soalTerpilih) === 10) hidden @endif>
+                Soal harus berjumlah 10. Saat ini baru <span id="jumlah-peringatan">{{ count($soalTerpilih) }}</span> soal yang dipilih.
             </p>
         </div>
 
         {{-- Tombol --}}
         <div class="rf-actions">
             <a href="{{ route('guru.room.index') }}" class="rf-btn rf-btn--ghost">Batal</a>
-            <button type="submit" class="rf-btn rf-btn--primary">
+            <button type="submit" class="rf-btn rf-btn--primary" id="btn-simpan-room"
+                    @disabled(count($soalTerpilih) !== 10)>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
                 Simpan
             </button>
