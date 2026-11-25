@@ -53,7 +53,7 @@
 .battle-body{
   height:100vh; height:100vh;
   overflow:hidden;
-  background:#4a8df0 url('../images/background-games.webp') center/cover no-repeat;
+  background:#4a8df0 url('/images/background-games.webp') center/cover no-repeat;
   font-family:"Fredoka","Noto Sans Balinese",system-ui,sans-serif;
 
   /* Sentuhan banyak jari */

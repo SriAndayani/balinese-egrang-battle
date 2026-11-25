@@ -27,7 +27,7 @@
     --karakter-lebar: 32%; /* lebar gambar anak (dari lebar papan) */
     --label-top: 61%; /* tulisan "Ketik nama" */
     --input-top: 68%; /* kotak isian nama */
-    --input-kiri: 28%; /* jarak kotak dari tepi kiri papan */
+    --input-kiri: 32%; /* jarak kotak dari tepi kiri papan */
     --input-lebar: 40%; /* lebar kotak isian */
 }
 
@@ -48,7 +48,7 @@
     height: 100vh;
     height: 100vh;
     overflow: hidden; /* tidak perlu scroll, semuanya muat di layar */
-    background: #4a8df0 url("../images/background-games.webp") center/cover
+    background: #4a8df0 url("/images/background-games.webp") center/cover
         no-repeat;
 }
 .sr-only {
