@@ -14,7 +14,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
-    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 700 800;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
@@ -41,7 +41,7 @@
     background: var(--vg-orange); border: 2px solid #C96F12; box-shadow: 0 4px 0 #B9630E;
     display: flex; align-items: center; justify-content: center; color: var(--vg-ink);
 }
-.vg-title { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--vg-ink-strong); }
+.vg-title { margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--vg-ink-strong); }
 
 /* Tab filter */
 .vg-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -75,9 +75,9 @@
     width: 52px; height: 52px; flex: none; border-radius: 50%;
     background: linear-gradient(180deg, #FDF0C4, #FBE0B4); border: 2px solid #F1D29A;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 22px; color: #8A4A0C;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 22px; color: #8A4A0C;
 }
-.vg-nama { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 21px; line-height: 1.2; color: var(--vg-ink-strong); }
+.vg-nama { margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 21px; line-height: 1.2; color: var(--vg-ink-strong); }
 .vg-email, .vg-tanggal { display: flex; align-items: center; gap: 6px; font-weight: 700; }
 .vg-email { margin: 2px 0 0; font-size: 15px; color: #5E4634; word-break: break-all; }
 .vg-tanggal { margin: 4px 0 0; font-size: 13px; color: var(--vg-muted); }

@@ -14,7 +14,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
-    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 700 800;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
@@ -44,7 +44,7 @@
     background: var(--sf-orange); border: 2px solid #C96F12; box-shadow: 0 4px 0 #B9630E;
     display: flex; align-items: center; justify-content: center; color: var(--sf-ink);
 }
-.sf-title { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--sf-ink-strong); }
+.sf-title { margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--sf-ink-strong); }
 
 /* Error */
 .sf-error {
@@ -65,7 +65,7 @@
 .sf-field { display: flex; flex-direction: column; gap: 10px; }
 .sf-label {
     margin: 0; display: flex; align-items: center; gap: 10px;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 19px; color: var(--sf-ink);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 19px; color: var(--sf-ink);
 }
 .sf-label small { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px; color: var(--sf-muted); }
 .sf-num {
@@ -133,7 +133,7 @@
 .sf-opsi__huruf {
     width: 36px; height: 36px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 17px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 17px;
     background: #FDE7B0; color: #7A3E08;
 }
 .sf-opsi__input { flex: 1; min-width: 0; min-height: 52px; padding: 0 18px; border-radius: 14px; background: #FFFFFF; }
@@ -154,7 +154,7 @@
 .sf-btn {
     min-height: 56px; border-radius: 999px; cursor: pointer;
     display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 18px; color: var(--sf-ink);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px; color: var(--sf-ink);
     transition: transform .15s;
 }
 .sf-btn:hover { transform: translateY(-2px); color: var(--sf-ink); }

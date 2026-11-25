@@ -3,7 +3,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
-    font-weight: 200 1000;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 100 200;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
@@ -11,7 +11,7 @@
 @font-face {
     font-family: 'Fredoka';
     src: url('../fonts/Fredoka-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 300 700;
+    font-weight: 700 800;
     font-style: normal;
     font-display: swap;
 }
@@ -40,7 +40,7 @@
 
 .guru-body {
     margin: 0;
-    font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: 'Nunito', system-ui, -apple-system,  sans-serif;
     color: var(--deep-brown);
     background: var(--cream);
 }
@@ -185,7 +185,7 @@
 /* ================= DASHBOARD ================= */
 .guru-title {
     margin: 0;
-    font-family: 'Fredoka', sans-serif;
+    font-family: 'Fredoka', 'Nunito', sans-serif;
     font-size: 2.25rem;
     line-height: 1.15;
     font-weight: 700;
@@ -243,7 +243,7 @@
 }
 .stat-card__value {
     margin-top: auto;
-    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+    font-family: 'Nunito', system-ui, sans-serif;
     font-size: 3.5rem;
     line-height: 1;
     font-weight: 600;

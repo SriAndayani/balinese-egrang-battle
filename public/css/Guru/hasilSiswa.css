@@ -14,7 +14,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
-    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 700 800;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
@@ -54,7 +54,7 @@
 }
 .rf-head__icon--sm { width: 44px; height: 44px; border-radius: 14px; box-shadow: none; }
 .rf-title {
-    margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800;
+    margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800;
     font-size: 40px; line-height: 1.05; color: var(--rf-ink-strong);
 }
 
@@ -83,7 +83,7 @@
 .rf-label {
     margin: 0 0 4px; padding: 0;
     display: flex; align-items: center; gap: 10px;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 19px; color: var(--rf-ink);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 19px; color: var(--rf-ink);
 }
 .rf-label small { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px; color: var(--rf-muted); }
 .rf-num {
@@ -121,7 +121,7 @@
     display: flex; align-items: center; justify-content: center;
     background: #FDE7B0; color: #7A3E08;
 }
-.rf-mode__name { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 19px; line-height: 1.1; }
+.rf-mode__name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 19px; line-height: 1.1; }
 .rf-mode__item input:checked + .rf-mode__card {
     background: linear-gradient(180deg, #FFE9B8, #FDD58A);
     border-color: #E5861A; box-shadow: 0 5px 0 var(--rf-orange-border);
@@ -137,7 +137,7 @@
     background: #FEF3C7; border: 2px solid #F5B731; color: #92400E;
     display: flex; align-items: center; justify-content: center;
 }
-.rf-input--reward { min-height: 76px; padding-left: 64px; border-radius: 18px; font-family: 'Baloo 2', sans-serif; font-size: 26px; font-weight: 800; }
+.rf-input--reward { min-height: 76px; padding-left: 64px; border-radius: 18px; font-family: 'Nunito', sans-serif; font-size: 26px; font-weight: 800; }
 
 /* ---------- Kode room ---------- */
 .rf-kode {
@@ -164,12 +164,12 @@
 .rf-btn--ghost {
     padding: 0 28px; border-radius: 999px; background: #FAF6DA;
     border: 2px solid var(--rf-line-2); box-shadow: 0 4px 0 var(--rf-line-2);
-    font-family: 'Baloo 2', sans-serif; font-size: 18px;
+    font-family: 'Nunito', sans-serif; font-size: 18px;
 }
 .rf-btn--primary {
     padding: 0 36px; border-radius: 999px; background: var(--rf-orange);
     border: 2px solid var(--rf-orange-border); box-shadow: 0 5px 0 var(--rf-orange-shadow);
-    font-family: 'Baloo 2', sans-serif; font-size: 18px;
+    font-family: 'Nunito', sans-serif; font-size: 18px;
 }
 .rf-btn--lihat {
     flex: none; min-height: 44px; padding: 0 14px; border-radius: 999px; font-size: 14px;
@@ -267,7 +267,7 @@
     background: linear-gradient(180deg, #F5E087 0%, #F5E3B3 100%); border-bottom: 2px solid var(--rf-line);
 }
 .rf-modal__title { display: flex; align-items: center; gap: 12px; }
-.rf-modal__title h2 { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 22px; line-height: 1.1; }
+.rf-modal__title h2 { margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 22px; line-height: 1.1; }
 .rf-modal__title small { font-size: 13px; font-weight: 700; color: #6B4A30; }
 .rf-modal__close {
     width: 44px; height: 44px; flex: none; border-radius: 50%; cursor: pointer;
@@ -288,7 +288,7 @@
 .rf-pv-opsi__huruf {
     flex: none; width: 36px; height: 36px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 17px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 17px;
     background: #FDE7B0; color: #7A3E08;
 }
 .rf-pv-opsi__teks { flex: 1; min-width: 0; font-size: 16px; font-weight: 700; line-height: 1.45; }
@@ -349,9 +349,9 @@ body.rf-modal-open { overflow: hidden; }
 .kr-no {
     width: 36px; height: 36px; border-radius: 12px; background: #FDE7B0; color: #7A3E08;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 17px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 17px;
 }
-.kr-nama { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 19px; line-height: 1.2; color: var(--rf-ink-strong); }
+.kr-nama { margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 19px; line-height: 1.2; color: var(--rf-ink-strong); }
 .kr-meta { margin: 6px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .kr-tag--assessment { background: #FDE3C4; color: #8A3F06; }
 .kr-tag--battle { background: #E3EEF7; color: #1E4A6E; }
@@ -403,14 +403,14 @@ body.rf-modal-open { overflow: hidden; }
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
     padding-bottom: 14px; border-bottom: 2px dashed var(--rf-line);
 }
-.hs-card__nama { margin: 0; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 24px; line-height: 1.15; color: var(--rf-ink-strong); }
+.hs-card__nama { margin: 0; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 24px; line-height: 1.15; color: var(--rf-ink-strong); }
 .hs-btn-detail { min-height: 44px; padding: 0 20px; font-family: 'Nunito', sans-serif; font-size: 14px; box-shadow: 0 4px 0 var(--rf-orange-shadow); }
 .hs-card__body { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; margin-top: 14px; }
 .hs-kode { display: flex; flex-direction: column; gap: 6px; }
 .hs-stats { display: flex; gap: 10px; }
 .hs-stat { min-width: 96px; padding: 10px 14px; border-radius: 16px; display: flex; align-items: center; gap: 10px; }
 .hs-stat span { display: flex; flex-direction: column; line-height: 1.1; }
-.hs-stat strong { font-family: 'Baloo 2', sans-serif; font-size: 22px; font-weight: 800; color: var(--rf-ink-strong); }
+.hs-stat strong { font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 800; color: var(--rf-ink-strong); }
 .hs-stat small { font-size: 12px; font-weight: 700; }
 .hs-stat--siswa { background: #EEF6E8; border: 2px solid #CFE3C3; color: var(--rf-green); }
 .hs-stat--siswa small { color: #4A5541; }
