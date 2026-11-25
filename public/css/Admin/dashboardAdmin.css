@@ -2,15 +2,31 @@
 
 @font-face {
     font-family: 'Nunito';
-    src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype');
-    font-weight: 200 1000;   /* font variabel: semua ketebalan dalam satu file */
+    src: url('/fonts/nunito/Nunito-SemiBold.ttf') format('truetype');
+    font-weight: 600;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/fonts/nunito/Nunito-Bold.ttf') format('truetype');
+    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/fonts/nunito/Nunito-ExtraBold.ttf') format('truetype');
+    font-weight: 800;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Fredoka';
-    src: url('../fonts/Fredoka-VariableFont_wdth,wght.ttf') format('truetype');
+    src: url('../fonts/Nunito-SemiBold.ttf') format('truetype');
     font-weight: 300 700;
     font-style: normal;
     font-display: swap;

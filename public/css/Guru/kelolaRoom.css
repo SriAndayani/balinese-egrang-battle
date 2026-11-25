@@ -4,17 +4,25 @@
    Semua class diawali "rf-" supaya tidak bentrok dengan Tailwind.
    ========================================================= */
 @font-face {
-    font-family: "Nunito";
-    src: url("../fonts/Nunito-VariableFont_wght.ttf") format("truetype");
-    font-weight: 400 600; /* font variabel: semua ketebalan dalam satu file */
+    font-family: 'Nunito';
+    src: url('/fonts/nunito/Nunito-SemiBold.ttf') format('truetype');
+    font-weight: 600;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Nunito";
-    src: url("../fonts/Nunito-VariableFont_wght.ttf") format("truetype");
-    font-weight: 700 800; /* font variabel: semua ketebalan dalam satu file */
+    font-family: 'Nunito';
+    src: url('/fonts/nunito/Nunito-Bold.ttf') format('truetype');
+    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/fonts/nunito/Nunito-ExtraBold.ttf') format('truetype');
+    font-weight: 800;   /* font variabel: semua ketebalan dalam satu file */
     font-style: normal;
     font-display: swap;
 }
