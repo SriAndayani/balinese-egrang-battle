@@ -102,6 +102,7 @@
     padding: 0 1rem;
     margin-bottom: auto;
     margin-top: 2rem;
+    font-family: 'Nunito', sans-serif;
 }
 
 .guru-nav__item {
@@ -142,6 +143,7 @@
     padding: .5rem;
     background: var(--peach);
     border-top: 2px solid rgba(126, 45, 8, .12);
+    font-family: 'Nunito', sans-serif;
 }
 .guru-logout {
     display: flex;
@@ -226,6 +228,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    font-family: 'Nunito', sans-serif;
     gap: .35rem;
     padding: 1.5rem;
     min-height: 10.5rem;

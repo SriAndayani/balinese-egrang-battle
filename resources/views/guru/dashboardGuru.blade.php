@@ -15,7 +15,6 @@
                 <h2 class="stat-card__label">Total Room</h2>
             </div>
             <p class="stat-card__value">{{ $totalRoom }}</p>
-            <p class="stat-card__hint">Semua room yang kamu buat</p>
             <svg class="stat-card__flower flower--white" viewBox="-62 -62 124 124" aria-hidden="true"><use href="#frangipani"/></svg>
         </section>
 
@@ -26,7 +25,6 @@
                 <h2 class="stat-card__label">Room Aktif</h2>
             </div>
             <p class="stat-card__value">{{ $roomAktif }}</p>
-            <p class="stat-card__hint">Room yang sedang dibuka</p>
             <svg class="stat-card__flower flower--white" viewBox="-62 -62 124 124" aria-hidden="true"><use href="#frangipani"/></svg>
         </section>
 

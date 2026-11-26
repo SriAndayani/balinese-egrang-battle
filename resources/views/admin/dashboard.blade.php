@@ -13,28 +13,28 @@
 @php
     $menus = [
         ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'admin.dashboardAdmin',         'active' => 'admin.dashboardAdmin'],
-        ['label' => 'Verifikasi Guru', 'icon' => 'user-check.svg', 'route' => 'admin.verifikasi.index',  'active' => 'admin.verifikasi.*'],
+        ['label' => 'Verifikasi admin', 'icon' => 'user-check.svg', 'route' => 'admin.verifikasi.index',  'active' => 'admin.verifikasi.*'],
         ['label' => 'Kelola Soal',     'icon' => 'book-open.svg', 'route' => 'admin.soal.index',        'active' => 'admin.soal.*'],
         ['label' => 'Kelola Kategori', 'icon' => 'category.svg', 'route' => 'admin.kategori.index',    'active' => 'admin.kategori.*'],
     ];
 @endphp
 
-<div class="guru-shell">
+<div class="admin-shell">
 
     {{-- ============ SIDEBAR ============ --}}
-    <aside class="guru-sidebar">
+    <aside class="admin-sidebar">
         <div>
             {{-- Logo --}}
-            <div class="guru-logo">
+            <div class="admin-logo">
                 <img src="{{ asset('images/logo.webp') }}" alt="Logo Ngiring Malajah Basa Bali">
             </div>
 
             {{-- Menu: dibuat otomatis dari daftar $menus di atas --}}
-            <nav class="guru-nav" aria-label="Menu guru">
+            <nav class="admin-nav" aria-label="Menu admin">
                 @foreach ($menus as $menu)
                     @php $aktif = request()->routeIs($menu['active']); @endphp
                     <a href="{{ Route::has($menu['route']) ? route($menu['route']) : '#' }}"
-                       class="guru-nav__item {{ $aktif ? 'is-active' : '' }}"
+                       class="admin-nav__item {{ $aktif ? 'is-active' : '' }}"
                        @if ($aktif) aria-current="page" @endif>
                         <img src="{{ asset('icons/' . $menu['icon']) }}" alt="">
                         <span>{{ $menu['label'] }}</span>
@@ -44,10 +44,10 @@
         </div>
 
         {{-- Logout --}}
-        <div class="guru-logout-wrap">
+        <div class="admin-logout-wrap">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="guru-logout">
+                <button type="submit" class="admin-logout">
                     <span>Logout</span>
                     <img src="{{ asset('icons/logout.svg') }}" alt="">
                 </button>
@@ -56,12 +56,12 @@
     </aside>
 
     {{-- ============ KONTEN UTAMA ============ --}}
-    <main class="guru-main">
+    <main class="admin-main">
 
-        <div class="guru-main__inner">
+        <div class="admin-main__inner">
             {{-- Pesan sukses dari controller --}}
             @if (session('success'))
-                <div class="guru-alert guru-alert--success" role="status">{{ session('success') }}</div>
+                <div class="admin-alert admin-alert--success" role="status">{{ session('success') }}</div>
             @endif
 
             @yield('content')

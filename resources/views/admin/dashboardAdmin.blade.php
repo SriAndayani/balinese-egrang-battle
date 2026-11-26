@@ -15,7 +15,6 @@
                 <h2 class="stat-card__label">Total Soal</h2>
             </div>
             <p class="stat-card__value">{{ $totalSoal }}</p>
-            <p class="stat-card__hint">Jumlah Soal yang telah dibuat</p>
             <svg class="stat-card__flower flower--white" viewBox="-62 -62 124 124" aria-hidden="true"><use href="#frangipani"/></svg>
         </section>
 
