@@ -1,18 +1,7 @@
-// public/js/battlePlay.js
-// Mesin permainan Battle: mengirim jawaban ke server, menggerakkan karakter, dan menampilkan pemenang.
-// Alur game dan data dari server TIDAK berubah. Yang berubah hanya tampilan dan animasi karakternya.
-
-// ================================================================
-// PENGATURAN (ubah angka di sini)
-// ================================================================
-const FALL_MS         = 500;   // lama karakter terjatuh sebelum berdiri lagi (milidetik)
-const NEXT_SOAL_DELAY = 600;   // jeda sebelum soal berikutnya tampil (supaya warna benar/salah terlihat)
+const FALL_MS         = 500;   // lama karakter terjatuh sebelum berdiri lagi 
+const NEXT_SOAL_DELAY = 600;   // jeda sebelum soal berikutnya tampil 
 const BOOST_MS        = 700;   // lama efek cahaya saat speed boost
 
-// ================================================================
-// STATE (data yang diingat game selama berjalan)
-// Backend adalah sumber kebenaran. State ini hanya salinan untuk animasi dan tampilan.
-// ================================================================
 const GameState = {
     a: {
         progress    : BATTLE_CONFIG.playerA.progress,
@@ -20,7 +9,7 @@ const GameState = {
         streakSalah : BATTLE_CONFIG.playerA.streakSalah,
         isFallen    : false,
         isFinished  : false,
-        isLocked    : false,   // terkunci saat jatuh atau saat menunggu server
+        isLocked    : false,   
         currentSoal : BATTLE_CONFIG.playerA.soal,
     },
     b: {
@@ -35,9 +24,8 @@ const GameState = {
     gameOver: false,
 };
 
-// ================================================================
+
 // REFERENSI ELEMEN HTML (dikumpulkan di satu tempat)
-// ================================================================
 const DOM = {
     nameA      : document.getElementById('name-a'),
     nameB      : document.getElementById('name-b'),
@@ -73,8 +61,6 @@ const DOM = {
     },
 };
 
-// Mengambil semua elemen milik satu pemain ('a' atau 'b') sekaligus,
-// supaya tidak perlu menulis "player === 'a' ? ... : ..." berulang kali.
 function elemenPemain(player) {
     if (player === 'a') {
         return {
@@ -90,21 +76,17 @@ function elemenPemain(player) {
     };
 }
 
-// ================================================================
-// INISIALISASI (dijalankan sekali saat halaman dibuka)
-// ================================================================
+// INISIALISASI
 function init() {
     // Nama pemain di judul papan
     DOM.nameA.textContent = BATTLE_CONFIG.playerA.nama;
     DOM.nameB.textContent = BATTLE_CONFIG.playerB.nama;
 
-    // Muat dulu semua gambar karakter agar tidak berkedip saat berganti ke pose jatuh
     ['a', 'b'].forEach(player => {
         new Image().src = BATTLE_CONFIG.gambar[player].jatuh;
         elemenPemain(player).img.src = BATTLE_CONFIG.gambar[player].berdiri;
     });
 
-    // Tampilkan soal, posisi karakter, dan titik streak awal
     ['a', 'b'].forEach(player => {
         renderSoal(player, GameState[player].currentSoal);
         updateProgress(player, GameState[player].progress);
@@ -112,9 +94,7 @@ function init() {
     });
 }
 
-// ================================================================
 // TAMPILKAN SOAL DAN PILIHAN JAWABAN
-// ================================================================
 function renderSoal(player, soal) {
     const el = elemenPemain(player);
 
@@ -132,15 +112,12 @@ function renderSoal(player, soal) {
         const btn = document.createElement('button');
         btn.className = 'answer-btn';
         btn.textContent = jawaban.teks_jawaban;
-        btn.dataset.id = jawaban.id_jawaban;   // disimpan untuk dikirim ke server
-        // pointerdown: bereaksi saat jari menyentuh, dan tiap jari dihitung sendiri-sendiri
+        btn.dataset.id = jawaban.id_jawaban;   
         btn.addEventListener('pointerdown', (e) => {
-            if (e.pointerType === 'mouse' && e.button !== 0) return;   // abaikan klik kanan
+            if (e.pointerType === 'mouse' && e.button !== 0) return;   
             handleAnswer(player, jawaban.id_jawaban);
         });
 
-        // Cadangan untuk keyboard (Enter/Spasi). Klik dari keyboard punya detail 0,
-        // sedangkan klik susulan dari sentuhan/mouse (detail 1) diabaikan.
         btn.addEventListener('click', (e) => {
             if (e.detail === 0) handleAnswer(player, jawaban.id_jawaban);
         });
@@ -148,16 +125,13 @@ function renderSoal(player, soal) {
     });
 }
 
-// ================================================================
 // SAAT PEMAIN MENEKAN JAWABAN
-// ================================================================
 function handleAnswer(player, idJawaban) {
     const state = GameState[player];
 
-    // Abaikan kalau pemain sedang jatuh, sudah finish, sedang menunggu server, atau game selesai
     if (state.isLocked || state.isFinished || GameState.gameOver) return;
 
-    state.isLocked = true;      // kunci agar tidak bisa ditekan dua kali
+    state.isLocked = true;      
     lockAnswers(player);
 
     fetch(BATTLE_CONFIG.answerUrl, {
@@ -182,9 +156,7 @@ function handleAnswer(player, idJawaban) {
     });
 }
 
-// ================================================================
 // PROSES JAWABAN DARI SERVER
-// ================================================================
 function processResponse(player, idJawaban, data) {
     const state = GameState[player];
 
@@ -204,33 +176,31 @@ function processResponse(player, idJawaban, data) {
 
     // 3. Animasi karakter
     if (data.is_correct) {
-        lompat(player, data.is_boost);                 // melangkah dengan egrang (melompat kecil)
+        lompat(player, data.is_boost);                 
         if (data.is_boost) {
             applyBoostEffect(player);
             showPopup(player, 'SPEED BOOST!', 'boost', 1500);
         }
     } else if (data.is_fallen) {
-        applyFallAnimation(player, data, state);       // salah 3x: pakai gambar jatuh
+        applyFallAnimation(player, data, state);       
     } else {
-        applyShakeAnimation(player);                   // salah 1-2x: goyang sedikit
+        applyShakeAnimation(player);                  
     }
 
     // 4. Ada pemenang?
     if (data.winner) {
         GameState.gameOver = true;
-        setTimeout(() => showWinScreen(data.winner, data.winner_nama), 800);   // tunggu animasi selesai
+        setTimeout(() => showWinScreen(data.winner, data.winner_nama), 800);   
         return;
     }
 
-    // 5. Soal berikutnya (kalau tidak jatuh. Kalau jatuh, soal tampil setelah berdiri lagi)
+    // 5. Soal berikutnya 
     if (!data.is_fallen && data.next_soal) {
         setTimeout(() => transitionToNextSoal(player, data.next_soal), NEXT_SOAL_DELAY);
     }
 }
 
-// ================================================================
 // WARNA TOMBOL JAWABAN
-// ================================================================
 function showAnswerFeedback(player, idJawaban, correctId, isCorrect) {
     const buttons = elemenPemain(player).answers.querySelectorAll('.answer-btn');
 
@@ -247,11 +217,6 @@ function showAnswerFeedback(player, idJawaban, correctId, isCorrect) {
     });
 }
 
-// ================================================================
-// SKOR DAN POSISI KARAKTER
-// Posisi diatur lewat variabel CSS --p (0 = start, 1 = finish).
-// Perhitungan posisinya ada di battlePlay.css.
-// ================================================================
 function updateProgress(player, progress) {
     const el = elemenPemain(player);
     const persen = Math.min(progress / BATTLE_CONFIG.winTarget, 1);
@@ -260,9 +225,7 @@ function updateProgress(player, progress) {
     el.progress.textContent = progress + '/' + BATTLE_CONFIG.winTarget;
 }
 
-// ================================================================
-// TITIK STREAK (3 titik, menyala sesuai jumlah benar berturut-turut)
-// ================================================================
+// TITIK STREAK 
 function updateStreakDots(player, streakBenar) {
     DOM.streakDots[player].forEach((dot, index) => {
         dot.className = 'streak-dot';
@@ -272,12 +235,8 @@ function updateStreakDots(player, streakBenar) {
     });
 }
 
-// ================================================================
-// ANIMASI KARAKTER
-// ================================================================
 
-// Karakter melompat kecil seperti melangkah dengan egrang.
-// Kalau boost (maju 2 langkah), melompat dua kali.
+// ANIMASI KARAKTER
 function lompat(player, boost) {
     const hopper = elemenPemain(player).hopper;
     hopper.classList.remove('lompat', 'lompat-2', 'goyang');
@@ -332,9 +291,7 @@ function applyFallAnimation(player, data, state) {
     }, FALL_MS);
 }
 
-// ================================================================
 // NOTIFIKASI KECIL ("SPEED BOOST!", "Jatuh!")
-// ================================================================
 function showPopup(player, text, type, duration) {
     const popup = elemenPemain(player).popup;
     popup.textContent = text;
@@ -346,9 +303,7 @@ function showPopup(player, text, type, duration) {
     setTimeout(() => popup.classList.remove('show'), duration);
 }
 
-// ================================================================
 // KUNCI DAN BUKA TOMBOL JAWABAN
-// ================================================================
 function lockAnswers(player) {
     elemenPemain(player).answers.querySelectorAll('.answer-btn').forEach(btn => {
         btn.disabled = true;
@@ -361,9 +316,7 @@ function unlockAnswers(player) {
     });
 }
 
-// ================================================================
 // PINDAH KE SOAL BERIKUTNYA
-// ================================================================
 function transitionToNextSoal(player, soal) {
     const state = GameState[player];
     state.currentSoal = soal;
@@ -371,9 +324,7 @@ function transitionToNextSoal(player, soal) {
     state.isLocked = false;
 }
 
-// ================================================================
 // LAYAR PEMENANG
-// ================================================================
 function showWinScreen(winner, winnerNama) {
     lockAnswers('a');
     lockAnswers('b');
@@ -390,9 +341,7 @@ function showWinScreen(winner, winnerNama) {
     launchConfetti();
 }
 
-// ================================================================
 // CONFETTI
-// ================================================================
 function launchConfetti() {
     const warna = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8', '#f8f9fa', '#74c0fc'];
 
@@ -414,9 +363,7 @@ function launchConfetti() {
     }
 }
 
-// ================================================================
-// TOMBOL LAYAR PENUH (pojok kanan bawah)
-// ================================================================
+// TOMBOL LAYAR PENUH 
 const tombolLayar = document.getElementById('btn-layar');
 
 function layarPenuhDidukung() {
@@ -441,7 +388,5 @@ if (!layarPenuhDidukung()) {
     });
 }
 
-// ================================================================
 // MULAI GAME
-// ================================================================
 init();

@@ -142,7 +142,7 @@
     );
 }
 
-/* Area gabus tempat soal muncul. Atur 4 angka ini jika kurang pas. */
+/* Area gabus tempat soal muncul. */
 .board__content {
     position: absolute;
     top: 17%;
@@ -246,7 +246,7 @@
     border-radius: calc(var(--bw) * 0.015);
 }
 
-/* Ikon status (dibuat murni dengan CSS) */
+/* Ikon status */
 .answer__status {
     position: relative;
     flex: none;
@@ -260,7 +260,7 @@
 .answer__status::before,
 .answer__status::after { content: none; position: absolute; }
 
-/* Hover / tekan (hanya sebelum dikunci) */
+/* Hover */
 .answers:not(.is-locked) .answer:hover  { transform: translateY(-3px); }
 .answers:not(.is-locked) .answer:active { transform: translateY(2px); box-shadow: none; }
 
@@ -334,7 +334,7 @@
     80%      { transform: translateX(2%); }
 }
 
-/* ---------- Tombol Next (kanan bawah) ---------- */
+/* ---------- Tombol Next ---------- */
 .nav-slot {
     position: fixed;
     z-index: 3;
@@ -371,7 +371,7 @@
     border-radius: 50%;
 }
 
-/* Tombol kanan muncul dengan efek membal setelah menjawab */
+/* Tombol kanan muncul dengan efek setelah menjawab */
 .nav-slot--next:not([hidden]) .nav-btn {
     animation: nav-pop .5s cubic-bezier(.3, 1.6, .5, 1);
 }

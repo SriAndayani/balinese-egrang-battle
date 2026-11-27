@@ -10,26 +10,20 @@ use Illuminate\Http\Request;
 class BattleController extends Controller
 {
 
-    // Target progress untuk menang
     const WIN_TARGET = 7;
 
-    // Jumlah jawaban benar berturut-turut untuk speed boost
     const STREAK_BOOST_THRESHOLD = 3;
 
-    // Progress tambahan saat speed boost aktif
     const BOOST_PROGRESS = 2;
 
-    // Progress normal per jawaban benar
     const NORMAL_PROGRESS = 1;
 
-    // Jumlah jawaban salah berturut-turut untuk fall
     const STREAK_FALL_THRESHOLD = 3;
 
     public function show($room)
     {
         $room = Room::findOrFail($room);
 
-        // Pastikan room memang mode battle dan aktif
         if ($room->mode !== 'battle' || !$room->status) {
             abort(403, 'Room tidak tersedia.');
         }
@@ -41,7 +35,6 @@ class BattleController extends Controller
     {
         $room = Room::findOrFail($room);
 
-        // Validasi nama kedua pemain
         $request->validate([
             'nama_a' => 'required|string|max:255',
             'nama_b' => 'required|string|max:255',
@@ -49,7 +42,6 @@ class BattleController extends Controller
 
         $soalIds = $room->soals()->pluck('soals.id_soal')->toArray();
 
-        // Validasi: pastikan room memiliki soal
         if (empty($soalIds)) {
             return redirect()->back()
                 ->with('error', 'Room ini belum memiliki soal.');
@@ -60,12 +52,10 @@ class BattleController extends Controller
         shuffle($queueA);
         shuffle($queueB);
 
-        // Inisialisasi seluruh state battle ke session
         session([
             'battle_room_id' => $room->id_room,
             'battle_started' => true,
 
-            // State lengkap Player A
             'battle_player_a' => [
                 'nama'         => $request->nama_a,
                 'queue'        => $queueA,
@@ -76,7 +66,6 @@ class BattleController extends Controller
                 'is_finished'  => false,
             ],
 
-            // State lengkap Player B
             'battle_player_b' => [
                 'nama'         => $request->nama_b,
                 'queue'        => $queueB,
@@ -87,7 +76,6 @@ class BattleController extends Controller
                 'is_finished'  => false,
             ],
 
-            // Winner dikosongkan dulu
             'battle_winner' => null,
         ]);
 
@@ -123,8 +111,6 @@ class BattleController extends Controller
             ? \App\Models\Soal::with('jawabans')->find($soalIdB)
             : null;
 
-        // ✅ Siapkan data soal sebagai array bersih di Controller
-        // Jangan lakukan transformasi ini di dalam Blade
         $soalAData = $soalA ? [
             'id_soal'    => $soalA->id_soal,
             'pertanyaan' => $soalA->pertanyaan,
@@ -161,19 +147,15 @@ class BattleController extends Controller
         $room = Room::findOrFail($room);
 
         $request->validate([
-            // player harus 'a' atau 'b'
             'player'     => 'required|in:a,b',
             'id_jawaban' => 'required|integer',
         ]);
 
-        $player = $request->player; // 'a' atau 'b'
+        $player = $request->player; 
 
-        // Ambil state pemain yang sedang menjawab dari session
-        // 'battle_player_a' atau 'battle_player_b'
         $sessionKey = 'battle_player_' . $player;
         $state      = session($sessionKey);
 
-        // Validasi: pastikan state ada dan pemain belum selesai
         if (!$state) {
             return response()->json(['error' => 'State tidak ditemukan.'], 400);
         }
@@ -182,38 +164,30 @@ class BattleController extends Controller
             return response()->json(['error' => 'Pemain sudah selesai.'], 400);
         }
 
-        // Ambil data jawaban dari database
         $jawaban = Jawaban::findOrFail($request->id_jawaban);
 
-        // Ambil jawaban yang benar untuk soal ini
-        // (untuk dikirim ke frontend agar bisa di-highlight)
         $jawabanBenar = Jawaban::where('id_soal', $jawaban->id_soal)
             ->where('is_correct', true)
             ->first();
 
-        // Proses jawaban menggunakan helper method
         if ($jawaban->is_correct) {
             $state = $this->handleBenar($state);
         } else {
             $state = $this->handleSalah($state, $jawaban->id_soal);
         }
 
-        // Cek win condition setelah progress diupdate
         $winner = null;
         if ($state['progress'] >= self::WIN_TARGET) {
             $state['is_finished'] = true;
-            $state['progress']    = self::WIN_TARGET; // cap progress di 7
+            $state['progress']    = self::WIN_TARGET;
 
-            // Simpan pemenang ke session
             session(['battle_winner' => $player]);
             $winner = $player;
         }
 
-        // Simpan state yang sudah diupdate kembali ke session
         session([$sessionKey => $state]);
 
-        // Ambil soal berikutnya dari queue
-        // (queue sudah diupdate di dalam handleBenar/handleSalah)
+
         $nextSoalId = $state['queue'][0] ?? null;
         $nextSoal   = null;
 
@@ -222,24 +196,20 @@ class BattleController extends Controller
                 ->find($nextSoalId);
         }
 
-        // Kembalikan response JSON ke JavaScript
+
         return response()->json([
             'is_correct'       => $jawaban->is_correct,
 
-            // ID jawaban yang benar (untuk highlight di UI)
             'correct_answer_id' => $jawabanBenar?->id_jawaban,
 
-            // State terbaru pemain
             'progress'         => $state['progress'],
             'streak_benar'     => $state['streak_benar'],
             'streak_salah'     => $state['streak_salah'],
             'is_fallen'        => $state['is_fallen'],
             'is_finished'      => $state['is_finished'],
 
-            // Apakah jawaban ini memicu speed boost
             'is_boost'         => $state['is_boost'] ?? false,
 
-            // Soal berikutnya untuk pemain ini
             'next_soal'        => $nextSoal ? [
                 'id_soal'    => $nextSoal->id_soal,
                 'pertanyaan' => $nextSoal->pertanyaan,
@@ -251,7 +221,6 @@ class BattleController extends Controller
                 ]),
             ] : null,
 
-            // Pemenang jika ada
             'winner'           => $winner,
             'winner_nama'      => $winner
                 ? session('battle_player_' . $winner)['nama']
@@ -266,17 +235,16 @@ class BattleController extends Controller
         $playerA = session('battle_player_a');
         $playerB = session('battle_player_b');
 
-        // Jika tidak ada pemenang di session, redirect ke awal
+
         if (!$winner || !$playerA || !$playerB) {
             return redirect()->route('battle.show',
                 ['room' => $room->id_room]);
         }
 
-        // Tentukan data pemenang dan yang kalah
+
         $winnerData = $winner === 'a' ? $playerA : $playerB;
         $loserData  = $winner === 'a' ? $playerB : $playerA;
 
-        // Bersihkan seluruh session battle setelah hasil ditampilkan
         session()->forget([
             'battle_room_id',
             'battle_started',
@@ -294,27 +262,22 @@ class BattleController extends Controller
 
     private function handleBenar(array $state): array
     {
-        // Reset streak salah karena pemain menjawab benar
         $state['streak_salah'] = 0;
         $state['is_fallen']    = false;
-        // Increment streak benar
         $state['streak_benar']++;
 
         $state['is_boost'] = false;
 
-        // Cek apakah streak benar mencapai threshold untuk boost
         if ($state['streak_benar'] >= self::STREAK_BOOST_THRESHOLD) {
-            // SPEED BOOST: progress +2
+            
             $state['progress']    += self::BOOST_PROGRESS;
-            // Reset streak benar setelah boost
+            
             $state['streak_benar'] = 0;
-            $state['is_boost']      = true; // menandai boost
+            $state['is_boost']      = true; 
         } else {
-            // Normal: progress +1
             $state['progress'] += self::NORMAL_PROGRESS;
         }
 
-        // untuk menghilangkan soal dari antrian karena sudah di jawab benar
         array_shift($state['queue']);
 
         return $state;
@@ -322,16 +285,13 @@ class BattleController extends Controller
 
     private function handleSalah(array $state, int $idSoal): array
     {
-        // Reset streak benar karena pemain menjawab salah
         $state['streak_benar'] = 0;
 
-        // Increment streak salah
         $state['streak_salah']++;
 
-        // Cek apakah pemain fall (3 salah berturut-turut)
         if ($state['streak_salah'] >= self::STREAK_FALL_THRESHOLD) {
             $state['is_fallen']    = true;
-            // Reset streak salah setelah fall
+
             $state['streak_salah'] = 0;
         } else {
             $state['is_fallen'] = false;

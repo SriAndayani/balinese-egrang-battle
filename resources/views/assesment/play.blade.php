@@ -40,9 +40,7 @@
             </div>
         </section>
  
-        {{-- PILIHAN JAWABAN
-             data-answer-url dibaca JS (tidak ada lagi script inline).
-             is_correct TIDAK disimpan di HTML; dicek di server. --}}
+        {{-- PILIHAN JAWABAN --}}
         <div id="jawaban-container"
              class="answers"
              role="group"

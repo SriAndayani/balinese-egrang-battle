@@ -1,54 +1,28 @@
-/* public/css/beranda.css
-   Halaman awal: judul, dua karakter, dua tombol mode, dan tombol login.
-
-   CARA KERJA (singkat):
-   1. Latar belakang memenuhi seluruh layar (object-fit: cover).
-   2. Semua yang lain ditaruh di dalam satu "PANGGUNG" berbentuk 16:9 (landscape)
-      atau 9:16 (portrait), selalu di tengah layar. Posisi dan ukuran tiap elemen
-      ditulis dalam PERSEN dari panggung, jadi seluruh komposisi membesar atau
-      mengecil bersama (IFP besar, HP kecil) tanpa berubah susunan.
-   3. Landscape atau portrait dipilih otomatis oleh @media (orientation: portrait).
-   4. Tombol login menempel di pojok LAYAR (bukan pojok panggung).
-
-   MAU MENGGESER ELEMEN? Ubah angkanya di blok "PENGATURAN" di bawah.
-   Tips: buka DevTools, pilih <body class="beranda">, lalu ubah variabelnya langsung
-   di panel Styles sampai pas, baru salin angkanya ke sini. */
-
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* ============================================================
-   PENGATURAN: LANDSCAPE (bawaan)
-   Semua angka = persen dari panggung.
-   ============================================================ */
 .beranda {
     /* Judul (papan "Ngiring Malajah Basa Bali"), selalu di tengah */
     --judul-lebar: 38%;
     --judul-atas:  3%;
 
-    /* Karakter. Lebar saja yang diatur; tinggi mengikuti gambar. */
+    /* Karakter */
     --iluh-kiri:   15%;   --iluh-bawah: 8%;   --iluh-lebar: 20%;   /* anak perempuan (kiri) */
     --gede-kanan:  15%;   --gede-bawah: 8%;   --gede-lebar: 20%;   /* anak laki-laki (kanan) */
 
     /* Dua tombol mode, ditumpuk di tengah */
     --tombol-lebar: 27%;
-    --uji-atas:     56%;      /* tombol Uji Kemampuan */
-    --egrang-atas:  70%;      /* tombol Balap Egrang */
+    --uji-atas:     56%;     
+    --egrang-atas:  70%;      
 
-    /* Tombol login (pojok layar). clamp(terkecil, ideal, terbesar) */
     --login-lebar: clamp(48px, 5vw, 200px);
 
-    /* Bagian latar belakang yang dijaga tetap terlihat saat gambar terpotong */
     --fokus-latar: 50% 50%;
 }
 
-/* ============================================================
-   PENGATURAN: PORTRAIT (HP berdiri, tablet berdiri)
-   Hanya angka yang berbeda dari landscape yang perlu ditulis ulang.
-   ============================================================ */
 @media (orientation: portrait) {
     .beranda {
         --judul-lebar: 76%;
@@ -67,17 +41,15 @@
     }
 }
 
-/* ============================================================
-   HALAMAN DAN LATAR BELAKANG
-   ============================================================ */
+/* HALAMAN DAN LATAR BELAKANG */
 .beranda {
     position: relative;
-    height: 100vh;               /* cadangan browser lama */
-    height: 100svh;              /* tinggi layar yang terlihat (aman untuk HP) */
-    overflow: hidden;            /* satu layar penuh, tanpa scroll */
+    height: 100vh;               
+    height: 100svh;              
+    overflow: hidden;            
     display: grid;
-    place-items: center;         /* panggung selalu di tengah layar */
-    background: #4a8df0;         /* warna langit selama gambar dimuat */
+    place-items: center;         
+    background: #4a8df0;         
 }
 
 .latar {
@@ -85,15 +57,13 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;           /* menutupi layar; bagian lebih dipotong, tidak digepengkan */
+    object-fit: cover;           
     object-position: var(--fokus-latar);
     z-index: 0;
     pointer-events: none;
 }
 
-/* ============================================================
-   PANGGUNG: kotak 16:9 yang muat di layar, tempat semua elemen ditata
-   ============================================================ */
+/* PANGGUNG */
 .panggung {
     position: relative;
     z-index: 1;
@@ -105,12 +75,11 @@
 @media (orientation: portrait) {
     .panggung {
         aspect-ratio: 9 / 16;
-        width: min(100vw, 56.25vh);    /* cadangan */
-        width: min(100vw, 56.25svh);   /* 56.25 = 100 x 9/16 */
+        width: min(100vw, 56.25vh);    
+        width: min(100vw, 56.25svh);   
     }
 }
 
-/* Semua gambar di dalam panggung: mengikuti lebar kotaknya, tidak bisa diseret */
 .judul img,
 .karakter,
 .tombol img,
@@ -126,7 +95,7 @@
 .judul {
     position: absolute;
     top: var(--judul-atas);
-    left: calc((100% - var(--judul-lebar)) / 2);    /* tepat di tengah */
+    left: calc((100% - var(--judul-lebar)) / 2);    
     width: var(--judul-lebar);
     z-index: 3;
     filter: drop-shadow(0 1.2svh 1.2svh rgba(0, 0, 0, .25));
@@ -144,9 +113,9 @@
 /* ===== Tombol mode ===== */
 .menu {
     position: absolute;
-    inset: 0;                    /* seukuran panggung */
+    inset: 0;                    
     z-index: 3;
-    pointer-events: none;        /* area kosong tidak menghalangi, hanya tombolnya yang bisa diklik */
+    pointer-events: none;        
 }
 
 .tombol {
@@ -167,7 +136,7 @@
 .tombol:active { transform: scale(.96) translateY(3%); }
 .tombol:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 999px; }
 
-/* ===== Tombol login (menempel di pojok LAYAR) ===== */
+/* ===== Tombol login ===== */
 .tombol-login {
     position: fixed;
     z-index: 10;
@@ -184,7 +153,6 @@
 .tombol-login:active { transform: scale(.94); }
 .tombol-login:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 50%; }
 
-/* Di portrait, tombol login pindah ke pojok kanan ATAS (sesuai desain) */
 @media (orientation: portrait) {
     .tombol-login {
         bottom: auto;

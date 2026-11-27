@@ -41,9 +41,7 @@
         </div>
     @else
 
-        {{-- ============================================================
-             1. RINGKASAN
-             ============================================================ --}}
+        {{-- 1. RINGKASAN --}}
         <section class="hd-card">
             <h2 class="hd-card__title">Ringkasan</h2>
 
@@ -63,10 +61,7 @@
                 </div>
             </div>
 
-            {{-- Dua grafik berdampingan. Dibuat dari kotak HTML biasa (tanpa library). --}}
             <div class="hd-charts">
-
-                {{-- Grafik 1: benar / salah / tidak dijawab per soal --}}
                 <div class="hd-chart">
                     <h3 class="hd-chart__title">Benar atau salah per soal</h3>
 
@@ -94,7 +89,6 @@
                     </div>
                 </div>
 
-                {{-- Grafik 2: sebaran skor --}}
                 <div class="hd-chart">
                     <h3 class="hd-chart__title">Sebaran skor</h3>
 
@@ -120,9 +114,7 @@
             </div>
         </section>
 
-        {{-- ============================================================
-             2. PERINGKAT (3 besar)
-             ============================================================ --}}
+        {{-- 2. PERINGKAT  --}}
         <section class="hd-card">
             <h2 class="hd-card__title">Peringkat</h2>
 
@@ -151,10 +143,6 @@
             </div>
         </section>
 
-        {{-- ============================================================
-             3. HASIL PER SISWA (klik baris untuk membuka rincian)
-             <details> adalah elemen HTML bawaan untuk dropdown, tanpa JavaScript.
-             ============================================================ --}}
         <section class="hd-card">
             <h2 class="hd-card__title">Hasil per Siswa</h2>
 
@@ -182,7 +170,6 @@
                             <div class="hd-center hd-salah">{{ $s['salah'] }}</div>
                         </summary>
 
-                        {{-- Rincian: soal, jawaban yang dipilih, benar/salah --}}
                         <div class="hd-rincian">
                             <table class="hd-subtable">
                                 <thead>
@@ -234,9 +221,6 @@
             </div>
         </section>
 
-        {{-- ============================================================
-             4. HASIL PER SOAL (klik baris untuk melihat siswa yang menjawab)
-             ============================================================ --}}
         <section class="hd-card">
             <h2 class="hd-card__title">Hasil per Soal</h2>
 
@@ -270,7 +254,6 @@
                             <div class="hd-center hd-salah">{{ $s['salah'] }}</div>
                         </summary>
 
-                        {{-- Rincian: siapa saja yang menjawab dan jawabannya --}}
                         <div class="hd-rincian">
                             <table class="hd-subtable">
                                 <thead>

@@ -4,18 +4,13 @@
 
 @section('content')
 
-{{-- $room berisi data room kalau sedang MELIHAT DETAIL / MENGUBAH, dan null kalau sedang MENAMBAH --}}
 @php
     $mengubah = $room !== null;
 
-    // Nilai awal form (pakai isian terakhir kalau validasi gagal)
     $modeTerpilih = old('mode', $room?->mode);
     $soalTerpilih = array_map('intval', (array) old('soal', $terpilih));
     $statusAktif  = $errors->any() ? (bool) old('status') : (bool) ($room?->status ?? true);
 
-    // Data lengkap tiap soal untuk pop up "Pratinjau Soal".
-    // >>> SESUAIKAN nama kolom pilihan jawaban & kunci dengan tabel soal kamu <<<
-    // (kalau kolomnya tidak ada, nilainya null dan pop up tetap jalan tanpa error)
     $dataSoal = collect($daftarSoal)->mapWithKeys(function ($soal) {
 
         $hurufPilihan = ['A', 'B', 'C', 'D'];
@@ -68,7 +63,6 @@
         <h1 class="rf-title">{{ $mengubah ? 'Detail Room' : 'Tambah Room' }}</h1>
     </div>
 
-    {{-- Ringkasan error --}}
     @if ($errors->any())
         <div class="rf-error" role="alert">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
@@ -94,7 +88,6 @@
                    class="rf-input">
         </div>
 
-        {{-- 2. Mode + 3. Poin --}}
         <div class="rf-grid">
             <fieldset class="rf-field rf-fieldset">
                 <legend class="rf-label"><span class="rf-num">2</span> Mode</legend>
@@ -141,8 +134,6 @@
             </div>
         </div>
 
-        {{-- Kode room: HANYA untuk mode assessment (hasilnya tercatat di "Hasil Siswa").
-             Blok ini disembunyikan oleh JavaScript kalau mode bukan assessment. --}}
         <div id="blok-kode" class="rf-kode" @if ($modeTerpilih !== 'assessment') hidden @endif>
             <label for="kode_room" class="rf-label">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M17 6l3 3"/></svg>

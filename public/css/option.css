@@ -1,47 +1,23 @@
-/* public/css/rooms.css
-   Halaman "Pilih Ruangan": papan judul, deretan kartu room, dan panah halaman.
-
-   Font Fredoka dan aturan umum ada di game-base.css, jadi muat file itu LEBIH DULU:
-     <link rel="stylesheet" href="{{ asset('css/game-base.css') }}">
-     <link rel="stylesheet" href="{{ asset('css/rooms.css') }}">
-
-   CARA KERJA (sama dengan beranda.css):
-   1. Latar belakang memenuhi layar (object-fit: cover).
-   2. Semua yang lain ditata di dalam satu PANGGUNG 16:9 (landscape) atau 9:16
-      (portrait) yang selalu di tengah layar. Ukuran dan posisi ditulis relatif ke
-      panggung, jadi seluruh tampilan membesar atau mengecil bersama (IFP besar,
-      HP kecil), termasuk ukuran tulisannya.
-   3. Landscape atau portrait dipilih otomatis oleh @media (orientation: portrait).
-
-   MAU MENGGESER ELEMEN? Ubah angkanya di blok "PENGATURAN" di bawah. */
-
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Atribut hidden HARUS menang atas aturan display lain.
-   rooms.js memakainya untuk menyembunyikan kartu di halaman lain. */
+
 [hidden] { display: none !important; }
 
-/* ============================================================
-   PENGATURAN: LANDSCAPE (bawaan)
-   Cara membaca:
-     "%"           = persen dari panggung (lebar untuk left/width, tinggi untuk top)
-     angka desimal = pecahan lebar panggung. Contoh --kartu: .202 berarti 20,2% lebar panggung.
-   ============================================================ */
 .room-body {
-    --rasio: 1.7778;                 /* lebar dibagi tinggi panggung (16:9) */
+    --rasio: 1.7778;                
 
     /* Papan judul */
     --judul-lebar: 27.5%;
     --judul-atas:  11%;
-    --font-judul:  .025;             /* ukuran tulisan judul */
+    --font-judul:  .025;             
 
     /* Deretan kartu room */
-    --per-halaman: 3;                /* jumlah kartu per halaman. DIBACA JUGA oleh rooms.js */
-    --arah-list:   row;              /* row = berjajar ke samping, column = bertumpuk ke bawah */
+    --per-halaman: 3;                /* jumlah kartu per halaman */
+    --arah-list:   row;              /* row = berjajar ke samping, column bertumpuk ke bawah */
     --kartu:       .202;             /* lebar satu kartu */
     --jarak:       .023;             /* jarak antar kartu */
     --list-atas:   53%;              /* posisi atas deretan kartu */
@@ -52,10 +28,9 @@
     --panah-sisi:   3%;              /* jarak panah dari tepi panggung */
     --panah-tengah: 62.5%;           /* tinggi titik tengah panah dari atas panggung */
 
-    /* Tombol home (menempel di pojok layar) */
+    /* Tombol home */
     --home-lebar: clamp(44px, 4.4vw, 150px);
 
-    /* Bagian latar belakang yang dijaga tetap terlihat saat gambar terpotong */
     --fokus-latar: 50% 50%;
 }
 
@@ -78,10 +53,6 @@
     color: var(--rf-ink);
 }
 
-/* ============================================================
-   PENGATURAN: PORTRAIT (HP berdiri, tablet berdiri)
-   Hanya angka yang berbeda dari landscape yang perlu ditulis ulang.
-   ============================================================ */
 @media (orientation: portrait) {
     .room-body {
         --rasio: .5625;              /* 9:16 */
@@ -107,24 +78,21 @@
     }
 }
 
-/* ============================================================
-   HALAMAN, LATAR, DAN PANGGUNG
-   --W = lebar panggung. Dipakai untuk ukuran yang harus ikut skala (kartu, tulisan, jarak).
-   ============================================================ */
+
 .room-body {
-    --tinggi-layar: 100vh;                          /* cadangan browser lama */
+    --tinggi-layar: 100vh;                          
     --W: min(100vw, calc(var(--tinggi-layar) * var(--rasio)));
 
     position: relative;
     height: var(--tinggi-layar);
-    overflow: hidden;                               /* satu layar penuh, tanpa scroll */
+    overflow: hidden;                              
     display: grid;
-    place-items: center;                            /* panggung selalu di tengah */
-    background: #4a8df0;                            /* warna langit selama gambar dimuat */
+    place-items: center;                            
+    background: #4a8df0;                            
 }
 
 @supports (height: 1svh) {
-    .room-body { --tinggi-layar: 100svh; }          /* tinggi layar yang terlihat (aman untuk HP) */
+    .room-body { --tinggi-layar: 100svh; }         
 }
 
 .latar {
@@ -145,13 +113,11 @@
     aspect-ratio: var(--rasio);
 }
 
-/* ============================================================
-   PAPAN JUDUL
-   ============================================================ */
+/* PAPAN JUDUL */
 .papan-judul {
     position: absolute;
     top: var(--judul-atas);
-    left: calc((100% - var(--judul-lebar)) / 2);    /* tepat di tengah */
+    left: calc((100% - var(--judul-lebar)) / 2);    
     width: var(--judul-lebar);
     z-index: 3;
     filter: drop-shadow(0 calc(var(--W) * .01) calc(var(--W) * .01) rgba(0, 0, 0, .25));
@@ -165,7 +131,7 @@
 }
 .papan-judul span {
     position: absolute;
-    inset: 34% 12% 17% 12%;                         /* area tulisan di badan papan */
+    inset: 34% 12% 17% 12%;                         
     display: grid;
     place-items: center;
     text-align: center;
@@ -178,9 +144,7 @@
     text-shadow: 0 .06em 0 rgba(0, 0, 0, .25);
 }
 
-/* ============================================================
-   DERETAN KARTU ROOM
-   ============================================================ */
+/* DERETAN KARTU ROOM*/
 .room-list {
     position: absolute;
     left: 0;
@@ -216,7 +180,7 @@
 
 .room-label {
     position: absolute;
-    inset: 16% 14%;                                 /* menjauhi paku dan tepi papan */
+    inset: 16% 14%;                                 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -231,7 +195,7 @@
     max-width: 100%;
     font-weight: 700;
     overflow-wrap: anywhere;
-    display: -webkit-box;                           /* nama panjang dipotong di baris ke-2 */
+    display: -webkit-box;                           
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -248,7 +212,7 @@
     paint-order: stroke fill;
 }
 
-.room-card.kosong { cursor: default; }              /* kartu "Belum ada room" bukan tautan */
+.room-card.kosong { cursor: default; }              
 
 @media (hover: hover) {
     a.room-card:hover { transform: scale(1.05) translateY(-3%); }
@@ -256,14 +220,12 @@
 a.room-card:active { transform: scale(.96) translateY(3%); }
 a.room-card:focus-visible { outline: 3px solid #fff; outline-offset: 6px; border-radius: 16px; }
 
-/* ============================================================
-   PANAH HALAMAN
-   ============================================================ */
+/* PANAH HALAMAN */
 .panah {
     position: absolute;
     z-index: 4;
     top: var(--panah-tengah);
-    margin-top: calc(var(--panah-lebar) / -2);      /* persen margin = persen LEBAR panggung, sama dengan tinggi panah */
+    margin-top: calc(var(--panah-lebar) / -2);      
     width: var(--panah-lebar);
     aspect-ratio: 1;
     padding: 0;
@@ -289,9 +251,7 @@ a.room-card:focus-visible { outline: 3px solid #fff; outline-offset: 6px; border
 .panah:disabled { opacity: .4; cursor: default; filter: grayscale(.6); }
 .panah:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 50%; }
 
-/* ============================================================
-   TOMBOL HOME (menempel di pojok kiri bawah LAYAR)
-   ============================================================ */
+/* TOMBOL HOME */
 .btn-home {
     position: fixed;
     z-index: 6;

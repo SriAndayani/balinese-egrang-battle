@@ -17,16 +17,15 @@ class GameController extends Controller
 
     public function room(string $mode)
     {
-        // Satu tempat untuk semua pengaturan per mode
         $pengaturan = [
             'assesment' => ['label' => 'Kuis',   'rute' => 'assesment.show', 'db' => 'assessment'],
             'battle'    => ['label' => 'Battle', 'rute' => 'battle.show', 'db' => 'battle'],
         ];
 
-        $label = $pengaturan[$mode]['label'];   // untuk judul halaman
-        $rute  = $pengaturan[$mode]['rute'];    // route tujuan tombol
+        $label = $pengaturan[$mode]['label'];   
+        $rute  = $pengaturan[$mode]['rute'];    
 
-        $rooms = Room::where('mode', $pengaturan[$mode]['db'])     // isi kolom mode di database harus sama persis
+        $rooms = Room::where('mode', $pengaturan[$mode]['db'])     
             ->where('status', 1)
             ->orderBy('id_room')
             ->get();

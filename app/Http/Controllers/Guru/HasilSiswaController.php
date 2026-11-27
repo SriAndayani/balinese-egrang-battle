@@ -12,18 +12,17 @@ use Illuminate\Support\Facades\Gate;
 
 class HasilSiswaController extends Controller
 {
-    private const TABEL_HASIL  = 'assessment_results';   // satu baris per siswa
-    private const TABEL_DETAIL = 'detail_results';       // satu baris per soal yang dijawab siswa
+    private const TABEL_HASIL  = 'assessment_results';   
+    private const TABEL_DETAIL = 'detail_results';       
 
         public function index()
     {
         $daftarRoom = Room::where('id_user', Auth::id())
             ->where('mode', 'assessment')
-            ->withCount('soals')                 // $room->soals_count
+            ->withCount('soals')                 
             ->latest('id_room')
             ->paginate(10);
  
-        // Jumlah siswa per room: [id_room => jumlah]
         $jumlahSiswa = DB::table(self::TABEL_HASIL)
             ->whereIn('id_room', $daftarRoom->pluck('id_room'))
             ->select('id_room', DB::raw('COUNT(*) as total'))
@@ -38,14 +37,12 @@ class HasilSiswaController extends Controller
         Gate::authorize('kelolaHasil', $room); 
         abort_if($room->mode !== 'assessment', 404);
  
-        // hasil siswa yang sudah mengerjakan
         $hasil = DB::table(self::TABEL_HASIL)
             ->where('id_room', $room->id_room)
             ->orderBy('waktu_selesai')
             ->orderBy('id_ass')
             ->get();
  
-        // Semua jawaban siswa yang ada di room ini
         $detail = DB::table(self::TABEL_DETAIL . ' as d')
             ->join(self::TABEL_HASIL . ' as h', 'h.id_ass', '=', 'd.id_ass')
             ->leftJoin('soals as s', 's.id_soal', '=', 'd.id_soal')
@@ -59,7 +56,6 @@ class HasilSiswaController extends Controller
             ->orderBy('d.id_detail')
             ->get();
  
-        // hasil siswa
         $namaSiswa = $hasil->pluck('nama', 'id_ass');
  
         $detail->each(function ($d) use ($namaSiswa) {
@@ -70,14 +66,13 @@ class HasilSiswaController extends Controller
         });
  
         // ---------- 3. Hasil per soal ----------
-        // Urutan soal mengikuti urutan di tabel room_soal
         $urutanSoal = DB::table('room_soal')
             ->where('id_room', $room->id_room)
             ->orderBy('id_rs')
             ->pluck('id_soal')
-            ->flip();                            // [id_soal => posisi]
+            ->flip();                            
  
-        $nomorSoal = [];                         // [id_soal => nomor soal]
+        $nomorSoal = [];                         
  
         $perSoal = $detail->groupBy('id_soal')
             ->sortBy(fn ($baris, $idSoal) => $urutanSoal[$idSoal] ?? PHP_INT_MAX)
@@ -98,7 +93,6 @@ class HasilSiswaController extends Controller
                     'benar'      => $benar,
                     'salah'      => $salah,
                     'kosong'     => $kosong,
-                    // persentase tinggi batang untuk grafik
                     'pb'         => round($benar / $total * 100, 1),
                     'ps'         => round($salah / $total * 100, 1),
                     'pk'         => round($kosong / $total * 100, 1),
@@ -134,13 +128,12 @@ class HasilSiswaController extends Controller
         $rataRata    = $jumlahSiswa ? round($hasil->avg('skor'), 1) : 0;
         $tertinggi   = $hasil->sortByDesc('skor')->first();
  
-        // 3 besar (skor sama: yang selesai lebih dulu menang)
         $peringkat = $hasil
             ->sortBy([['skor', 'desc'], ['waktu_selesai', 'asc']])
             ->take(3)
             ->values();
  
-        // ---------- 6. Grafik distribusi skor ----------
+
         $jumlahBin = 8;
         $skorMaks  = (int) ($hasil->max('skor') ?? 0);
         $lebar     = max(1, (int) ceil(($skorMaks + 1) / $jumlahBin));
@@ -148,7 +141,7 @@ class HasilSiswaController extends Controller
         $grafikSkor = [];
         for ($i = 0; $i < $jumlahBin; $i++) {
             $dari   = $i * $lebar;
-            $batas  = $dari + $lebar;           // batas atas (tidak termasuk)
+            $batas  = $dari + $lebar;           
             $grafikSkor[] = [
                 'dari'   => $dari,
                 'sampai' => $batas - 1,
@@ -168,9 +161,6 @@ class HasilSiswaController extends Controller
         ));
     }
  
-    /**
-     * Hapus SEMUA hasil siswa di satu room. Room dan soalnya tidak ikut terhapus.
-     */
     public function destroy(Room $room)
     {
         Gate::authorize('kelolaHasil', $room);
@@ -180,7 +170,6 @@ class HasilSiswaController extends Controller
                 ->where('id_room', $room->id_room)
                 ->pluck('id_ass');
  
-            // Hapus rincian jawaban dulu, baru hasilnya
             DB::table(self::TABEL_DETAIL)->whereIn('id_ass', $idHasil)->delete();
             DB::table(self::TABEL_HASIL)->where('id_room', $room->id_room)->delete();
         });

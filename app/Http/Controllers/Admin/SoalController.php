@@ -23,7 +23,7 @@ class SoalController extends Controller
             ->when($kategoriDipilih, fn ($query) => $query->where('id_kategori', $kategoriDipilih))
             ->latest('id_soal')
             ->paginate(10)
-            ->withQueryString();   // supaya filter tidak hilang saat pindah halaman
+            ->withQueryString();
  
         $daftarKategori = Kategori::orderBy('nama_kategori')->get();
  
@@ -35,8 +35,8 @@ class SoalController extends Controller
         return view('admin.soalForm', [
             'soal'           => null,
             'daftarKategori' => Kategori::orderBy('nama_kategori')->get(),
-            'teks'           => [],     // belum ada jawaban
-            'indexBenar'     => null,   // belum ada jawaban benar
+            'teks'           => [],     
+            'indexBenar'     => null,   
         ]);
     }
 
@@ -44,7 +44,6 @@ class SoalController extends Controller
     {
         $validated = $request->validate($this->aturan(), $this->pesan());
  
-        // Soal dan jawabannya disimpan bersamaan: gagal satu, gagal semua.
         DB::transaction(function () use ($request, $validated) {
             $soal = Soal::create([
                 'id_user'     => Auth::id(),
@@ -64,11 +63,10 @@ class SoalController extends Controller
 
     public function edit(Soal $soal)
     {
-        Gate::authorize('update', $soal);   // 403 kalau bukan pembuatnya
+        Gate::authorize('update', $soal);   
  
         $jawabans = $soal->jawabans()->orderBy('id_jawaban')->get();
  
-        // Urutan (0-3) jawaban yang benar. search() mengembalikan false kalau tidak ada.
         $indexBenar = $jawabans->search(fn ($jawaban) => $jawaban->is_correct);
  
         return view('admin.soalForm', [
@@ -85,7 +83,6 @@ class SoalController extends Controller
  
         $validated = $request->validate($this->aturan(), $this->pesan());
  
-        // Tentukan gambar: ganti kalau ada upload baru, kosongkan kalau dicentang "hapus"
         $gambarLama = $soal->gambar;
         $gambarBaru = $gambarLama;
  
@@ -105,7 +102,6 @@ class SoalController extends Controller
             $this->simpanJawaban($soal, $validated['jawaban'], (int) $validated['benar']);
         });
  
-        // File gambar lama dihapus SETELAH data berhasil tersimpan
         if ($gambarLama && $gambarLama !== $gambarBaru) {
             Storage::disk('public')->delete($gambarLama);
         }
@@ -133,7 +129,6 @@ class SoalController extends Controller
                 $soal->delete();
             });
         } catch (QueryException $e) {
-            // Kode 23000 = soal ini masih dipakai tabel lain (room, riwayat jawaban, dll.)
             if ($e->getCode() === '23000') {
                 return back()->withErrors([
                     'hapus' => 'Soal tidak bisa dihapus karena masih dipakai.',
@@ -168,7 +163,6 @@ class SoalController extends Controller
         }
     }
  
-    /** Aturan validasi form soal. */
     private function aturan(): array
     {
         return [
@@ -181,7 +175,6 @@ class SoalController extends Controller
         ];
     }
  
-    /** Pesan error */
     private function pesan(): array
     {
         return [

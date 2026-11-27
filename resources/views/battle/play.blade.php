@@ -1,5 +1,3 @@
-{{-- resources/views/battle/play.blade.php  (ganti isi file battle play lamamu dengan ini)
-     Data dari controller: $room, $playerA, $playerB, $soalAData, $soalBData (tidak berubah) --}}
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,10 +12,6 @@
 </head>
 <body class="battle-body">
 
-{{-- ============================================================
-     DATA DARI BACKEND (PHP -> JavaScript)
-     Data PHP diubah ke JSON agar bisa dibaca JavaScript.
-     ============================================================ --}}
 <script>
     const BATTLE_CONFIG = {
         answerUrl : '{{ route("battle.answer", $room->id_room) }}',
@@ -25,7 +19,6 @@
         csrfToken : '{{ csrf_token() }}',
         winTarget : 7,
 
-        // Gambar karakter: berdiri (normal) dan jatuh (salah 3x berturut-turut)
         gambar: {
             a: {
                 berdiri : @json(asset('images/gede-egrang-stand.png')),
@@ -56,8 +49,6 @@
 </script>
 
 <div class="battle-layout">
-
-    {{-- ========== BAGIAN ATAS: ARENA + KARAKTER + SKOR ========== --}}
     <section class="baris-arena">
 
         {{-- Skor Pemain 1 (kiri) --}}
@@ -71,11 +62,11 @@
             </div>
         </div>
 
-        {{-- Arena: lantai rumput + dua karakter di atasnya --}}
+        {{-- Arena --}}
         <div class="arena" id="track-main">
             <img class="lantai" src="{{ asset('images/arena.png') }}" alt="" draggable="false">
 
-            {{-- Karakter Pemain 1 (jalur belakang) --}}
+            {{-- Karakter Pemain 1  --}}
             <div class="kid kid-a" id="char-a" style="--p:0">
                 <div class="hopper" id="hopper-a">
                     <img class="sprite" id="img-a" alt="" draggable="false">
@@ -83,7 +74,7 @@
                 <i class="bayangan"></i>
             </div>
 
-            {{-- Karakter Pemain 2 (jalur depan) --}}
+            {{-- Karakter Pemain 2 --}}
             <div class="kid kid-b" id="char-b" style="--p:0">
                 <div class="hopper" id="hopper-b">
                     <img class="sprite" id="img-b" alt="" draggable="false">
@@ -124,7 +115,7 @@
     </section>
 </div>
 
-{{-- Tombol home (kiri bawah) dan layar penuh (kanan bawah) --}}
+{{-- Tombol home dan layar penuh  --}}
 <a class="btn-sudut btn-home" href="{{ route('game.index') }}" aria-label="Kembali ke menu">
     <img src="{{ asset('images/home-btn.webp') }}" alt="" draggable="false">
 </a>
@@ -132,9 +123,7 @@
     <img src="{{ asset('images/full-screen-btn.webp') }}" alt="" draggable="false">
 </button>
 
-{{-- ============================================================
-     LAYAR PEMENANG
-     ============================================================ --}}
+{{-- LAYAR PEMENANG --}}
 <div id="win-overlay">
     <div class="winner-card" id="win-card">
         <div class="win-piala">&#127942;</div>

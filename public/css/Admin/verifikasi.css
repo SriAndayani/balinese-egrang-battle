@@ -1,12 +1,7 @@
-/* =========================================================
-   Halaman Verifikasi Guru (admin) — Ngiring Malajah Basa Bali
-   Lokasi: public/css/adminVerifikasi.css
-   Semua class diawali "vg-" supaya tidak bentrok dengan Tailwind.
-   ========================================================= */
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-SemiBold.ttf') format('truetype');
-    font-weight: 600;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 600;   
     font-style: normal;
     font-display: swap;
 }
@@ -14,7 +9,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-Bold.ttf') format('truetype');
-    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 700;   
     font-style: normal;
     font-display: swap;
 }
@@ -22,7 +17,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-ExtraBold.ttf') format('truetype');
-    font-weight: 800;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 800;   
     font-style: normal;
     font-display: swap;
 }

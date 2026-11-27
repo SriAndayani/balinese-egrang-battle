@@ -58,7 +58,7 @@ class RoomController extends Controller
                 'status'    => $request->boolean('status'),
             ]);
  
-            $room->soals()->sync($idSoal);   // isi tabel room_soal
+            $room->soals()->sync($idSoal);   
         });
  
         return redirect()->route('guru.room.index')
@@ -67,7 +67,7 @@ class RoomController extends Controller
  
     public function edit(Room $room)
     {
-        Gate::authorize('update', $room);   // 403 kalau bukan room miliknya
+        Gate::authorize('update', $room);   
  
         return view('guru.roomFile', [
             'room'       => $room,
@@ -100,7 +100,7 @@ class RoomController extends Controller
                 'status'    => $request->boolean('status'),
             ]);
  
-            $room->soals()->sync($idSoal);   // samakan isi room_soal dengan pilihan baru
+            $room->soals()->sync($idSoal);   
         });
  
         return redirect()->route('guru.room.index')
@@ -114,7 +114,6 @@ class RoomController extends Controller
         try {
             $room->delete();
         } catch (QueryException $e) {
-            // Kode 23000 = room ini masih dirujuk tabel lain (misalnya hasil siswa)
             if ($e->getCode() === '23000') {
                 return back()->withErrors([
                     'hapus' => "Room {$room->nama_room} tidak bisa dihapus karena sudah punya hasil siswa. "
@@ -138,7 +137,6 @@ class RoomController extends Controller
         });
     }
  
-    /** Daftar soal untuk ditampilkan sebagai pilihan di form. */
     private function daftarSoalTersedia()
     {
         return $this->soalTersedia()

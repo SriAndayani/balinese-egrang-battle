@@ -29,7 +29,6 @@
                 <img src="{{ asset('images/logo.webp') }}" alt="Logo Ngiring Malajah Basa Bali">
             </div>
 
-            {{-- Menu: dibuat otomatis dari daftar $menus di atas --}}
             <nav class="guru-nav" aria-label="Menu guru">
                 @foreach ($menus as $menu)
                     @php $aktif = request()->routeIs($menu['active']); @endphp

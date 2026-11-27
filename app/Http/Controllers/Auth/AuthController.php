@@ -13,8 +13,8 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $request->validate([//untuk validasi form login di blade
-            'username' => ['required', 'string'],// required itu untuk kolom email harus di isi pada form login
+        $request->validate([
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
             'role' => ['required', 'in:guru,admin'],
         ],[
@@ -22,7 +22,6 @@ class AuthController extends Controller
             'password.required' => 'Password masih kosong!', 
         ]);
 
-        //mencocokkan form dengan table user
         $credentials = [
             'username' => $request->username,
             'password' => $request->password,
@@ -37,7 +36,6 @@ class AuthController extends Controller
  
         $user = Auth::user();
  
-        // 4. Guru hanya boleh masuk kalau akunnya sudah diverifikasi admin
         if ($user->role === 'guru' && $user->status !== 'active') {
             Auth::logout();
             $request->session()->invalidate();
@@ -48,10 +46,8 @@ class AuthController extends Controller
                 ->onlyInput('username', 'role');
         }
 
-        // 5. Login sukses: buat ulang session
         $request->session()->regenerate();
  
-        // 6. Arahkan sesuai role
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboardAdmin');
         }
@@ -62,7 +58,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // 1. Validasi isi form
         $validated = $request->validate([
             'username' => ['required', 'string', 'max:50', 'unique:users,username'],
             'email'    => ['required', 'email', 'max:100', 'unique:users,email'],
@@ -78,7 +73,6 @@ class AuthController extends Controller
             'password.confirmed' => 'Ulangi password tidak cocok.',
         ]);
 
-        // 2. Simpan ke database
         User::create([
             'username' => $validated['username'],
             'email'    => $validated['email'],
@@ -87,7 +81,6 @@ class AuthController extends Controller
             'status'   => 'pending',
         ]);
  
-        // 3. Kembali ke halaman login dengan pesan sukses
         return redirect()->route('login')
             ->with('success', 'Pendaftaran berhasil! Tunggu verifikasi dari admin sebelum login.');
     }

@@ -31,7 +31,6 @@
     --input-lebar: 40%; /* lebar kotak isian */
 }
 
-/* Browser baru: pakai min() dan vh */
 @supports (width: min(1px, 2px)) and (height: 1vh) {
     .setup-body {
         --papan-lebar: min(40vw, 52vh);
@@ -47,7 +46,7 @@
 .setup-body {
     height: 100vh;
     height: 100vh;
-    overflow: hidden; /* tidak perlu scroll, semuanya muat di layar */
+    overflow: hidden; 
     background: #4a8df0 url("/images/background-games.webp") center/cover
         no-repeat;
 }
@@ -93,7 +92,6 @@ img {
     filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.3));
 }
 
-/* Teks mengikuti lebar papan, jadi ikut membesar di layar IFP */
 .judul-papan,
 .label-nama {
     position: absolute;

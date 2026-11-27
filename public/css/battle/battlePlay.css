@@ -1,12 +1,4 @@
-/* public/css/battlePlay.css
-   Halaman permainan Battle (dua pemain di satu layar IFP).
-   Dimuat SETELAH index.css (font Fredoka ada di sana).
-   Gambar di public/images/: background-games.webp, arena.png, gede-egrang-stand.png,
-   iluh-egrang-stand.png, gede-fall.png, iluh-fall.png, home-btn.webp, full-screen-btn.webp */
 
-/* ============================================================
-   PENGATURAN (ubah angka di sini kalau posisi belum pas)
-   ============================================================ */
 :root{ color-scheme: only light; }
 
 @font-face {
@@ -47,7 +39,7 @@
   --benar:#6fe0b0; --salah:#ec5555;
 }
 
-[hidden]{ display:none !important; }     /* agar atribut hidden selalu bekerja */
+[hidden]{ display:none !important; }     
 
 /* ===== Dasar halaman ===== */
 .battle-body{
@@ -57,10 +49,10 @@
   font-family:"Fredoka","Noto Sans Balinese",system-ui,sans-serif;
 
   /* Sentuhan banyak jari */
-  touch-action:manipulation;          /* tanpa zoom ketuk-ganda */
-  overscroll-behavior:none;           /* cegah tarik-untuk-muat-ulang */
+  touch-action:manipulation;          
+  overscroll-behavior:none;           
   -webkit-user-select:none; user-select:none;
-  -webkit-touch-callout:none;         /* cegah menu tahan-lama di iOS */
+  -webkit-touch-callout:none;         
 }
 .battle-body button{ font-family:inherit; }
 img{ user-select:none; -webkit-user-drag:none; }
@@ -71,9 +63,7 @@ img{ user-select:none; -webkit-user-drag:none; }
   grid-template-rows:var(--baris-atas) 1fr;
 }
 
-/* ============================================================
-   BAGIAN ATAS: ARENA
-   ============================================================ */
+/* BAGIAN ATAS: ARENA */
 .baris-arena{
   position:relative;
   display:flex; justify-content:center; align-items:flex-end;
@@ -110,8 +100,8 @@ img{ user-select:none; -webkit-user-drag:none; }
 
 /* Gerakan: melompat kecil saat melangkah dengan egrang */
 .hopper.lompat   { animation:lompat .4s ease-out; }
-.hopper.lompat-2 { animation:lompat .28s ease-out 2; }     /* boost: dua lompatan */
-.hopper.goyang   { animation:goyang .4s ease-in-out; }     /* salah 1-2x */
+.hopper.lompat-2 { animation:lompat .28s ease-out 2; }     
+.hopper.goyang   { animation:goyang .4s ease-in-out; }     
 .kid.jatuh .hopper{ animation:jatuh .35s ease-in; }
 .kid.bangun .hopper{ animation:bangun .35s ease-out; }
 .kid.boost .sprite{ filter:drop-shadow(0 0 1.2vh gold); }
@@ -180,13 +170,10 @@ img{ user-select:none; -webkit-user-drag:none; }
 .popup-notify.boost{ background:#ffc400; color:#4a3300; }
 .popup-notify.fall{ background:var(--salah); color:#fff; }
 
-/* ============================================================
-   BAGIAN BAWAH: PAPAN SOAL DAN JAWABAN
-   ============================================================ */
 .baris-panel{
   display:grid; grid-template-columns:1fr 1fr;
   gap:3vw;
-  padding:0 8vw 2.4vh;                   /* ruang di sisi untuk tombol home dan layar penuh */
+  padding:0 8vw 2.4vh;                  
 }
 .panel{
   display:flex; flex-direction:column; gap:1.4vh;
@@ -244,9 +231,7 @@ img{ user-select:none; -webkit-user-drag:none; }
 .answer-btn.wrong  { background:var(--salah) !important; color:#fff !important; }
 .answer-btn:disabled:not(.correct):not(.wrong){ opacity:.6; cursor:not-allowed; }
 
-/* ============================================================
-   TOMBOL SUDUT (home kiri bawah, layar penuh kanan bawah)
-   ============================================================ */
+/* TOMBOL SUDUT (home kiri bawah, layar penuh kanan bawah) */
 .btn-sudut{
   position:fixed; z-index:30;
   width:clamp(42px,3vw,84px);
@@ -267,9 +252,7 @@ img{ user-select:none; -webkit-user-drag:none; }
 .btn-sudut:active{ transform:translateY(4px) scale(.96); }
 .btn-sudut:focus-visible{ outline:3px solid #fff; outline-offset:4px; border-radius:50%; }
 
-/* ============================================================
-   LAYAR PEMENANG
-   ============================================================ */
+/* LAYAR PEMENANG */
 #win-overlay{
   position:fixed; inset:0; z-index:999;
   display:none; align-items:center; justify-content:center;

@@ -11,20 +11,17 @@ class VerifikasiGuruController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil filter dari alamat. Kalau tidak valid, pakai 'semua'.
         $filter = $request->query('status', 'semua');
         if (! in_array($filter, ['semua', 'pending', 'active'])) {
             $filter = 'semua';
         }
  
-        // Angka untuk tab: Semua (n), Menunggu (n), Terverifikasi (n)
         $jumlah = [
             'semua'    => User::where('role', 'guru')->count(),
             'pending'  => User::where('role', 'guru')->where('status', 'pending')->count(),
             'active' => User::where('role', 'guru')->where('status', 'active')->count(),
         ];
  
-        // Daftar guru yang akan ditampilkan sebagai card
         $daftarGuru = User::where('role', 'guru')
             ->when($filter !== 'semua', fn ($query) => $query->where('status', $filter))
             ->latest()

@@ -15,9 +15,7 @@
         <h1 class="kt-title">Kelola Kategori</h1>
     </div>
 
-    {{-- ============ RINGKASAN ERROR ============
-         Menampilkan semua pesan error (tambah, ubah, maupun hapus) di satu tempat.
-    --}}
+    {{-- ============ RINGKASAN ERROR ============ --}}
     @if ($errors->any())
         <div class="kt-error" role="alert">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
@@ -70,8 +68,6 @@
                             <span class="kt-no">{{ $loop->iteration }}</span>
                         </td>
 
-                        {{-- Kolom nama: ada 2 tampilan (teks biasa / form ubah),
-                             dipertukarkan oleh fungsi toggleUbah() di bawah --}}
                         <td>
                             <span id="nama-{{ $kategori->id_kategori }}" class="kt-nama">
                                 {{ $kategori->nama_kategori }}
@@ -136,8 +132,7 @@
 </div>
 
 <script>
-    // Menukar tampilan satu baris: teks biasa <-> form ubah.
-    // "id" adalah id_kategori baris yang diklik.
+
     function toggleUbah(id) {
         document.getElementById('nama-' + id).classList.toggle('kt-hidden');
         var form = document.getElementById('form-ubah-' + id);

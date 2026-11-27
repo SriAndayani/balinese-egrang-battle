@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = document.documentElement;
     const canRequest = root.requestFullscreen || root.webkitRequestFullscreen;
 
-    // iPhone Safari tidak mendukung fullscreen API -> sembunyikan tombol
     if (!canRequest) {
         btn.hidden = true;
         return;

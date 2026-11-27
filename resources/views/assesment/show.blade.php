@@ -15,8 +15,7 @@
          alt="" aria-hidden="true">
  
     <main class="game-stage">
- 
-        {{-- Nama room untuk pembaca layar --}}
+
         <h1 class="sr-only">{{ $room->nama_room }}</h1>
  
         <form action="{{ route('assesment.start', $room->id_room) }}"
@@ -25,13 +24,11 @@
               novalidate>
             @csrf
  
-            {{-- Papan Inputan --}}
             <section class="board">
                 <img class="board__img"
                      src="{{ asset('images/bulletin-board.webp') }}"
                      alt="" aria-hidden="true">
- 
-                {{-- Input nama --}}
+
                 <div class="field field--nama">
                     <label for="nama" class="field__label">Ketik nama</label>
                     <input
@@ -73,12 +70,12 @@
         </form>
     </main>
  
-    {{-- Tombol Home (kiri bawah) --}}
+    {{-- Tombol Home --}}
     <a href="{{ route('game.index') }}" class="icon-btn icon-btn--home" aria-label="Kembali ke daftar room">
         <img src="{{ asset('images/home-btn.webp') }}" alt="">
     </a>
  
-    {{-- Tombol Full Screen (kanan bawah) --}}
+    {{-- Tombol Full Screen --}}
     <button type="button" class="icon-btn icon-btn--fullscreen" id="btn-fullscreen" aria-label="Layar penuh">
         <img src="{{ asset('images/full-screen-btn.webp') }}" alt="">
     </button>

@@ -10,7 +10,6 @@ use Illuminate\Validation\Rule;
 
 class KategoriController extends Controller
 {
-    // menampilkan kategori
     public function index()
     {
         $daftarKategori = Kategori::orderBy('nama_kategori')->get();
@@ -18,7 +17,6 @@ class KategoriController extends Controller
         return view('admin.kategori', compact('daftarKategori'));
     }
 
-    // buat kategori baru
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -39,7 +37,6 @@ class KategoriController extends Controller
         return back()->with('success', "Kategori {$validated['nama_kategori']} berhasil ditambahkan.");
     }
 
-    // edit kategori
     public function update(Request $request, Kategori $kategori)
     {
         $validated = $request->validate([
@@ -47,7 +44,6 @@ class KategoriController extends Controller
                 'required',
                 'string',
                 'max:50',
-                // ignore($kategori): nama boleh sama dengan namanya sendiri
                 Rule::unique(Kategori::class, 'nama_kategori')->ignore($kategori),
             ],
         ], [
@@ -61,7 +57,6 @@ class KategoriController extends Controller
         return back()->with('success', 'Kategori berhasil diubah.');
     }
 
-    // hapus kategori
     public function destroy(Kategori $kategori)
     {
         try {

@@ -301,7 +301,7 @@
     .pulse-dot::after { animation: none; }
 }
 
-/* bunga watermark di dalam kartu */
+
 .stat-card__flower {
     position: absolute;
     right: -28px;

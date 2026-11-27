@@ -25,17 +25,14 @@
     <form method="POST" action="{{ route('login.proses') }}" class="auth-form">
         @csrf
 
-        {{-- Input tersembunyi: menyimpan role yang dipilih (guru / admin) --}}
         <input type="hidden" name="role" id="role-input" value="{{ old('role', 'guru') }}">
 
-        {{-- Pilihan role --}}
         <span class="auth-label">Masuk sebagai:</span>
         <div class="role-group">
             <button type="button" id="btn-guru" class="role-btn">👤 Guru</button>
             <button type="button" id="btn-admin" class="role-btn">⭐ Admin</button>
         </div>
 
-        {{-- Pesan error (kalau login gagal) --}}
         @if ($errors->any())
             <div class="auth-alert" role="alert">
                 {{ $errors->first() }}
@@ -64,7 +61,6 @@
         {{-- Tombol Masuk --}}
         <button type="submit" class="auth-btn">Masuk</button>
 
-        {{-- Link daftar: HANYA tampil untuk Guru --}}
         <p id="register-text" class="auth-text">
             Belum punya akun?
             <a href="{{ Route::has('register') ? route('register') : '#' }}" class="auth-link">Daftar di sini</a>

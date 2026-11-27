@@ -15,12 +15,7 @@
         <h1 class="vg-title">Verifikasi Guru</h1>
     </div>
 
-    {{-- ============ TAB FILTER ============
-         Daftar tab dibuat dari array, sama seperti menu sidebar.
-         key   : nilai yang dikirim lewat alamat (?status=...)
-         label : tulisan di tab
-         total : angka di dalam kurung
-    --}}
+    {{-- ============ TAB FILTER ============ --}}
     @php
         $tabs = [
             ['key' => 'semua',   'label' => 'semua',         'total' => $jumlah['semua']],
@@ -45,8 +40,6 @@
 
         @forelse ($daftarGuru as $guru)
             <article class="vg-card">
-
-                {{-- Baris atas: avatar + identitas (kiri), badge status (kanan) --}}
                 <div class="vg-card__top">
                     <div class="vg-identitas">
                         <span class="vg-avatar" aria-hidden="true">
@@ -87,7 +80,7 @@
                             </button>
                         </form>
 
-                        {{-- Tolak (ada konfirmasi dulu karena data akan dihapus) --}}
+                        {{-- Tolak --}}
                         <form method="POST" action="{{ route('admin.verifikasi.tolak', $guru) }}"
                               onsubmit="return confirm('Tolak dan hapus pendaftaran {{ $guru->username }}?')">
                             @csrf
@@ -97,7 +90,6 @@
                             </button>
                         </form>
                     @else
-                        {{-- Guru sudah aktif: hapus akun --}}
                         <form method="POST" action="{{ route('admin.user.destroy', $guru) }}"
                               onsubmit="return confirm('Yakin ingin menghapus akun guru {{ $guru->username }}? Tindakan ini tidak dapat dibatalkan.')">
                             @csrf
@@ -111,7 +103,6 @@
             </article>
 
         @empty
-            {{-- Tampil kalau tidak ada guru pada filter ini --}}
             <div class="vg-empty">
                 Tidak ada guru pada kategori ini.
             </div>

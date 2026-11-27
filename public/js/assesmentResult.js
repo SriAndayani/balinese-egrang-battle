@@ -1,11 +1,5 @@
-// public/js/confetti.js
-// Confetti yang dipakai BERSAMA oleh layar pemenang battle dan halaman hasil kuis.
-// CSS-nya ada di game-base.css (.confetti-piece).
-//
-// Cara pakai: muat file ini, lalu panggil launchConfetti().
-
 function launchConfetti() {
-    // Hormati pengguna yang meminta layar tanpa gerakan berlebihan
+    
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return;
     }
@@ -31,24 +25,15 @@ function launchConfetti() {
     }
 }
 
-// public/js/assessmentResult.js
-// Tugas file ini ada dua:
-//   1. Mengubah kartu skor (#score-card) menjadi gambar JPEG lalu mengunduhnya.
-//   2. Meluncurkan confetti saat halaman dibuka.
-//
-// Membutuhkan: html2canvas dan confetti.js (dimuat lebih dulu di Blade).
-
 var tombolUnduh = document.getElementById("btn-unduh");
 var kartuSkor   = document.getElementById("score-card");
 
 // ---------- 1. Nama file yang aman ----------
-// Nama siswa bebas diketik, jadi huruf aneh (spasi, garis miring, tanda kutip, dan sebagainya)
-// diganti tanda "-" supaya aman dipakai sebagai nama file.
 function namaFileAman(teks) {
   var bersih = teks
     .trim()
-    .replace(/[^\p{L}\p{N}]+/gu, "-")   // selain huruf dan angka -> "-"
-    .replace(/^-+|-+$/g, "");           // buang "-" di awal dan akhir
+    .replace(/[^\p{L}\p{N}]+/gu, "-")   
+    .replace(/^-+|-+$/g, "");           
 
   if (bersih === "") {
     return "siswa";
@@ -58,36 +43,33 @@ function namaFileAman(teks) {
 
 // ---------- 2. Unduh kartu sebagai gambar ----------
 async function unduhKartu() {
-  // Kalau html2canvas gagal dimuat (misalnya internet putus)
+
   if (typeof html2canvas === "undefined") {
     alert("Fitur unduh belum siap. Periksa koneksi internet, lalu muat ulang halaman.");
     return;
   }
 
   var teksAwal = tombolUnduh.textContent;
-  tombolUnduh.disabled = true;                      // cegah klik ganda
+  tombolUnduh.disabled = true;                      
   tombolUnduh.textContent = "Menyiapkan gambar...";
 
   try {
-    // Pastikan font Fredoka sudah termuat, supaya tulisan di gambar tidak memakai font cadangan
+
     await document.fonts.ready;
 
     var kanvas = await html2canvas(kartuSkor, {
-      scale: 2,                       // 2x lebih tajam
+      scale: 2,                       
       useCORS: true,
-      backgroundColor: "#4a8df0",     // cadangan: JPEG tidak mengenal transparan
-      windowWidth: 900,               // ukuran halaman tiruan yang TETAP,
-      windowHeight: 1400,             // supaya hasilnya sama di semua perangkat
+      backgroundColor: "#4a8df0",     
+      windowWidth: 900,               
+      windowHeight: 1400,             
 
-      // onclone: mengubah SALINAN halaman (bukan halaman yang dilihat pengguna)
-      // sebelum difoto. "mode-unduh" mengunci ukuran huruf dan menambah bingkai biru.
       onclone: function (dokumenSalinan) {
         dokumenSalinan.body.classList.add("sedang-unduh");
         dokumenSalinan.getElementById("score-card").classList.add("mode-unduh");
       },
     });
 
-    // Ubah gambar menjadi berkas (blob), lalu picu pengunduhan
     var berkas = await new Promise(function (selesai) {
       kanvas.toBlob(selesai, "image/jpeg", 0.92);
     });

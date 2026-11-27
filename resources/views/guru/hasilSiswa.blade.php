@@ -15,7 +15,6 @@
         <h1 class="rf-title">Hasil Siswa</h1>
     </div>
 
-    {{-- Pesan error (kalau ada) --}}
     @if ($errors->any())
         <div class="rf-error" role="alert">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
@@ -27,13 +26,11 @@
         </div>
     @endif
 
-    {{-- ============ DAFTAR ROOM (satu card per room) ============ --}}
+    {{-- ============ DAFTAR ROOM ============ --}}
     @if ($daftarRoom->count())
         <div class="hs-grid">
             @foreach ($daftarRoom as $room)
                 <article class="hs-card">
-
-                    {{-- Baris atas: nama room (kiri), tombol (kanan) --}}
                     <div class="hs-card__head">
                         <h2 class="hs-card__nama">{{ $room->nama_room }}</h2>
 
@@ -55,7 +52,6 @@
                         </div>
                     </div>
 
-                    {{-- Baris bawah: kode room (kiri), jumlah siswa dan soal (kanan) --}}
                     <div class="hs-card__body">
                         <div class="hs-kode">
                             <p class="rf-overline">Kode Room</p>

@@ -1,12 +1,7 @@
-/* =========================================================
-   Form Tambah / Detail Room — Ngiring Malajah Basa Bali
-   Lokasi: public/js/guruRoom.js  (sudah dipanggil di guru/dashboard.blade.php)
-   Semua bagian aman dijalankan di halaman lain: kalau elemennya
-   tidak ada, bagian itu dilewati.
-   ========================================================= */
+
 document.addEventListener('DOMContentLoaded', function () {
     var form = document.getElementById('form-room');
-    if (!form) return; // bukan halaman tambah/detail room
+    if (!form) return; 
 
     /* ---------- 1. Mode: tampilkan kode room hanya untuk assessment ---------- */
     var radioMode = form.querySelectorAll('input[name="mode"]');
@@ -252,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
         render();
     });
 
-    // Esc menutup pop up (hanya saat pop up terbuka)
+    // Esc menutup pop up
     modal.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') tutup();
     });

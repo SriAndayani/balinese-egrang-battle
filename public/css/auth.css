@@ -1,16 +1,7 @@
-/* =========================================================
-   auth.css — dipakai bersama oleh halaman Login & Register
-   Tema: Ngiring Malajah Basa Bali
-   ========================================================= */
-
-/* =========================================================
-   Font lokal (TTF) — letakkan file di public/fonts/
-   Sesuaikan nama file di bawah dengan file milik Anda.
-   ========================================================= */
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-VariableFont.ttf') format('truetype');
-    font-weight: 200 1000;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 200 1000;   
     font-style: normal;
     font-display: swap;
 }

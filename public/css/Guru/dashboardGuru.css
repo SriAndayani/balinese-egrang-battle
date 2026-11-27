@@ -3,7 +3,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-SemiBold.ttf') format('truetype');
-    font-weight: 600;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 600;   
     font-style: normal;
     font-display: swap;
 }
@@ -11,7 +11,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-Bold.ttf') format('truetype');
-    font-weight: 700;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 700;   
     font-style: normal;
     font-display: swap;
 }
@@ -19,7 +19,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('/fonts/nunito/Nunito-ExtraBold.ttf') format('truetype');
-    font-weight: 800;   /* font variabel: semua ketebalan dalam satu file */
+    font-weight: 800;   
     font-style: normal;
     font-display: swap;
 }
@@ -300,7 +300,6 @@
     .pulse-dot::after { animation: none; }
 }
 
-/* bunga watermark di dalam kartu */
 .stat-card__flower {
     position: absolute;
     right: -28px;

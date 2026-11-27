@@ -31,10 +31,6 @@
     }
 }
 
-/* ============================================================
-   CONFETTI (dipakai bersama oleh layar pemenang battle dan hasil kuis)
-   Kepingannya dibuat oleh public/js/confetti.js
-   ============================================================ */
 .confetti-piece {
     position: fixed; border-radius: 2px; z-index: 1000; pointer-events: none;
     animation: confetti-fall linear forwards;

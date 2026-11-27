@@ -1,6 +1,5 @@
 @extends('admin.dashboard')
 
-{{-- $soal berisi data soal kalau sedang MENGUBAH, dan null kalau sedang MENAMBAH --}}
 @php
     $mengubah = $soal !== null;
 @endphp
@@ -24,7 +23,6 @@
         <h1 class="sf-title">{{ $mengubah ? 'Ubah Soal' : 'Tambah Soal' }}</h1>
     </div>
 
-    {{-- Ringkasan error. unique() menghapus pesan kembar (misalnya "semua jawaban harus diisi" yang muncul 4 kali) --}}
     @if ($errors->any())
         <div class="sf-error" role="alert">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
@@ -36,7 +34,6 @@
         </div>
     @endif
 
-    {{-- enctype="multipart/form-data" WAJIB kalau form mengirim file (gambar) --}}
     <form method="POST"
           enctype="multipart/form-data"
           action="{{ $mengubah ? route('admin.soal.update', $soal) : route('admin.soal.store') }}"
@@ -74,7 +71,7 @@
             @endif
         </div>
 
-        {{-- 3. Gambar (opsional) --}}
+        {{-- 3. Gambar --}}
         <div class="sf-field">
             <label for="gambar" class="sf-label">
                 <span class="sf-num">3</span> Gambar <small>(opsional, maksimal 2 MB)</small>
@@ -122,7 +119,6 @@
                             <span class="sf-opsi__huruf">{{ chr(65 + $i) }}</span>
                         </label>
 
-                        {{-- name="jawaban[0]" ... "jawaban[3]" : dikirim sebagai array --}}
                         <input type="text" name="jawaban[{{ $i }}]"
                                value="{{ old('jawaban.' . $i, $teks[$i] ?? '') }}"
                                placeholder="Jawaban {{ chr(65 + $i) }}" required
@@ -151,7 +147,6 @@
     </form>
 </div>
 
-{{-- Tampilkan nama file yang dipilih --}}
 <script>
     document.getElementById('gambar')?.addEventListener('change', function () {
         document.getElementById('nama-file').textContent =

@@ -7,14 +7,6 @@
     <link rel="stylesheet" href="{{ asset('css/game-base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/assesment/assesmentResult.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{--
-        html2canvas adalah library JavaScript yang mengubah
-        elemen HTML menjadi gambar (canvas).
-        Kita gunakan ini untuk fitur Download Score Card.
-
-        Diambil dari CDN sehingga tidak perlu install npm.
-    --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body class="hasil-body">
@@ -26,16 +18,9 @@
 
     <main class="hasil-halaman">
 
-        {{-- Pembungkus luar: hanya untuk animasi muncul dan bayangan (TIDAK ikut diunduh) --}}
         <div class="kartu-bingkai">
 
-            {{--
-                SCORE CARD.
-
-                Elemen id="score-card" inilah yang diubah menjadi gambar oleh html2canvas
-                (lihat public/js/assessmentResult.js). Semua yang ingin muncul di gambar
-                hasil unduhan harus berada di dalam elemen ini.
-            --}}
+            {{-- SCORE CARD. --}}
             <div id="score-card">
                 <article class="kartu-hasil">
 
@@ -64,12 +49,6 @@
                         </div>
                     </section>
 
-                    {{--
-                        Waktu selesai. $result->waktu_selesai adalah Carbon karena Model
-                        sudah memakai cast 'datetime'.
-                        locale('id') + translatedFormat() menghasilkan nama bulan bahasa
-                        Indonesia, contoh: "15 Juni 2025, 14:30".
-                    --}}
                     <p class="waktu">
                         Diselesaikan pada:
                         {{ $result->waktu_selesai?->locale('id')->translatedFormat('d F Y, H:i') }}
@@ -79,10 +58,7 @@
             </div>
         </div>
 
-        {{-- Tombol di bawah kartu (di luar #score-card, jadi tidak ikut tergambar) --}}
         <div class="aksi">
-            {{-- data-nama dipakai untuk nama file unduhan. Memakai atribut data (bukan menulis
-                 nama langsung di JavaScript) supaya nama siswa tidak bisa menyelipkan kode. --}}
             <button type="button" class="tombol-game tombol-hijau" id="btn-unduh"
                     data-nama="{{ $result->nama }}">
                 Unduh Kartu Skor

@@ -40,9 +40,7 @@
         </div>
     @endif
 
-    {{-- ============ FILTER KATEGORI ============
-         onchange="this.form.submit()" : begitu pilihan diganti, form langsung dikirim.
-    --}}
+    {{-- ============ FILTER KATEGORI ============ --}}
     <form method="GET" action="{{ route('admin.soal.index') }}" class="ks-filter">
         <label for="filter-kategori" class="ks-sr">Filter kategori</label>
         <div class="ks-filter__box">
@@ -60,7 +58,7 @@
         </div>
     </form>
 
-    {{-- Warna badge kategori (dipilih berdasarkan id kategori, bergilir) --}}
+    {{-- Warna badge kategori --}}
     @php
         $warnaBadge = ['ks-badge--1', 'ks-badge--2', 'ks-badge--3', 'ks-badge--4'];
     @endphp

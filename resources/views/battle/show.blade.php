@@ -10,7 +10,6 @@
 </head>
 <body class="setup-body">
 
-    {{-- Pesan error dari server (misalnya gagal memulai battle) --}}
     @if (session('error'))
         <div class="pesan-atas" role="alert">{{ session('error') }}</div>
     @endif
@@ -18,7 +17,6 @@
     <form class="setup" id="form-battle" method="POST" action="{{ route('battle.start', $room->id_room) }}">
         @csrf
  
-        {{-- Judul untuk pembaca layar (tidak terlihat) --}}
         <h1 class="sr-only">Battle - {{ $room->nama_room }}</h1>
  
         <div class="papan-baris">
@@ -59,12 +57,11 @@
         </button>
     </form>
  
-    {{-- Tombol home (pojok kiri bawah) --}}
+    {{-- Tombol home --}}
     <a class="btn-sudut btn-home" href="{{ route('game.index') }}" aria-label="Kembali ke daftar room">
         <img src="{{ asset('images/home-btn.webp') }}" alt="" draggable="false">
     </a>
  
-    {{-- Tombol layar penuh (pojok kanan bawah) --}}
     <button type="button" class="btn-sudut btn-layar" id="btn-layar" aria-label="Layar penuh">
         <img src="{{ asset('images/full-screen-btn.webp') }}" alt="" draggable="false">
     </button>

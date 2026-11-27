@@ -9,14 +9,12 @@ use Illuminate\Http\Request;
 class AssesmentResultController extends Controller
 {
     public function show($result){
-        //  Mengambil data hasil beserta relasi yang dibutuhkan
         $result = AssesmentResult::with([
             'room',
             'detailResults.soal',
             'detailResults.jawaban',
         ])->findOrFail($result);
-
-        // Menghitung jumlah benar dan salah dari detail results.
+        
         $jumlahBenar = $result->detailResults
             ->filter(fn($d) => $d->jawaban->is_correct)
             ->count();
