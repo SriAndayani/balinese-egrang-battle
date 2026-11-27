@@ -37,6 +37,7 @@ class AuthController extends Controller
         $user = Auth::user();
  
         if ($user->role === 'guru' && $user->status !== 'active') {
+            
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

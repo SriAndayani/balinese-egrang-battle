@@ -265,7 +265,6 @@ class BattleController extends Controller
         $state['streak_salah'] = 0;
         $state['is_fallen']    = false;
         $state['streak_benar']++;
-
         $state['is_boost'] = false;
 
         if ($state['streak_benar'] >= self::STREAK_BOOST_THRESHOLD) {
