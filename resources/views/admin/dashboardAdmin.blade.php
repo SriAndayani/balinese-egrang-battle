@@ -3,8 +3,8 @@
 @section('title', 'Dashboard Admin')
 
 @section('content')
-    <h1 class="guru-title">Dashboard Admin</h1>
-    <p class="guru-greeting">Selamat Datang, {{ auth()->user()->username }}!</p>
+    <h1 class="admin-title">Dashboard Admin</h1>
+    <p class="admin-greeting">Selamat Datang, {{ auth()->user()->username }}!</p>
 
     <div class="stat-grid">
 

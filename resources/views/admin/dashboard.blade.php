@@ -13,8 +13,8 @@
 @php
     $menus = [
         ['label' => 'Dashboard',       'icon' => 'dashboard.svg', 'route' => 'admin.dashboardAdmin',         'active' => 'admin.dashboardAdmin'],
-        ['label' => 'Verifikasi admin', 'icon' => 'user-check.svg', 'route' => 'admin.verifikasi.index',  'active' => 'admin.verifikasi.*'],
-        ['label' => 'Kelola Soal',     'icon' => 'book-open.svg', 'route' => 'admin.soal.index',        'active' => 'admin.soal.*'],
+        ['label' => 'Verifikasi Guru', 'icon' => 'user-check.svg', 'route' => 'admin.verifikasi.index',  'active' => 'admin.verifikasi.*'],
+        ['label' => 'Bank Soal',     'icon' => 'book-open.svg', 'route' => 'admin.soal.index',        'active' => 'admin.soal.*'],
         ['label' => 'Kelola Kategori', 'icon' => 'category.svg', 'route' => 'admin.kategori.index',    'active' => 'admin.kategori.*'],
     ];
 @endphp

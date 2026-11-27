@@ -13,7 +13,7 @@
             <span class="ks-head__icon" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>
             </span>
-            <h1 class="ks-title">Kelola Soal</h1>
+            <h1 class="ks-title">Bank Soal</h1>
         </div>
 
         <div class="ks-top__aksi">
