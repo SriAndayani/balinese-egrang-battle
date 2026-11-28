@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>{{ ucfirst($mode) }} - Malajah Basa Bali</title>
+    <link rel="preload" href="{{ asset('fonts/Fredoka-Variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/option.css') }}">
     <link rel="stylesheet" href="{{ asset('css/game-base.css') }}">
 </head>
@@ -50,5 +52,6 @@
     </a>
  
     <script src="{{ asset('js/option.js') }}"></script>
+    <script src="{{ asset('js/viewport.js') }}"></script>
 </body>
 </html>

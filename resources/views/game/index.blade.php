@@ -41,6 +41,6 @@
 <a class="tombol-login" href="{{ route('login') }}">
     <img src="{{ asset('images/login-btn.webp') }}" alt="Login" decoding="async" draggable="false">
 </a>
-
+<script src="{{ asset('js/viewport.js') }}"></script>
 </body>
 </html>

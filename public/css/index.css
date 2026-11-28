@@ -43,6 +43,7 @@
 
 /* HALAMAN DAN LATAR BELAKANG */
 .beranda {
+    --tinggi-layar: 100vh;
     position: relative;
     height: 100vh;               
     height: 100svh;              
@@ -50,6 +51,10 @@
     display: grid;
     place-items: center;         
     background: #4a8df0;         
+}
+
+@supports (height: 1svh) {
+    .beranda { --tinggi-layar: 100svh; }
 }
 
 .latar {
@@ -68,15 +73,13 @@
     position: relative;
     z-index: 1;
     aspect-ratio: 16 / 9;
-    width: min(100vw, 177.78vh);       /* cadangan */
-    width: min(100vw, 177.78svh);      /* 177.78 = 100 x 16/9 */
+    width: min(100vw, calc(var(--tinggi-layar) * 1.7778));
 }
 
 @media (orientation: portrait) {
     .panggung {
         aspect-ratio: 9 / 16;
-        width: min(100vw, 56.25vh);    
-        width: min(100vw, 56.25svh);   
+        width: min(100vw, calc(var(--tinggi-layar) * .5625));  
     }
 }
 
@@ -146,6 +149,8 @@
     filter: drop-shadow(0 .6svh .6svh rgba(0, 0, 0, .3));
     transition: transform .12s ease-out;
     -webkit-tap-highlight-color: transparent;
+    align-self: end;
+    justify-self: start;
 }
 @media (hover: hover) {
     .tombol-login:hover { transform: scale(1.08); }
@@ -157,6 +162,7 @@
     .tombol-login {
         bottom: auto;
         top: max(2svh, env(safe-area-inset-top));
+        align-self: start;
     }
 }
 

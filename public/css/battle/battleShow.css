@@ -46,7 +46,7 @@
 .setup-body {
     height: 100vh;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
     background: #4a8df0 url("/images/background-games.webp") center/cover
         no-repeat;
 }
@@ -202,13 +202,17 @@ img {
     color: #fff3d6;
     paint-order: stroke fill;
     text-shadow: 0 0.06em 0 rgba(0, 0, 0, 0.25);
-    color:#fff3d6;
+    color: #fff3d6;
     text-shadow:
-        -.05em 0 0 #6b3220,  .05em 0 0 #6b3220,
-        0 -.05em 0 #6b3220,  0 .05em 0 #6b3220,
-        -.035em -.035em 0 #6b3220,  .035em -.035em 0 #6b3220,
-        -.035em  .035em 0 #6b3220,  .035em  .035em 0 #6b3220,
-        0 .11em 0 rgba(0,0,0,.25);
+        -0.05em 0 0 #6b3220,
+        0.05em 0 0 #6b3220,
+        0 -0.05em 0 #6b3220,
+        0 0.05em 0 #6b3220,
+        -0.035em -0.035em 0 #6b3220,
+        0.035em -0.035em 0 #6b3220,
+        -0.035em 0.035em 0 #6b3220,
+        0.035em 0.035em 0 #6b3220,
+        0 0.11em 0 rgba(0, 0, 0, 0.25);
 }
 @media (hover: hover) {
     .btn-mulai:hover {
@@ -308,9 +312,11 @@ img {
     }
 }
 
-.judul-papan, .label-nama, .btn-mulai span{
-  -webkit-text-stroke:0 !important;
-  paint-order:normal !important;
-  color:#fff3d6 !important;
-  text-shadow:0 .05em .12em rgba(0,0,0,.85) !important;
+.judul-papan,
+.label-nama,
+.btn-mulai span {
+    -webkit-text-stroke: 0 !important;
+    paint-order: normal !important;
+    color: #fff3d6 !important;
+    text-shadow: 0 0.05em 0.12em rgba(0, 0, 0, 0.85) !important;
 }

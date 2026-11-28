@@ -1,32 +1,55 @@
-*, *::before, *::after {
+@font-face {
+    font-family: "Fredoka";
+    src: url("/fonts/fredoka/Fredoka-Variable.ttf") format("truetype");
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Fredoka";
+    src: url("/fonts/fredoka/Fredoka-Variable.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+.room-body {
+    font-family: "Fredoka", system-ui, sans-serif;
+}
 
-[hidden] { display: none !important; }
+[hidden] {
+    display: none !important;
+}
 
 .room-body {
-    --rasio: 1.7778;                
+    --rasio: 1.7778;
 
     /* Papan judul */
     --judul-lebar: 27.5%;
-    --judul-atas:  11%;
-    --font-judul:  .025;             
+    --judul-atas: 11%;
+    --font-judul: 0.025;
 
     /* Deretan kartu room */
-    --per-halaman: 3;                /* jumlah kartu per halaman */
-    --arah-list:   row;              /* row = berjajar ke samping, column bertumpuk ke bawah */
-    --kartu:       .202;             /* lebar satu kartu */
-    --jarak:       .023;             /* jarak antar kartu */
-    --list-atas:   53%;              /* posisi atas deretan kartu */
-    --font-kartu:  .0205;            /* ukuran tulisan nama room */
+    --per-halaman: 3; /* jumlah kartu per halaman */
+    --arah-list: row; /* row = berjajar ke samping, column bertumpuk ke bawah */
+    --kartu: 0.202; /* lebar satu kartu */
+    --jarak: 0.023; /* jarak antar kartu */
+    --list-atas: 53%; /* posisi atas deretan kartu */
+    --font-kartu: 0.0205; /* ukuran tulisan nama room */
 
     /* Panah halaman */
-    --panah-lebar:  6%;
-    --panah-sisi:   3%;              /* jarak panah dari tepi panggung */
-    --panah-tengah: 62.5%;           /* tinggi titik tengah panah dari atas panggung */
+    --panah-lebar: 6%;
+    --panah-sisi: 3%; /* jarak panah dari tepi panggung */
+    --panah-tengah: 62.5%; /* tinggi titik tengah panah dari atas panggung */
 
     /* Tombol home */
     --home-lebar: clamp(44px, 4.4vw, 150px);
@@ -36,40 +59,41 @@
 
 /* PALET WARNA */
 
-.rf, .rf-modal {
-    --rf-ink: #3B1F0E;
-    --rf-ink-strong: #2A160A;
-    --rf-muted: #7A5A44;
-    --rf-card: #FFFDF8;
-    --rf-soft: #FFF8EE;
-    --rf-line: #F1DCC2;
-    --rf-line-2: #EBD5BB;
-    --rf-gold: #E9C98F;
-    --rf-orange: linear-gradient(180deg, #F7B531 0%, #EE9A1E 55%, #E5861A 100%);
-    --rf-orange-border: #C96F12;
-    --rf-orange-shadow: #B9630E;
-    --rf-green: #2F6B2B;
-    font-family: 'Nunito', system-ui, sans-serif;
+.rf,
+.rf-modal {
+    --rf-ink: #3b1f0e;
+    --rf-ink-strong: #2a160a;
+    --rf-muted: #7a5a44;
+    --rf-card: #fffdf8;
+    --rf-soft: #fff8ee;
+    --rf-line: #f1dcc2;
+    --rf-line-2: #ebd5bb;
+    --rf-gold: #e9c98f;
+    --rf-orange: linear-gradient(180deg, #f7b531 0%, #ee9a1e 55%, #e5861a 100%);
+    --rf-orange-border: #c96f12;
+    --rf-orange-shadow: #b9630e;
+    --rf-green: #2f6b2b;
+    font-family: "Nunito", system-ui, sans-serif;
     color: var(--rf-ink);
 }
 
 @media (orientation: portrait) {
     .room-body {
-        --rasio: .5625;              /* 9:16 */
+        --rasio: 0.5625; /* 9:16 */
 
         --judul-lebar: 76%;
-        --judul-atas:  6%;
-        --font-judul:  .07;
+        --judul-atas: 6%;
+        --font-judul: 0.07;
 
         --per-halaman: 3;
-        --arah-list:   column;
-        --kartu:       .478;
-        --jarak:       .09;
-        --list-atas:   39%;
-        --font-kartu:  .045;
+        --arah-list: column;
+        --kartu: 0.478;
+        --jarak: 0.09;
+        --list-atas: 39%;
+        --font-kartu: 0.045;
 
-        --panah-lebar:  12%;
-        --panah-sisi:   5%;
+        --panah-lebar: 12%;
+        --panah-sisi: 5%;
         --panah-tengah: 65%;
 
         --home-lebar: clamp(40px, 11vw, 120px);
@@ -78,21 +102,22 @@
     }
 }
 
-
 .room-body {
-    --tinggi-layar: 100vh;                          
+    --tinggi-layar: 100vh;
     --W: min(100vw, calc(var(--tinggi-layar) * var(--rasio)));
 
     position: relative;
     height: var(--tinggi-layar);
-    overflow: hidden;                              
+    overflow: hidden;
     display: grid;
-    place-items: center;                            
-    background: #4a8df0;                            
+    place-items: center;
+    background: #4a8df0;
 }
 
 @supports (height: 1svh) {
-    .room-body { --tinggi-layar: 100svh; }         
+    .room-body {
+        --tinggi-layar: 100svh;
+    }
 }
 
 .latar {
@@ -117,10 +142,12 @@
 .papan-judul {
     position: absolute;
     top: var(--judul-atas);
-    left: calc((100% - var(--judul-lebar)) / 2);    
+    left: calc((100% - var(--judul-lebar)) / 2);
     width: var(--judul-lebar);
     z-index: 3;
-    filter: drop-shadow(0 calc(var(--W) * .01) calc(var(--W) * .01) rgba(0, 0, 0, .25));
+    filter: drop-shadow(
+        0 calc(var(--W) * 0.01) calc(var(--W) * 0.01) rgba(0, 0, 0, 0.25)
+    );
 }
 .papan-judul img {
     display: block;
@@ -131,7 +158,7 @@
 }
 .papan-judul span {
     position: absolute;
-    inset: 34% 12% 17% 12%;                         
+    inset: 34% 12% 17% 12%;
     display: grid;
     place-items: center;
     text-align: center;
@@ -139,9 +166,11 @@
     font-weight: 700;
     font-size: calc(var(--W) * var(--font-judul));
     color: #fff3d6;
-    -webkit-text-stroke: .1em #6b3220;
-    paint-order: stroke fill;
-    text-shadow: 0 .06em 0 rgba(0, 0, 0, .25);
+    text-shadow:
+     .05em  .05em 0 #6b3220,
+    -.05em  .05em 0 #6b3220,
+     .05em -.05em 0 #6b3220,
+    -.05em -.05em 0 #6b3220; 
 }
 
 /* DERETAN KARTU ROOM*/
@@ -165,8 +194,10 @@
     width: calc(var(--W) * var(--kartu));
     text-decoration: none;
     color: inherit;
-    filter: drop-shadow(0 calc(var(--W) * .009) calc(var(--W) * .009) rgba(0, 0, 0, .3));
-    transition: transform .12s ease-out;
+    filter: drop-shadow(
+        0 calc(var(--W) * 0.009) calc(var(--W) * 0.009) rgba(0, 0, 0, 0.3)
+    );
+    transition: transform 0.12s ease-out;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
 }
@@ -180,7 +211,7 @@
 
 .room-label {
     position: absolute;
-    inset: 16% 14%;                                 
+    inset: 16% 14%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -190,54 +221,65 @@
     overflow: hidden;
     font-size: calc(var(--W) * var(--font-kartu));
     color: #fff3d6;
+    text-shadow:
+     .05em  .05em 0 #6b3220,
+    -.05em  .05em 0 #6b3220,
+     .05em -.05em 0 #6b3220,
+    -.05em -.05em 0 #6b3220; 
 }
-.room-label b {
-    max-width: 100%;
-    font-weight: 700;
-    overflow-wrap: anywhere;
-    display: -webkit-box;                           
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-    -webkit-text-stroke: .1em #6b3220;
-    paint-order: stroke fill;
-    text-shadow: 0 .06em 0 rgba(0, 0, 0, .25);
-}
+
 .room-label small {
-    margin-top: .25em;
-    font-size: .55em;
+    margin-top: 0.25em;
+    font-size: 0.55em;
     font-weight: 600;
-    -webkit-text-stroke: .15em #6b3220;
+    -webkit-text-stroke: 0.15em #6b3220;
     paint-order: stroke fill;
 }
 
-.room-card.kosong { cursor: default; }              
+.room-card.kosong {
+    cursor: default;
+}
 
 @media (hover: hover) {
-    a.room-card:hover { transform: scale(1.05) translateY(-3%); }
+    a.room-card:hover {
+        transform: scale(1.05) translateY(-3%);
+    }
 }
-a.room-card:active { transform: scale(.96) translateY(3%); }
-a.room-card:focus-visible { outline: 3px solid #fff; outline-offset: 6px; border-radius: 16px; }
+a.room-card:active {
+    transform: scale(0.96) translateY(3%);
+}
+a.room-card:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 6px;
+    border-radius: 16px;
+}
 
 /* PANAH HALAMAN */
 .panah {
     position: absolute;
     z-index: 4;
     top: var(--panah-tengah);
-    margin-top: calc(var(--panah-lebar) / -2);      
+    margin-top: calc(var(--panah-lebar) / -2);
     width: var(--panah-lebar);
     aspect-ratio: 1;
     padding: 0;
     border: 0;
     background: none;
     cursor: pointer;
-    filter: drop-shadow(0 calc(var(--W) * .006) calc(var(--W) * .006) rgba(0, 0, 0, .35));
-    transition: transform .1s, opacity .2s;
+    filter: drop-shadow(
+        0 calc(var(--W) * 0.006) calc(var(--W) * 0.006) rgba(0, 0, 0, 0.35)
+    );
+    transition:
+        transform 0.1s,
+        opacity 0.2s;
     -webkit-tap-highlight-color: transparent;
 }
-.panah.kiri  { left:  var(--panah-sisi); }
-.panah.kanan { right: var(--panah-sisi); }
+.panah.kiri {
+    left: var(--panah-sisi);
+}
+.panah.kanan {
+    right: var(--panah-sisi);
+}
 
 .panah img {
     display: block;
@@ -247,21 +289,33 @@ a.room-card:focus-visible { outline: 3px solid #fff; outline-offset: 6px; border
     pointer-events: none;
     -webkit-user-drag: none;
 }
-.panah:active:not(:disabled) { transform: scale(.92); }
-.panah:disabled { opacity: .4; cursor: default; filter: grayscale(.6); }
-.panah:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 50%; }
+.panah:active:not(:disabled) {
+    transform: scale(0.92);
+}
+.panah:disabled {
+    opacity: 0.4;
+    cursor: default;
+    filter: grayscale(0.6);
+}
+.panah:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
 
 /* TOMBOL HOME */
 .btn-home {
     position: fixed;
     z-index: 6;
-    left:   max(2vw,  env(safe-area-inset-left));
+    left: max(2vw, env(safe-area-inset-left));
     bottom: max(2svh, env(safe-area-inset-bottom));
     width: var(--home-lebar);
     display: block;
-    filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .35));
-    transition: transform .08s;
+    filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.35));
+    transition: transform 0.08s;
     -webkit-tap-highlight-color: transparent;
+    align-self: end;
+    justify-self: start;
 }
 .btn-home img {
     display: block;
@@ -270,9 +324,19 @@ a.room-card:focus-visible { outline: 3px solid #fff; outline-offset: 6px; border
     pointer-events: none;
     -webkit-user-drag: none;
 }
-.btn-home:active { transform: translateY(4px) scale(.96); }
-.btn-home:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 50%; }
+.btn-home:active {
+    transform: translateY(4px) scale(0.96);
+}
+.btn-home:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
 
 @media (prefers-reduced-motion: reduce) {
-    .room-card, .panah, .btn-home { transition: none; }
+    .room-card,
+    .panah,
+    .btn-home {
+        transition: none;
+    }
 }

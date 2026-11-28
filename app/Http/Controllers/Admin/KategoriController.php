@@ -13,7 +13,7 @@ class KategoriController extends Controller
     public function index()
     {
         $daftarKategori = Kategori::orderBy('nama_kategori')->get();
- 
+
         return view('admin.kategori', compact('daftarKategori'));
     }
 

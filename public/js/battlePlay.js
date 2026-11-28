@@ -47,6 +47,7 @@ const DOM = {
     winTitle   : document.getElementById('win-title'),
     winSubtitle: document.getElementById('win-subtitle'),
     winCard    : document.getElementById('win-card'),
+    winReward  : document.getElementById('win-reward'),
     streakDots : {
         a: [
             document.getElementById('streak-a-1'),
@@ -333,7 +334,11 @@ function showWinScreen(winner, winnerNama) {
         ? BATTLE_CONFIG.playerB.nama
         : BATTLE_CONFIG.playerA.nama;
 
+    const reward = BATTLE_CONFIG.reward;
+
     DOM.winTitle.textContent    = winnerNama + ' MENANG!';
+    DOM.winReward.textContent = 'Kamu mendapat ' + reward + ' point';
+    DOM.winReward.hidden = !reward;
     DOM.winSubtitle.textContent = 'Selamat telah mengalahkan ' + loserNama + '!';
     DOM.winCard.style.borderColor = (winner === 'a') ? '#5b8ff7' : '#f4a09b';
 

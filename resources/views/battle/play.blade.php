@@ -15,9 +15,9 @@
 <script>
     const BATTLE_CONFIG = {
         answerUrl : '{{ route("battle.answer", $room->id_room) }}',
-        resultUrl : '{{ route("battle.result", $room->id_room) }}',
         csrfToken : '{{ csrf_token() }}',
         winTarget : 7,
+        reward    : {{ (int) ($room->reward ?? 0) }},
 
         gambar: {
             a: {
@@ -128,6 +128,7 @@
     <div class="winner-card" id="win-card">
         <div class="win-piala">&#127942;</div>
         <h1 id="win-title">MENANG!</h1>
+        <p class="win-reward" id="win-reward"></p>
         <p id="win-subtitle">-</p>
         <a class="btn-hijau" href="{{ route('game.index') }}">Kembali ke Menu</a>
     </div>

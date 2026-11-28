@@ -163,7 +163,4 @@ Route::prefix('battle')->name('battle.')->group(function () {
 
     Route::post('/{room}/answer', [BattleController::class, 'answer'])
         ->name('answer');
-
-    Route::get('/{room}/result', [BattleController::class, 'result'])
-        ->name('result');
 });

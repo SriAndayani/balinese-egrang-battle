@@ -162,7 +162,7 @@ class AssesmentController extends Controller
             'id_room'       => $room->id_room,
             'nama'          => $nama,
             'skor'          => $nilaiAkhir,
-            'waktu_selesai' => now(),
+            'waktu_selesai' => now(), // noted
         ]);
 
         foreach ($jawaban as $idSoal => $idJawaban) {

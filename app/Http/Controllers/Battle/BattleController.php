@@ -252,12 +252,6 @@ class BattleController extends Controller
             'battle_player_b',
             'battle_winner',
         ]);
-
-        return view('battle.result', compact(
-            'room',
-            'winnerData',
-            'loserData'
-        ));
     }
 
     private function handleBenar(array $state): array
